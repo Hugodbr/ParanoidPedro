@@ -1,0 +1,57 @@
+[
+  {
+    "speaker": "Julie",
+    "text": "¿Eres tú...?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Weiyoung",
+    "text": "Julie... pensé que nunca te volvería a ver. ¿Sabes qué es este lugar?",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "No lo sé. Todo aquí parece sacado de mis recuerdos, pero está... distorsionado. Es extraño y, al mismo tiempo, familiar.",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Weiyoung",
+    "text": "Es como si alguien estuviera jugando con lo que conocemos. Y tú... has cambiado mucho desde la última vez que te vi.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Yo? ¿Cómo... cómo he cambiado?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Weiyoung",
+    "text": "Estás diferente, Julie. Ahora eres más... decidida. Me alegra verte así.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "Diferente… Todo está tan confuso... pero al menos te encontré, y eso me da algo de calma. Tenemos que encontrar a Joker. Si este mundo lo creó él, tal vez sepa la verdad.",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Weiyoung",
+    "text": "No sé si lo que dices sea cierto, pero si es lo que tienes que hacer, te apoyo.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¡Espera! ¿A dónde vas?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Weiyoung",
+    "text": "Creo que no podemos estar juntas mucho tiempo, pero recuerda esto: no olvides quién eres, Julie. Y ahora estás mejor que antes.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Es esto realmente un mundo de cartas? ¿Por qué está lleno de mis recuerdos? Voy a encontrar a Joker. Necesito saber la verdad.",
+    "isPlayer": true
+  }
+]

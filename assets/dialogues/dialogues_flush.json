@@ -1,0 +1,82 @@
+[
+  {
+    "speaker": "Julie",
+    "text": "Ugh... Mi cabeza...",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Vaya, otra visitante. Bienvenida al mundo de las cartas, supongo.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Quién eres? ¿Qué es el mundo de las cartas?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Me llamo Flush. Como tú, estoy atrapado aquí. Este lugar, creado por Joker, es conocido como 'el mundo de las cartas', aunque algunos lo llaman como Madness.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Joker? ¿El ser extraño que acabo de ver?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Posiblemente. Es un maestro del caos. Nadie sabe por qué nos trae aquí, pero para salir tendrás que enfrentarte a su juego.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Juego? ¿Cómo salgo de aquí?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Solo Joker tiene las respuestas. Para encontrarlo, deberás explorar y llegar al Cuarto Piso de este mundo.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "Me dijo algo sobre unas escaleras ¿Cómo las puedo encontrar?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Primero necesitas la Llave Mágica. Aparece en lugares diferentes cada vez. Esa llave abre la puerta al siguiente piso.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "Entonces la encontraré. No me quiero quedarme atrapada aquí.",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Espera. Este mundo está lleno de peligros. Necesitarás aprender a defenderte antes de continuar.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Cómo hago eso?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Concéntrate. Siente la energía dentro de ti. Este lugar te concede habilidades únicas.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "Esto es... ¿un poder? Puedo disparar energía...",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Flush",
+    "text": "Así es. Ahora, encuentra la llave y la puerta. Buena suerte.",
+    "isPlayer": false
+  }
+]

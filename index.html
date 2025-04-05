@@ -1,0 +1,135 @@
+<html>
+<head>
+    <title>Madness</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Juego/estilo.css"> <!-- Esto cargaria un archivo de estilo, pero no es necesario en Fiddle porque lo hace automáticamente -->
+    <link rel="icon" href="./Juego/assets/enemies/bob.png" type="image/png">
+    <script src="./Juego/lib/phaser.js"></script>
+    <script src="./Juego/lib/script.js"></script>
+    <script src="./Juego/lib/easystar.js"></script>
+</head>
+<body class="body">
+    <div id="fullscreen-animation" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: rgba(0, 0, 0, 0.8);">
+        <img id="animation-frame" src="./Juego/assets/map/map_boss/map_boss_1.png" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+
+    <script src="./Juego/src/game.js" type="module"></script>
+    <header>
+        <h1 class="title">Madness</h1>
+        <p class="banner">NextStationGames</p>
+    </header>
+
+
+    <nav>
+        <a href="#" onclick="muestraID('juego'),
+                     escondeClase('descripcion'),
+                     escondeClase('controles'),
+                     escondeClase('contacto'),
+                     escondeClase('creditos')">Juego</a>
+        <a href="#" onclick="muestraClase('descripcion'),
+                     escondeClase('controles'),
+                     escondeClase('contacto'),
+                     escondeClase('creditos'),
+                     escondeID('juego')">Descripción</a>
+        <a href="#" onclick="muestraClase('controles'),
+                     escondeClase('descripcion'),
+                     escondeClase('contacto'),
+                     escondeClase('creditos'),
+                     escondeID('juego')">Controles</a>
+        <a href="#" onclick="muestraClase('creditos'),
+                     escondeClase('controles'),
+                     escondeClase('contacto'),
+                     escondeClase('descripcion'),
+                     escondeID('juego')">Créditos</a>
+        <a href="#" onclick="muestraClase('contacto'),
+                     escondeClase('controles'),
+                     escondeClase('descripcion'),
+                     escondeClase('creditos'),
+                     escondeID('juego')">Contacto</a>
+    </nav>
+    <div class="wrapper">
+        <div id="juego"> </div>
+        <div class="content">
+            <div class="texto">
+                <div class="descripcion" style="display:none">
+                    <p>
+                        <b>Descripción:</b> <br>
+                        <br>
+                        Madness es un juego RPG en el que disfrutarás de una emocionante aventura junto a Julie, <br>
+                        nuestra protagonista. Julie, una joven obsesionada con el póker, es secuestrada y llevada  <br>
+                        al mundo de las cartas por el Joker. Al llegar allí, se olvida de su pasado y lo único que <br>
+                        sabe es que, para recuperar su libertad, deberá encontrar al Joker, quien la espera en el <br>
+                        último piso. A lo largo de la travesía, te enfrentarás a numerosos enemigos mientras descubres<br>
+                        los misterios del pasado de Julie.
+                    </p>
+                </div>
+                <div class="controles" style="display:none">
+                    <p>
+                        <b>Movimiento: </b>
+                        W, A, S, D<br>
+                        <b>Ataque: </b>
+                        Clic izquierdo <br>
+                        <b>Interactuar: </b>
+                        E <br>
+                        <b>Pausa: </b>
+                        P <br>
+                    </p>
+
+                </div>
+                <div class="contacto" style="display:none">
+                    <p>
+                        <b>Redes Sociales:</b>
+                        <a href="https://x.com/NextStationG" target="_blank" style="color: white">
+                            Twitter:@NextStationG
+                        </a>
+                    </p>
+                </div>
+                <div class="creditos" style="display:none">
+                    <p>
+                        <b>Desarrollado por:</b><br>
+                        <b>Programación:</b> Maria Eduarda Beckers, Haoshuang Hou, Bingcheng Wang, Mauro Martínez<br>
+                        <b>Arte:</b> Maria Eduarda Beckers, Haoshuang Hou<br>
+                        <b>Música:</b> Bingcheng Wang<br>
+                        <b>Agradecimiento especial</b><br>
+                        <br>por colaborar en la parte estética:<br>
+                        <br>Piutolinha<br>
+                        <br>Haoxue Hou<br>
+                    </p>
+                    <p>
+                        <b>Recursos utilizados:</b><br>
+                        Phaser<br>
+                        <br>
+                        <b>Fuentes de letra:</b><br>
+                        LoveYaLikeASister diseñado por Kimberly Geswein <br>
+                        Cookie diseñado por  Ania Kruk<br>
+                        Molle diseñado por  Elena Albertoni<br>
+                        Inspiration diseñado por  Robert Leuschke<br>
+                        <b>Assets públicos:</b><br>
+                        Pocket Inventory Series #5 : Player Status por Humblepixel<br>
+                        Lucid por MidHil M<br>
+                        AmazonDrone por 730eb7<br>
+                        Menu buttons por NectaNebo<br>
+                        Spooky Wizard Laugh 01 por GIKMultimedia<br>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <footer>
+            <p>© 2024 NextStationGames. All rights reserved.</p>
+            <div class="footer-icons">
+                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/facebook-app-round-white-icon.png" alt="Facebook" style="width: 35px; height: 35px;">
+                <a href="https://x.com/NextStationG">
+                    <img src="https://img.icons8.com/m_sharp/512/FFFFFF/twitter.png" alt="Twitter" style="width: 40px; height: 40px;">
+                </a>
+                <img src="https://cdn.iconscout.com/icon/free/png-256/free-instagram-logo-icon-download-in-svg-png-gif-file-formats--business-social-post-logos-icons-1646407.png?f=webp" alt="Instagram" style="width: 40px; height: 40px;">
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>

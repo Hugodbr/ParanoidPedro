@@ -1,0 +1,32 @@
+[
+  {
+    "speaker": "Julie",
+    "text": "¿Un... gato? ¿Qué hace aquí? ¿Cómo puede sobrevivir en un lugar como este?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Julie",
+    "text": "Oye, tú... pequeño... ¿cómo? ¿Por qué siento que te conozco?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Piu",
+    "text": "Miau.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Julie",
+    "text": "¿Qué es esto? Ese sonido... lo he escuchado antes. Tú eras importante para mí.",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Julie",
+    "text": "¡Eres Piu! Mi gato, mi pequeño. ¿Cómo pude olvidarte?",
+    "isPlayer": true
+  },
+  {
+    "speaker": "Julie",
+    "text": "Tú eras lo único que me mantenía cuerda. Mi compañero, mi amigo... ¿Cómo es posible que estés aquí? Esto no puede ser real...",
+    "isPlayer": true
+  }
+]

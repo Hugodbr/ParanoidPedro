@@ -1,0 +1,22 @@
+[
+  {
+    "speaker": "Joker",
+    "text": "¿De verdad crees que has ganado?",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Joker",
+    "text": "Nada se borra. Todo queda.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Joker",
+    "text": "Tal vez ni siquiera quieras salir.",
+    "isPlayer": false
+  },
+  {
+    "speaker": "Joker",
+    "text": "¿Qué harás cuando te des cuenta de que no hay salida?",
+    "isPlayer": false
+  }
+]

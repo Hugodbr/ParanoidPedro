@@ -1,0 +1,32 @@
+[
+  {
+    "x": 100,
+    "y": 500,
+    "title": "maxLife",
+    "count": 0
+  },
+  {
+    "x": 225,
+    "y": 500,
+    "title": "shootSpeed",
+    "count": 0
+  },
+  {
+    "x": 350,
+    "y": 500,
+    "title": "damage",
+    "count": 0
+  },
+  {
+    "x": 475,
+    "y": 500,
+    "title": "speedFactor",
+    "count": 0
+  },
+  {
+    "x": 600,
+    "y": 500,
+    "title": "prob",
+    "count": 0
+  }
+]
