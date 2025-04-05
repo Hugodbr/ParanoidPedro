@@ -1,73 +1,42 @@
 <html>
 <head>
-    <title>Madness</title>
+    <title>Paranoid Pedro</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Juego/estilo.css"> <!-- Esto cargaria un archivo de estilo, pero no es necesario en Fiddle porque lo hace automáticamente -->
-    <link rel="icon" href="./Juego/assets/enemies/bob.png" type="image/png">
-    <script src="./Juego/lib/phaser.js"></script>
-    <script src="./Juego/lib/script.js"></script>
-    <script src="./Juego/lib/easystar.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- <link rel="icon" href="./Juego/assets/enemies/bob.png" type="image/png"> TODO -->
+    <script src=".lib/phaser.js"></script>
+    <!-- <script src="./Juego/lib/script.js"></script> // TODO: if other lib needed -->
 </head>
-<body class="body">
-    <div id="fullscreen-animation" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: rgba(0, 0, 0, 0.8);">
-        <img id="animation-frame" src="./Juego/assets/map/map_boss/map_boss_1.png" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
 
-    <script src="./Juego/src/game.js" type="module"></script>
+
+<body class="body">
+    <!-- <div id="fullscreen-animation" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: rgba(0, 0, 0, 0.8);">
+        <img id="animation-frame" src="./Juego/assets/map/map_boss/map_boss_1.png" style="width: 100%; height: 100%; object-fit: cover;">
+    </div> -->
+
+    <script src="./src/game.js" type="module"></script>
     <header>
-        <h1 class="title">Madness</h1>
-        <p class="banner">NextStationGames</p>
+        <h1 class="title">Paranoid Pedro</h1>
+        <p class="banner">5G Studios</p>
     </header>
 
-
-    <nav>
-        <a href="#" onclick="muestraID('juego'),
-                     escondeClase('descripcion'),
-                     escondeClase('controles'),
-                     escondeClase('contacto'),
-                     escondeClase('creditos')">Juego</a>
-        <a href="#" onclick="muestraClase('descripcion'),
-                     escondeClase('controles'),
-                     escondeClase('contacto'),
-                     escondeClase('creditos'),
-                     escondeID('juego')">Descripción</a>
-        <a href="#" onclick="muestraClase('controles'),
-                     escondeClase('descripcion'),
-                     escondeClase('contacto'),
-                     escondeClase('creditos'),
-                     escondeID('juego')">Controles</a>
-        <a href="#" onclick="muestraClase('creditos'),
-                     escondeClase('controles'),
-                     escondeClase('contacto'),
-                     escondeClase('descripcion'),
-                     escondeID('juego')">Créditos</a>
-        <a href="#" onclick="muestraClase('contacto'),
-                     escondeClase('controles'),
-                     escondeClase('descripcion'),
-                     escondeClase('creditos'),
-                     escondeID('juego')">Contacto</a>
-    </nav>
     <div class="wrapper">
         <div id="juego"> </div>
         <div class="content">
             <div class="texto">
-                <div class="descripcion" style="display:none">
+                <div class="descripcion">
                     <p>
                         <b>Descripción:</b> <br>
                         <br>
-                        Madness es un juego RPG en el que disfrutarás de una emocionante aventura junto a Julie, <br>
-                        nuestra protagonista. Julie, una joven obsesionada con el póker, es secuestrada y llevada  <br>
-                        al mundo de las cartas por el Joker. Al llegar allí, se olvida de su pasado y lo único que <br>
-                        sabe es que, para recuperar su libertad, deberá encontrar al Joker, quien la espera en el <br>
-                        último piso. A lo largo de la travesía, te enfrentarás a numerosos enemigos mientras descubres<br>
-                        los misterios del pasado de Julie.
+                        Paranaoid Pedro es un juego plataformas en el que disfrutarás de una emocionante aventura ... <br>
+
                     </p>
                 </div>
-                <div class="controles" style="display:none">
+                <div class="controles">
                     <p>
                         <b>Movimiento: </b>
-                        W, A, S, D<br>
+                        W, A, S, D<br>dd
                         <b>Ataque: </b>
                         Clic izquierdo <br>
                         <b>Interactuar: </b>
@@ -77,24 +46,11 @@
                     </p>
 
                 </div>
-                <div class="contacto" style="display:none">
-                    <p>
-                        <b>Redes Sociales:</b>
-                        <a href="https://x.com/NextStationG" target="_blank" style="color: white">
-                            Twitter:@NextStationG
-                        </a>
-                    </p>
-                </div>
-                <div class="creditos" style="display:none">
+
+                <div class="creditos">
                     <p>
                         <b>Desarrollado por:</b><br>
-                        <b>Programación:</b> Maria Eduarda Beckers, Haoshuang Hou, Bingcheng Wang, Mauro Martínez<br>
-                        <b>Arte:</b> Maria Eduarda Beckers, Haoshuang Hou<br>
-                        <b>Música:</b> Bingcheng Wang<br>
-                        <b>Agradecimiento especial</b><br>
-                        <br>por colaborar en la parte estética:<br>
-                        <br>Piutolinha<br>
-                        <br>Haoxue Hou<br>
+                        <b>Hugo Rocha & Telmo Kissoca<br>
                     </p>
                     <p>
                         <b>Recursos utilizados:</b><br>
@@ -119,14 +75,7 @@
 
 
         <footer>
-            <p>© 2024 NextStationGames. All rights reserved.</p>
-            <div class="footer-icons">
-                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/facebook-app-round-white-icon.png" alt="Facebook" style="width: 35px; height: 35px;">
-                <a href="https://x.com/NextStationG">
-                    <img src="https://img.icons8.com/m_sharp/512/FFFFFF/twitter.png" alt="Twitter" style="width: 40px; height: 40px;">
-                </a>
-                <img src="https://cdn.iconscout.com/icon/free/png-256/free-instagram-logo-icon-download-in-svg-png-gif-file-formats--business-social-post-logos-icons-1646407.png?f=webp" alt="Instagram" style="width: 40px; height: 40px;">
-            </div>
+            <p>© 2025 5G Studios. All rights reserved.</p>
         </footer>
     </div>
 
