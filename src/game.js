@@ -6,7 +6,7 @@ let config = {
 	parent: 'juego',
 	width: 1000,
 	height: 600,
-	pixelArt: true, // TODO: mirar eso mejor
+	pixelArt: true,
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
 
@@ -27,7 +27,7 @@ let config = {
 	physics: {
 		default: 'arcade',
 		arcade: {
-			gravity: { y: 10 }, // TODO: polish
+			gravity: { y: 10 },
 			debug: true
 		},
 
