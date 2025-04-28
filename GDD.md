@@ -1,11 +1,11 @@
 # PARANOID PEDRO - GDD
 
-# IDEA:
+# Idea:
 
 Paranoid Pedro es un juego de plataformas de acción de un solo jugador en el que el jugador protagoniza a Pedro, un loco conspiranoico que tiene que escapar del hospital repartiendo leches a todo lo que vea (sanitarios, paredes, etc.).
 El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch Quest (estética) y Assassin’s Creed Chronicles.
 
-# MECÁNICAS:
+# Mecánicas:
 
 ## Del jugador
 
@@ -61,7 +61,7 @@ Para avanzar en el juego se deben destruir las paredes que separan a las zonas e
 Los pasillos son transitables por los enemigos y pueden estar conectados entre sí, de forma que un enemigo puede tanto patrullar de alante a atrás un pasillo (más común) como transitar entre zonas a través de los pasillos. 
 Opcionalmente nos gustaría que el jugador también pueda usar este sistema para hacer la animación de entrar en puertas, ascensores, etc.
 
-# SISTEMAS:
+# Sistemas:
 
 Una vez comentadas las mecánicas y sistemas que incluirá el juego, vamos a definir en detalle lo que hacen:
 
@@ -83,15 +83,19 @@ Wall {
 
 Al destruir esta pared las zonas 2 y 3 se harán visibles (puede quedar bien con un tweens que settee la visibilidad a 0). Para gestionar estas colisiones y obtener el objeto de cada layer y manejar su visibilidad, el Zone_System implementado en código tendrá que leer del archivo del tilemap y guardarse una lista de objetos pared `Array<BreakeableWall>` y un mapa de ID's a objetos de layer `Map<number, Phaser.Tilemaps.LayerData>`.
 
-## Flat_3D_System
+## Flat3D-System
 
-Todas las entidades del juego derivan de `Flat_3D_Entity`, clase que contará con atributos de posición en 3D como posición y velocidad 3D, esto para gestionar el movimientos de las entidades, que serán cuerpos kinemáticos para evitar físicas raras sobre todo con la simulación del eje Z y para evitar conflictos en los desplazamientos hechos por IA. Además, esta clase  contará con un atributo muy importante que será el *depth scaling factor*, que se utilizará para escalar el Sprite de cada entidad dependiendo de su profundidad en el eje Z para dar el efecto deseado.
+Todas las entidades del juego derivan de `Flat3D_Entity`, clase que contará con atributos de posición en 3D como posición y velocidad 3D, esto para gestionar el movimientos de las entidades, que serán cuerpos kinemáticos para evitar físicas raras sobre todo con la simulación del eje Z y para evitar conflictos en los desplazamientos hechos por IA. Además, esta clase  contará con un atributo muy importante que será el *depth scaling factor*, que se utilizará para escalar el Sprite de cada entidad dependiendo de su profundidad en el eje Z para dar el efecto deseado.
 
-De la mano con esta clase vendrá el manager `Flat_3D_Physics_System`, que deberá tener registradas en una lista a todas las entidades para gestionar en su update el movimiento y las colisiones entre la entidades apoyándose en los métodos existentes de Phaser, pero añadiendo el factor de que para que una colisión se esté dando la Z debe ser la misma, el resto sería todo igual. De esta forma en vez de usar `this.physics.add.overlap` se usaría la versión de `Flat_3D_Physics_System` (serían también métodos estáticos).
+De la mano con esta clase vendrá el manager `Flat3D_Physics_System`, que deberá tener registradas en una lista a todas las entidades para gestionar en su update el movimiento y las colisiones entre la entidades apoyándose en los métodos existentes de Phaser, pero añadiendo el factor de que para que una colisión se esté dando la Z debe ser la misma, el resto sería todo igual. De esta forma en vez de usar `this.physics.add.overlap` se usaría la versión de `Flat3D_Physics_System` (serían también métodos estáticos).
 
+## Path3D-System
 
+Apoyándose en el sistema anterior, este sistema establece una serie de puntos 3D como camino a seguir por las entidades del juego. Cada `Path3D_Point` consta de posición (un vector 3D), el id de la zona en la que se encuentra y un booleano que indica si se trata de un punto de pasillo (`isCorridorPoint`).
 
-# DINÁMICAS:
+La clase `Path3D_System`, será un componente/atributo de las entidades que sigan una ruta, este contendrá la lista de `Paths3D_Point`s, el sentido en el que se está recorriendo el camino, el próximo punto a alcanzar, el punto del camino mas cercano a otro punto dado, etc. Todo esto será accedido deste los árboles de comportamiento de los NPC para desplazarlos a los puntos indicados si es necesario. 
+
+# Dinámicas:
 
 ## Acción:
 
@@ -101,7 +105,7 @@ La dinámica principal del juego será la de destruir todo lo que se ponga en fr
 
 Como ya se ha mencionado en mecánica hay enemigos invencibles que a demás de matar de un golpe, el jugador no puede matar (como el alien, por ejemplo), en un principio no serán demasiados pero estas zonas de enemigos invencibles se apoyarán en la mecánica del sistema de pasillos para que el jugador tenga que hacer timing con la trayectoria del enemigo y evitar ser visto.
 
-# ESTÉTICA:
+# Estética:
 
 Para la estética del juego nos inspiramos en el juego Sketch Quest, los gráficos estarán basados en dibujos hechos a mano, trasladando al jugador a una atmósfera más surrealista.
 
