@@ -2,7 +2,7 @@
 
 # Idea:
 
-Paranoid Pedro es un juego de plataformas de acción de un solo jugador en el que el jugador protagoniza a Pedro, un loco conspiranoico que tiene que escapar del hospital repartiendo leches a todo lo que vea (sanitarios, paredes, etc.).
+Paranoid Pedro es un juego de plataformas de acción de un solo jugador en el que el jugador protagoniza a Pedro, un loco conspiranoico que tiene como objetivo escapar del hospital repartiendo leches a todo lo que vea (sanitarios, paredes, etc.).
 El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch Quest (estética) y Assassin’s Creed Chronicles.
 
 # Mecánicas:
@@ -13,9 +13,15 @@ El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch 
 
 El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras rueda, mientras cae o mientras está quieto para eliminar enemigos o interactuar con otros objetos destructibles como por ejemplo paredes o carros.
 
+Controls:
+A-D: desplazamiento izquierda-derecha
+W: salto
+J: ataque (en suelo y en aire)
+K: rodar en suelo
+
 ### Uso de llaves para acceder a nuevas zonas:
 
-Para avanzar en el juego, en ciertas zonas será necesario abrir puertas con llaves, que se obtienen a través de la exploración y/o de derrotar a algún enemigo que la posea.
+Para avanzar en el juego, en ciertas zonas será necesario abrir puertas con llaves, que se obtienen a través de la exploración y/o de derrotar a algún enemigo que la posea. Las llaves son obtenidas automáticamente al derrotarlos.
 
 ### Seguimiento de la cámara al personaje:
 
@@ -41,6 +47,16 @@ Si un enemigo ve al jugador desde el pasillo porque este pasa por enfrente, este
 Para desarrollar esta mecánica tan compleja de los enemigos tenemos pensado usar un modelo de árboles de comportamiento para entrelazar de manera más clara las acciones de los enemigos en determinadas circunstancias.
 
 ![image](https://github.com/user-attachments/assets/0e245095-ae25-4b39-a347-adb9a1c25e6e)
+
+### Tipos de enemigos
+
+Todos los enemigos pueden patrullar en X y/o Z.
+En orden de dificultad y aparecimiento:
+Enemigos normales: más fáciles, lentos. Son funcionarios del hospital que intentan agarrar a Pedro y aplicarle la vacuna. Si el jugador no está golpeando de ninguna manera y hay colisión, pierde todas sus vidas pues fue capturado y vuelve al inicio.
+Enemigos que disparan proyectiles(pulso 5G): Son de la seguridad del hospital. Si están de cara al jugador se quedan disparando y no se mueven.
+Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Sólo reciben daño desde arriba o espalda.
+Enemigos inmortales (Alien): no reciben daño, tiene mayor velocidad de desplazamiento, van para el jugador hasta donde pueden y tienen la misma lógica de los enemigos normales, es decir, si colisionan con el jugador este pierde la “run”.
+
 
 
 ### Los enemigos tienen factor visibilidad con el jugador:
@@ -104,6 +120,14 @@ La dinámica principal del juego será la de destruir todo lo que se ponga en fr
 ## Sigilo:
 
 Como ya se ha mencionado en mecánica hay enemigos invencibles que a demás de matar de un golpe, el jugador no puede matar (como el alien, por ejemplo), en un principio no serán demasiados pero estas zonas de enemigos invencibles se apoyarán en la mecánica del sistema de pasillos para que el jugador tenga que hacer timing con la trayectoria del enemigo y evitar ser visto.
+Una idea es queL los enemigos pueden tener distintas velocidades de desplazamiento en Z, lo que significa que los más difíciles no permiten que el jugador pase sin ser percibido solamente con el movimiento horizontal normal, sino que tenga que rodar por el suelo que le hace más deprisa.
+
+## Enemigos:
+
+Ataques enemigos por proyectiles (pulso 5G) obligan al jugador usar mecánicas de rodar para pasar por debajo o saltar por arriba para evitar daño.
+Los enemigos inmortales le dan al jugador dos alternativas: sigilo o correr. Al correr para huir, tendrá menos tiempo para pensar y reaccionar a ataques de enemigos más adelante, pues rápidamente lo alcanzará y lo matará.
+Los enemigos reptilianos sólo se pueden derrotar saltando y golpeando la cabeza o si están de espalda con cualquier ataque. Cuando están de cara, sus dientes afilados no permiten a uno acercarse sin recibir daño ni infringir.
+
 
 # Estética:
 
