@@ -1,0 +1,52 @@
+------------------------------------------------
+Ejemplo AI de enemigo
+------------------------------------------------
+
+Si está idle
+  No hace nada
+
+Si está atacando
+ Ataca (devuelve running hasta acabar)
+
+Si está patrullando
+  Si acaba de entrar en el estado
+    Busca el punto de la lista de puntos de control más cercano al él
+  Si no ha llegado al punto XZ
+    Desplazar una unidad hacia XZ (3DWoldManager.setObjectPosition(o, pos))
+  Si sí
+    Si hay más puntos en la lista y en el mismo sentido
+      Cambiar punto objetivo
+    Si no
+      Cambiar el sentido de la iteración de puntos
+      Cambiar punto objetivo
+
+Si está buscando
+  Si no hay punto de búsqueda establecido
+    El punto de búsqueda es el punto de control más cercano al jugador en ese
+    momento
+  Si sí
+    Se tiene que establecer un punto de control por el que buscar
+  Se usa la velocidad de persecución (más acelerada)
+  Si está en profundidad (this.pos.z > 0)
+    Busca en qué dirección de la lista de puntos de control se encuentra un
+    punto con z = 0.
+  Sigue el mismo proceso que en la PATRULLA pero descartando el eje Z y hasta donde
+  sea posible (si el resto de puntos están en otra zona inaccesible sin usar el
+  pasillo)
+  Si pasa un tiempo buscando
+    Vuelve al estado de PATRULLA
+
+Si está persiguiendo
+  Si está en profundidad (this.pos.z > 0)
+    Desplazar una unidad en sentido -Z
+  Si no ha llegado a cierta distancia X del jugador (depende del enemigo)
+    Desplazar una unidad hacia el jugador en X (a no ser que salte, mucho lío)
+  Si sí
+    Cambiar a estado de ATAQUE
+
+Si ve al jugador
+  Si no está atacando
+    Cambiar a estado PERSEGUIR
+Si no
+  Si está en PERSEGUIR
+    Cambiar a estado BUSCAR
