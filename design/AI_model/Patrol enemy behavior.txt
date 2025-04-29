@@ -51,13 +51,13 @@ Si está persiguiendo
   Si está en profundidad (Flat3D_Entity.position.z > 0)
     Desplazar una unidad en sentido -Z
     ( Flat3D_Entity.move(Vec3(0,0,-z)) )
-
-  Si no está a cierta distancia X del jugador (depende del enemigo estará demasiado pegado o lejos)
-    Desplazar una unidad hacia el jugador en X (a no ser que salte, mucho lío) o lejos de él
-    ( Vector3D diff = ...							)
-    ( Flat3D_Entity.move(diff.normalized() * speed) // diff with ideal distance )
-  Si sí (rango de distancia ideal)
-    Cambiar a estado de ATAQUE
+  Si sí
+    Si no está a cierta distancia X del jugador (depende del enemigo estará demasiado pegado o lejos)
+      Desplazar una unidad hacia el jugador en X (a no ser que salte, mucho lío) o lejos de él
+      ( Vector3D diff = ...							)
+      ( Flat3D_Entity.move(diff.normalized() * speed) // diff with ideal distance )
+    Si sí (rango de distancia ideal)
+      Cambiar a estado de ATAQUE
 
 Si ve al jugador
   Si no está atacando
