@@ -1,35 +1,3 @@
-
-@font-face {
-    font-family: 'Fuente1';
-    src: url('assets/font/Inspiration-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Fuente2';
-    src: url('assets/font/LoveYaLikeASister-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Fuente3';
-    src: url('assets/font/Molle-Italic.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Fuente4';
-    src: url('assets/font/Cookie-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'PixelArt';
-    src: url('assets/font/Jersey25-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .texto {
     background-color: #212121;
     color: white;

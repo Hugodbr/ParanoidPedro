@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "mapatiled.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 0.25
+        },
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "jsonmap.json": {
+            "scale": 0.7184375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 595.73727707699,
+                "y": 320.1391909525881
+            }
+        },
+        "mapateste.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "mapatiled.tmx": {
+            "scale": 0.7184375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 315.96346237494566,
+                "y": 320.1391909525881
+            }
+        },
+        "mapatiled.tmx#mapateste": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
+    "last.externalTilesetPath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
+    "last.imagePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map",
+    "map.lastUsedExportFilter": "Arquivos de mapa JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
+    "openFiles": [
+        "mapatiled.tmx",
+        "mapateste.tsx"
+    ],
+    "project": "project.tiled-project",
+    "recentFiles": [
+        "mapateste.tsx",
+        "mapatiled.tmx",
+        "jsonmap.json"
+    ],
+    "tileset.lastUsedFilter": "Ficheiros de conjunto de tiles Tiled (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx"
+}

@@ -1,28 +1,30 @@
-import Title from './scenes/title.js';
+// import Title from './scenes/title.js';
+import MainGame from './scenes/maingame.js';
+
 
 
 let config = {
 	type: Phaser.AUTO,
 	parent: 'juego',
-	width: 1000,
-	height: 600,
+	width: 1280,
+	height: 640,
 	pixelArt: true,
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
 
 		mode: Phaser.Scale.FIT,
 		min: {
-			width: 800,
-			height: 600
+			width: 640,
+			height: 300
 		},
 		max: {
-			width: 1600,
-			height: 1200
+			width: 1280,
+			height: 640
 		},
 		zoom: 1
 
 	},
-	scene: [Title],
+	scene: [MainGame],
 
 	physics: {
 		default: 'arcade',
