@@ -1,3 +1,5 @@
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../utils/asset_keys.js'
+
 export default class Character extends Phaser.GameObjects.Sprite {
 	/**
 	 * Constructor de del personaje principal
@@ -6,7 +8,9 @@ export default class Character extends Phaser.GameObjects.Sprite {
 	 * @param {number} y - coordenada y
 	 */
 	constructor(scene, x, y) {
-		super(scene, x, y, 'character');
+		super(scene, x, y, TextureKeys.PlayerCharacter);
+        scene.physics.add.existing(this);
+
 
 	}
 

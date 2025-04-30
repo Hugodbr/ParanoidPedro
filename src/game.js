@@ -8,7 +8,7 @@ let config = {
 	parent: 'juego',
 	width: 1280,
 	height: 640,
-	pixelArt: true,
+	pixelArt: false,
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
 

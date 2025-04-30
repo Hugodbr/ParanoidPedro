@@ -1,4 +1,7 @@
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../utils/asset_keys.js'
+
 import Character from "../entities/character.js";
+
 
 /**
  * Game main scene.
@@ -21,31 +24,32 @@ export default class MainGame extends Phaser.Scene
      */
 	preload() {
 
-        //* Preload tilemap assets. 
-        // Load Tilemap json
-        this.load.tilemapTiledJSON('tilemap', 'assets/map/tiled/jsonmap.json');
-        // Load tileset image
-        this.load.image('tilesetMapImage', 'assets/map/mapateste.png');
+    //* Preload tilemap assets
+    this.load.tilemapTiledJSON(TilemapKeys.MapJSON, 'assets/map/tiled/jsonmap.json');
+    this.load.image(TilemapKeys.TilesetImage, 'assets/map/mapateste.png');
 
-
-        //* Main character Player
-		this.load.image('mainCharacter', 'assets/character/characterTeste.png');
+    //* Preload player character
+    this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
 	}
 	
 	create() {
 
-        //* Map creation
-        this.map = this.make.tilemap({
-			key: 'tilemap',
-			tileWidth: 32,
-			tileHeight: 32
-		});
+    //* Map creation
+    this.map = this.make.tilemap({
+        key: TilemapKeys.MapJSON,
+        tileWidth: 32,
+        tileHeight: 32
+    });
 
-        const map_tileset = this.map.addTilesetImage('tilesetMap', 'tilesetMapImage');
-        const layer = this.map.createLayer('layer1', map_tileset, 0, 0);
+    const mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
+    const layer = this.map.createLayer(LayerNames.Ground, mapTileset, 0, 0);
 
-        //* Entity creation
-        let player = this.map.createFromObjects('objects', { name: 'characterStart', classType: Character, key: "mainCharacter" });
+    //* Entity creation
+    const player = this.map.createFromObjects(LayerNames.Objects, {
+        name: ObjectNames.CharacterSpawn,
+        classType: Character,
+        key: TextureKeys.PlayerCharacter
+    });
 
 
         //* Collision definitions
