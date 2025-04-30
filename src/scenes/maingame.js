@@ -1,4 +1,4 @@
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../utils/asset_keys.js'
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
 import Character from "../entities/character.js";
 
@@ -42,7 +42,8 @@ export default class MainGame extends Phaser.Scene
     });
 
     const mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
-    const layer = this.map.createLayer(LayerNames.Ground, mapTileset, 0, 0);
+    const groundLayer = this.map.createLayer(LayerNames.Ground, mapTileset, 0, 0);
+    groundLayer.setCollisionBetween(1, 10000);
 
     //* Entity creation
     const player = this.map.createFromObjects(LayerNames.Objects, {
@@ -52,7 +53,8 @@ export default class MainGame extends Phaser.Scene
     });
 
 
-        //* Collision definitions
+    //* Collision definitions
+    this.physics.add.collider(player, groundLayer);
 
 	}
 

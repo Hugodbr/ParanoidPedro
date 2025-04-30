@@ -4,11 +4,13 @@ export const TilemapKeys = {
 };
 
 export const TilesetNames = {
-    InTiled: 'mapateste',  // This must match the name you used in Tiled!!!!!!!!!!!!!
+    InTiled: 'mapateste',  // ! This must match the name you used in Tiled!!!!!!!!!!!!!
 };
 
 export const LayerNames = {
-    Ground: 'layer1',
+    Ground: 'ground',
+    BackgroundFar: 'backgroundFar',
+    BackgroundScenery: 'backgroundScenery',
     Objects: 'objects'
 };
 
@@ -17,7 +19,11 @@ export const TextureKeys = {
 };
 
 export const ObjectNames = {
-    CharacterSpawn: 'characterStart',
+    CharacterSpawn: 'characterSpawn',
+
+    Property: {
+        Order: 'Order' // Ascending order of a point sequence 
+    }
 };
 
 export const AnimationKeys = {

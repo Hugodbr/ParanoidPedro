@@ -27,11 +27,11 @@
             "scaleInEditor": 1
         },
         "mapatiled.tmx": {
-            "scale": 0.7184375,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 315.96346237494566,
-                "y": 320.1391909525881
+                "x": 518,
+                "y": 210.5
             }
         },
         "mapatiled.tmx#mapateste": {
@@ -49,6 +49,7 @@
         "mapateste.tsx"
     ],
     "project": "project.tiled-project",
+    "property.type": "int",
     "recentFiles": [
         "mapateste.tsx",
         "mapatiled.tmx",
