@@ -1,3 +1,4 @@
+import Character from "../entities/character.js";
 
 /**
  * Game main scene.
@@ -25,6 +26,10 @@ export default class MainGame extends Phaser.Scene
         this.load.tilemapTiledJSON('tilemap', 'assets/map/tiled/jsonmap.json');
         // Load tileset image
         this.load.image('tilesetMapImage', 'assets/map/mapateste.png');
+
+
+        //* Main character Player
+		this.load.image('mainCharacter', 'assets/character/characterTeste.png');
 	}
 	
 	create() {
@@ -40,6 +45,7 @@ export default class MainGame extends Phaser.Scene
         const layer = this.map.createLayer('layer1', map_tileset, 0, 0);
 
         //* Entity creation
+        let player = this.map.createFromObjects('objects', { name: 'characterStart', classType: Character, key: "mainCharacter" });
 
 
         //* Collision definitions
