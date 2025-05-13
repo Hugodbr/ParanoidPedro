@@ -1,7 +1,7 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
 import Character from "../entities/character.js";
-
+import { Flat3D_Entity } from "../entities/flat3D_entity.js";
 
 /**
  * Game main scene.
@@ -46,15 +46,18 @@ export default class MainGame extends Phaser.Scene
     groundLayer.setCollisionBetween(1, 10000);
 
     //* Entity creation
-    const player = this.map.createFromObjects(LayerNames.Objects, {
+   /* const player = this.map.createFromObjects(LayerNames.Objects, {
         name: ObjectNames.CharacterSpawn,
-        classType: Character,
+        classType: Flat3D_Entity,
         key: TextureKeys.PlayerCharacter
-    });
+    });*/
+    const player = new Flat3D_Entity(this, 200, 200);
 
+    player.setPos_(player.x, player.y, 0);
+    //let flat3d_player = new Flat3D_Entity(this, 200, 200);
 
     //* Collision definitions
-    this.physics.add.collider(player, groundLayer);
+    //this.physics.add.collider(player, groundLayer);
 
 	}
 
