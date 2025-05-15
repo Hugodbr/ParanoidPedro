@@ -58,7 +58,6 @@ export default class MainGame extends Phaser.Scene
 
     //* Collision definitions
     this.physics.add.collider(player, groundLayer);
-
 	}
 
 

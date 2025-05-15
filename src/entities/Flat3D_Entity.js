@@ -38,7 +38,7 @@ export class Vector3D {
 	}
 }
 
-export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
+export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	/**
 	 * @type {Vector3D}
 	 * It can only be modified by the Flat3D_Physics_System
@@ -69,8 +69,10 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 		this.setFlat3D_Pos(this.x, this.y, 0);
 
 		scene.physics.add.existing(this);
-		scene.add.existing(this);
-		//this.body.enable = false;
+		scene.add.existing(this); // Seems to be necessary to display the sprite, otherwise it doesn't show it
+		
+		this.addToUpdateList();
+		this.setOrigin(0.5, 0.2); // For scalling reasons we set the sprite origin upper than the middle
 
 		// Key bindings 
 		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump
@@ -127,7 +129,8 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 			this.flat3D_Position.z -= this.groundSpeed;
 			console.log("out");
 		}
-
+		
 		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
+		console.log(this.body.allowGravity);
 	}
 }
