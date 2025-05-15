@@ -53,11 +53,11 @@ export default class MainGame extends Phaser.Scene
     });*/
     const player = new Flat3D_Entity(this, 200, 200);
 
-    player.setPos_(player.x, player.y, 0);
+    player.setFlat3D_Pos(player.x, player.y, 0);
     //let flat3d_player = new Flat3D_Entity(this, 200, 200);
 
     //* Collision definitions
-    //this.physics.add.collider(player, groundLayer);
+    this.physics.add.collider(player, groundLayer);
 
 	}
 

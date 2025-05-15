@@ -43,21 +43,19 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 	 * @type {Vector3D}
 	 * It can only be modified by the Flat3D_Physics_System
 	 * */
-	position = new Vector3D(0, 0, 0);
-	/**
-	 * @type {Vector3D}
-	 * */
-	velocity = new Vector3D(0, 0, 0);
-	/**
-	 * @type {Vector3D}
-	 * Factor that is added to the actual velocity of deplacement to act as force
-	 * */
-	gravityVelocity = new Vector3D(0, 0, 0);
+	flat3D_Position = new Vector3D(0, 0, 0);
+
 	/**
 	 * @type {number}
 	 * The factor that will render the entity smaller or bigger deppending on its  position in the Z axis
 	 * */
-	depthScalingFactor = 0.99;
+	depthScalingFactor = 0.9999;
+
+	/**
+	 * @type {number}
+	 * Normal speed of the entity when moving
+	 */
+	groundSpeed = 160;
 
 	/**
 	 * Constructor de del personaje principal
@@ -68,10 +66,11 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 	constructor(scene, x, y) {
 		super(scene, x, y, TextureKeys.PlayerCharacter);
 
-		this.setPos_(this.x, this.y, 0);
+		this.setFlat3D_Pos(this.x, this.y, 0);
 
-		//scene.physics.add.existing(this);
+		scene.physics.add.existing(this);
 		scene.add.existing(this);
+		//this.body.enable = false;
 
 		// Key bindings 
 		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump
@@ -82,20 +81,14 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 
 	}
 
-	setPos_(x, y, z) {
-		//this.position.set(x, y, z);
-		this.position.z = z;
-		this.position.y = y;
-		this.position.x = x;
-	//	this.setPosition(x, y);
-	this.x = x;
-	this.y = y;
+	setFlat3D_Pos(x, y, z) {
+		this.flat3D_Position.set(x, y, z);
 		this.applyScale();
 	}
 
 	applyScale() {
 		this.scale = 1;
-		for(let i = 0; i < this.position.z; i++)
+		for(let i = 0; i < this.flat3D_Position.z; i++)
 			this.setScale(this.scale * this.depthScalingFactor);
 	}
 
@@ -107,34 +100,34 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite{
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
 		
-		let d = new Vector3D(0,0,0);
-		let speed = 1;
+		this.setFlat3D_Pos(this.flat3D_Position.x, this.flat3D_Position.y, this.flat3D_Position.z);
 
 		// Move LEFT
 		if (this.aKey.isDown) {
-			d = new Vector3D(-speed, 0, 0);
+			this.body.setVelocityX(-this.groundSpeed);
+			console.log("left");
 		}
-
 		// Move RIGHT
-		if (this.dKey.isDown) {
-			d = new Vector3D(speed, 0, 0);
+		else if (this.dKey.isDown) {
+			this.body.setVelocityX(this.groundSpeed);
+			console.log("right");
+		}
+		else {
+			this.body.setVelocityX(0);
 		}
 
 		// JUMP
 		if (this.wKey.isDown) {
-			//d = new Vector3D(0, -speed, 0);
-			d = new Vector3D(0, 0, speed);
+			this.flat3D_Position.z += this.groundSpeed;
+			console.log("deep");
 		}
 
 		// DOWN
 		if (this.sKey.isDown) {
-			//d = new Vector3D(0, speed, 0);
-			d = new Vector3D(0, 0, -speed);
+			this.flat3D_Position.z -= this.groundSpeed;
+			console.log("out");
 		}
 
-		let p = this.position.add(d);
-		this.setPos_(p.x, p.y, p.z); // for the scale factor
-
-	//	this.setPosition(this.position.x, this.position.y);
+		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
 	}
 }
