@@ -1,43 +1,11 @@
-//import { Vector3D } from "../utils/vector3D";
+import { Vector3D } from "../utils/vector3D.js";
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
 
-export class Vector3D {
-	x = 0;
-	y = 0;
-	z = 0;
-
-	constructor(x = 0, y = 0, z = 0) {
-
-		this.set(x, y, z);
-	}
-
-	set(x, y, z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
-	setX(val) {
-		this.x = val;
-	}
-
-	setY(val) {
-		this.y = val;
-	}
-
-	setZ(val) {
-		this.z = val;
-	}
-
-	add(vec3d) {
-		return new Vector3D(this.x + vec3d.x, this.y + vec3d.y, this.z + vec3d.z);
-	}
-
-	sub(vec3d) {
-		return new Vector3D(this.x - vec3d.x, this.y - vec3d.y, this.z - vec3d.z);
-	}
-}
-
+/**
+ * Flat3D_Entity works with the real 2D position that gets form its parent (Sprite) and an abstract position
+ * that is the @type {Vector3D} flat3D_Position, that is used in the path system to know whether the entity
+ * is in a 3D point or not
+ */
 export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	/**
 	 * @type {Vector3D}
@@ -85,10 +53,14 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 
 	setFlat3D_Pos(x, y, z) {
 		this.flat3D_Position.set(x, y, z);
-		this.applyScale();
+		this._applyScale();
 	}
 
-	applyScale() {
+	moveInDir(direction_vec) {
+
+	}
+
+	_applyScale() {
 		this.scale = 1;
 		for(let i = 0; i < this.flat3D_Position.z; i++)
 			this.setScale(this.scale * this.depthScalingFactor);
