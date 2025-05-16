@@ -27,10 +27,26 @@ export class Vector3D {
 	}
 
 	add(vec3d) {
-		return new Vector3D(this.x + vec3d.x, this.y + vec3d.y, this.z + vec3d.z);
+		this.x += vec3d.x;
+		this.y += vec3d.y;
+		this.z += vec3d.z;
+
+		return this;
 	}
 
 	sub(vec3d) {
+		this.x -= vec3d.x;
+		this.y -= vec3d.y;
+		this.z -= vec3d.z;
+
+		return this;
+	}
+
+	static add_vecs(vec3d) {
+		return new Vector3D(this.x + vec3d.x, this.y + vec3d.y, this.z + vec3d.z);
+	}
+
+	static sub_vecs(vec3d) {
 		return new Vector3D(this.x - vec3d.x, this.y - vec3d.y, this.z - vec3d.z);
 	}
 }

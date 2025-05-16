@@ -17,13 +17,16 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	 * @type {number}
 	 * The factor that will render the entity smaller or bigger deppending on its  position in the Z axis
 	 * */
-	depthScalingFactor = 0.9999;
+	depthScalingFactor = 0.99996;
 
 	/**
 	 * @type {number}
 	 * Normal speed of the entity when moving
 	 */
-	groundSpeed = 160;
+	groundSpeed = 280;
+	//patrollingGroundSpeed = 100;
+
+	jumpSpeed = 700;
 
 	/**
 	 * Constructor de del personaje principal
@@ -42,12 +45,16 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		this.addToUpdateList();
 		this.setOrigin(0.5, 0.2); // For scalling reasons we set the sprite origin upper than the middle
 
+		this.body.setGravityY(1700);
+		this.body.setMaxVelocityY(2000);
+
 		// Key bindings 
 		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump
 		this.aKey = this.scene.input.keyboard.addKey('A'); // Left
 		this.dKey = this.scene.input.keyboard.addKey('D'); // Right
 		this.jKey = this.scene.input.keyboard.addKey('J'); // Punch
 		this.sKey = this.scene.input.keyboard.addKey('S'); // Roll
+		this.spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 	}
 
@@ -56,8 +63,12 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		this._applyScale();
 	}
 
-	moveInDir(direction_vec) {
-
+	/**
+	 * If the entity has Z > 0
+	 * @returns {boolean}
+	 */
+	isInDepth() {
+		return this.flat3D_Position.z > 0;
 	}
 
 	_applyScale() {
@@ -76,15 +87,18 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		
 		this.setFlat3D_Pos(this.flat3D_Position.x, this.flat3D_Position.y, this.flat3D_Position.z);
 
+		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
+		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
+			this.body.setVelocityY(0);
+		}
+
 		// Move LEFT
 		if (this.aKey.isDown) {
 			this.body.setVelocityX(-this.groundSpeed);
-			console.log("left");
 		}
 		// Move RIGHT
 		else if (this.dKey.isDown) {
 			this.body.setVelocityX(this.groundSpeed);
-			console.log("right");
 		}
 		else {
 			this.body.setVelocityX(0);
@@ -93,17 +107,14 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		// JUMP
 		if (this.wKey.isDown) {
 			this.flat3D_Position.z += this.groundSpeed;
-			console.log("deep");
 		}
 		// DOWN
 		else if (this.sKey.isDown) {
 			this.flat3D_Position.z -= this.groundSpeed;
-			console.log("out");
 		}
 		
-		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
-		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
-			this.body.setVelocityY(0);
+		if(this.spaceBar.isDown && this.body.onFloor()) {
+			this.body.setVelocityY(-this.jumpSpeed);
 		}
 	}
 }
