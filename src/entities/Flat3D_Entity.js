@@ -123,14 +123,15 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 			this.flat3D_Position.z += this.groundSpeed;
 			console.log("deep");
 		}
-
 		// DOWN
-		if (this.sKey.isDown) {
+		else if (this.sKey.isDown) {
 			this.flat3D_Position.z -= this.groundSpeed;
 			console.log("out");
 		}
 		
 		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
-		console.log(this.body.allowGravity);
+		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
+			this.body.setVelocityY(0);
+		}
 	}
 }
