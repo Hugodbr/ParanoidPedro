@@ -7,21 +7,21 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
  */
 export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	/**
-	 * @type {Vector3D}
 	 * Abstract position that represents the "real" world position of the entity. It can only be modified 
 	 * by the Flat3D_Physics_System
+	 * @type {Vector3D}
 	 * */
 	flat3D_Position = new Vector3D(0, 0, 0);
 
 	/**
-	 * @type {number}
 	 * The factor that will render the entity smaller or bigger deppending on its  position in the Z axis
+	 * @type {number}
 	 * */
 	depthScalingFactor = 0.99996;
 
 	/**
-	 * @type {number}
 	 * Normal speed of the entity when moving
+	 * @type {number}
 	 */
 	groundSpeed = 280;
 	//patrollingGroundSpeed = 100;
@@ -48,7 +48,6 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 
 		this.body.setGravityY(1700);
 		this.body.setMaxVelocityY(2000);
-
 
 		// Key bindings 
 		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump

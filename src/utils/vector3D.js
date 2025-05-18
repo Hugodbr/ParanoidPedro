@@ -42,11 +42,17 @@ export class Vector3D {
 		return this;
 	}
 
-	static add_vecs(vec3d) {
-		return new Vector3D(this.x + vec3d.x, this.y + vec3d.y, this.z + vec3d.z);
+	static add_vecs(vec3d_a, vec3d_b) {
+		return new Vector3D(vec3d_a.x + vec3d_b.x, vec3d_a.y + vec3d_b.y, vec3d_a.z + vec3d_b.z);
 	}
 
-	static sub_vecs(vec3d) {
-		return new Vector3D(this.x - vec3d.x, this.y - vec3d.y, this.z - vec3d.z);
+	static sub_vecs(vec3d_a, vec3d_b) {
+		return new Vector3D(vec3d_a.x - vec3d_b.x, vec3d_a.y - vec3d_b.y, vec3d_a.z - vec3d_b.z);
+	}
+
+	static distance(vec3d_a, vec3d_b) {
+		let diffVec = this.sub_vecs(vec3d_a, vec3d_b);
+
+		return Math.sqrt(Math.pow(diffVec.x, 2) + Math.pow(diffVec.y, 2) + Math.pow(diffVec.z, 2));
 	}
 }
