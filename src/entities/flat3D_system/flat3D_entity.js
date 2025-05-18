@@ -1,5 +1,5 @@
-import { Vector3D } from "../utils/vector3D.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
+import { Vector3D } from "../../utils/vector3D.js";
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../../assets/asset_keys.js';
 
 /**
  * Flat3D_Entity works with the real 2D position that gets form its parent (Sprite) and an abstract position

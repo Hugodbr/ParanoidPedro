@@ -1,7 +1,7 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
 import Character from "../entities/character.js";
-import { Flat3D_Entity } from "../entities/flat3D_entity.js";
+import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 
 /**
  * Game main scene.
@@ -51,7 +51,7 @@ export default class MainGame extends Phaser.Scene
         classType: Flat3D_Entity,
         key: TextureKeys.PlayerCharacter
     });*/
-    const player = new Flat3D_Entity(this, 200, 200, 1000);
+    const player = new Flat3D_Entity(this, 200, 200, 0);
 
     //let flat3d_player = new Flat3D_Entity(this, 200, 200);
 
