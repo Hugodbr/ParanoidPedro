@@ -19,24 +19,16 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	 * */
 	depthScalingFactor = 0.99996;
 
-	/**
-	 * Normal speed of the entity when moving
-	 * @type {number}
-	 */
-	groundSpeed = 280;
-	//patrollingGroundSpeed = 100;
-
-	jumpSpeed = 700;
 
 	/**
-	 * Constructor de del personaje principal
 	 * @param {Scene} scene - escena en la que aparece
 	 * @param {number} x - coordenada x
 	 * @param {number} y - coordenada y
 	 * @param {number} z - coordenada z (Flat3D System)
+	 * @param {Phaser.Textures.Texture} texture - aspect of the entity
 	 */
-	constructor(scene, x, y, z) {
-		super(scene, x, y, TextureKeys.PlayerCharacter);
+	constructor(scene, x, y, z, texture) {
+		super(scene, x, y, texture);
 
 		scene.physics.add.existing(this);
 		scene.add.existing(this); // Seems to be necessary to display the sprite, otherwise it doesn't show it
@@ -48,14 +40,6 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 
 		this.body.setGravityY(1700);
 		this.body.setMaxVelocityY(2000);
-
-		// Key bindings 
-		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump
-		this.aKey = this.scene.input.keyboard.addKey('A'); // Left
-		this.dKey = this.scene.input.keyboard.addKey('D'); // Right
-		this.jKey = this.scene.input.keyboard.addKey('J'); // Punch
-		this.sKey = this.scene.input.keyboard.addKey('S'); // Roll
-		this.spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 	}
 
 	setFlat3D_Pos(x, y, z) {
@@ -93,31 +77,5 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
 			this.body.setVelocityY(0);
 		}
-
-		// Move LEFT
-		if (this.aKey.isDown) {
-			this.body.setVelocityX(-this.groundSpeed * this.scale);
-		}
-		// Move RIGHT
-		else if (this.dKey.isDown) {
-			this.body.setVelocityX(this.groundSpeed * this.scale);
-		}
-		else {
-			this.body.setVelocityX(0);
-		}
-
-		// JUMP
-		if (this.wKey.isDown) {
-			this.flat3D_Position.z += this.groundSpeed;
-		}
-		// DOWN
-		else if (this.sKey.isDown) {
-			this.flat3D_Position.z -= this.groundSpeed;
-		}
-		
-		if(this.spaceBar.isDown && this.body.onFloor()) {
-			this.body.setVelocityY(-this.jumpSpeed);
-		}
-		
 	}
 }
