@@ -51,9 +51,8 @@ export default class MainGame extends Phaser.Scene
         classType: Flat3D_Entity,
         key: TextureKeys.PlayerCharacter
     });*/
-    const player = new Flat3D_Entity(this, 200, 200);
+    const player = new Flat3D_Entity(this, 200, 200, 1000);
 
-    player.setFlat3D_Pos(player.x, player.y, 0);
     //let flat3d_player = new Flat3D_Entity(this, 200, 200);
 
     //* Collision definitions

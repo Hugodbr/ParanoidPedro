@@ -3,13 +3,13 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
 
 /**
  * Flat3D_Entity works with the real 2D position that gets form its parent (Sprite) and an abstract position
- * that is the @type {Vector3D} flat3D_Position, that is used in the path system to know whether the entity
- * is in a 3D point or not
+ * that is the @type {Vector3D} flat3D_Position
  */
 export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	/**
 	 * @type {Vector3D}
-	 * It can only be modified by the Flat3D_Physics_System
+	 * Abstract position that represents the "real" world position of the entity. It can only be modified 
+	 * by the Flat3D_Physics_System
 	 * */
 	flat3D_Position = new Vector3D(0, 0, 0);
 
@@ -33,20 +33,22 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	 * @param {Scene} scene - escena en la que aparece
 	 * @param {number} x - coordenada x
 	 * @param {number} y - coordenada y
+	 * @param {number} z - coordenada z (Flat3D System)
 	 */
-	constructor(scene, x, y) {
+	constructor(scene, x, y, z) {
 		super(scene, x, y, TextureKeys.PlayerCharacter);
-
-		this.setFlat3D_Pos(this.x, this.y, 0);
 
 		scene.physics.add.existing(this);
 		scene.add.existing(this); // Seems to be necessary to display the sprite, otherwise it doesn't show it
-		
-		this.addToUpdateList();
+
+		this.setFlat3D_Pos(this.x, this.y, z);
+
+		//this.addToUpdateList();
 		this.setOrigin(0.5, 0.2); // For scalling reasons we set the sprite origin upper than the middle
 
 		this.body.setGravityY(1700);
 		this.body.setMaxVelocityY(2000);
+
 
 		// Key bindings 
 		this.wKey = this.scene.input.keyboard.addKey('W'); // Jump
@@ -55,11 +57,12 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		this.jKey = this.scene.input.keyboard.addKey('J'); // Punch
 		this.sKey = this.scene.input.keyboard.addKey('S'); // Roll
 		this.spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
 	}
 
 	setFlat3D_Pos(x, y, z) {
 		this.flat3D_Position.set(x, y, z);
+		this.body.position.x = x;
+		this.body.position.y = y;
 		this._applyScale();
 	}
 
@@ -85,7 +88,7 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
 		
-		this.setFlat3D_Pos(this.flat3D_Position.x, this.flat3D_Position.y, this.flat3D_Position.z);
+		this.setFlat3D_Pos(this.body.position.x, this.body.position.y, this.flat3D_Position.z);
 
 		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
 		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
@@ -116,5 +119,6 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		if(this.spaceBar.isDown && this.body.onFloor()) {
 			this.body.setVelocityY(-this.jumpSpeed);
 		}
+		
 	}
 }
