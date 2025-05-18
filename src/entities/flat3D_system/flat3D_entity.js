@@ -96,11 +96,11 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 
 		// Move LEFT
 		if (this.aKey.isDown) {
-			this.body.setVelocityX(-this.groundSpeed);
+			this.body.setVelocityX(-this.groundSpeed * this.scale);
 		}
 		// Move RIGHT
 		else if (this.dKey.isDown) {
-			this.body.setVelocityX(this.groundSpeed);
+			this.body.setVelocityX(this.groundSpeed * this.scale);
 		}
 		else {
 			this.body.setVelocityX(0);

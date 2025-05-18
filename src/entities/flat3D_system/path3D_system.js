@@ -32,21 +32,28 @@ export class Path3D_System {
      * [READ-ONLY] The actual point the entity must reach
      * @type {Path3D_Point}
      */
-    target;
+    target = null;
 
     /**
      * OBVERSE (by deafult) if the entity is following the normal sense of the path, REVERSE if it is going
      * backwards
      * @type {PATH_ORIENTATION}
      */
-    _pathOrientation;
+    _pathOrientation = PATH_ORIENTATION.OBVERSE;
 
     /**
      * Keeps the actual position in the array of points in order to be able of knowing the next point, as 
      * the Path3D points may not be unique in the path and can get repeated in more complex paths
      * @type {number}
      */
-    _pathArr_it;
+    _pathArr_it = 0;ç
+
+    /**
+     * @param {Path3D_Point[]} pathPoints 
+     */
+    constructor(pathPoints) {
+
+    }
 
     /**
      * Returns the following target's position in the array without updating the actual one (`constatnt method`)
