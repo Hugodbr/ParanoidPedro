@@ -52,11 +52,11 @@ export class Player extends Flat3D_Entity {
 
 		// JUMP
 		if (this.wKey.isDown) {
-			this.flat3D_Position.z += this.groundSpeed;
+			this.moveInZ(this.groundSpeed);
 		}
 		// DOWN
 		else if (this.sKey.isDown) {
-			this.flat3D_Position.z -= this.groundSpeed;
+			this.moveInZ(-this.groundSpeed);
 		}
 		
 		if(this.spaceBar.isDown && this.body.onFloor()) {

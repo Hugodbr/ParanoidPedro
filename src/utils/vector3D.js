@@ -8,6 +8,14 @@ export class Vector3D {
 		this.set(x, y, z);
 	}
 
+	/**
+	 * Returns a new Vector3D with the same values of this vector
+	 * @returns {Vector3D}
+	 */
+	copy() {
+		return new Vector3D(this.x, this.y, this.z);
+	}
+
 	toStr() {
         return 'Vector3D(' + this.x + ", " + this.y + ", " + this.z + ")";
     }
@@ -70,5 +78,9 @@ export class Vector3D {
 		let diffVec = this.sub_vecs(vec3d_a, vec3d_b);
 
 		return Math.sqrt(Math.pow(diffVec.x, 2) + Math.pow(diffVec.y, 2) + Math.pow(diffVec.z, 2));
+	}
+
+	static zero() {
+		return new Vector3D(0, 0, 0);
 	}
 }

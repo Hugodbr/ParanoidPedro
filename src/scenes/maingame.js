@@ -54,11 +54,12 @@ export default class MainGame extends Phaser.Scene
         key: TextureKeys.PlayerCharacter
     });*/
 
-    //const player = new Player(this, 200, 200, 0);
     const enemy = new Enemy(this, 200, 200, 0);
+    const player = new Player(this, 600, 200, 0);
 
     //* Collision definitions
     this.physics.add.collider(enemy, groundLayer);
+    this.physics.add.collider(player, groundLayer);
 	}
 
 

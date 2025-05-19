@@ -20,7 +20,6 @@ export class Path3D_Point extends Flat3D_Entity {
     }
 
     preUpdate(t, dt) {
-		super.preUpdate(t, dt);
 
         this.body.setAllowGravity(0);
 		this.body.setVelocityY(0);

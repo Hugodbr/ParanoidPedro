@@ -7,7 +7,7 @@ import { FallbackBehaviorNode } from "../AI_behavior/fallback_behavior_node.js";
 import { SequenceBehaviorNode } from "../AI_behavior/sequence_behavior_node.js";
 import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js";
 
-import { Path3D_System } from "./flat3D_system/Path3D_System.js";
+import { Path3D_System } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
 
 export class Enemy extends Flat3D_Entity {
@@ -27,7 +27,7 @@ export class Enemy extends Flat3D_Entity {
 	 * Normal speed of the entity when moving
 	 * @type {number}
 	 */
-	groundSpeed = 100;
+	groundSpeed = 280;
 
     /**
      * @param {Scene} scene 
@@ -41,7 +41,10 @@ export class Enemy extends Flat3D_Entity {
         this.pathSystem = new Path3D_System([
             new Path3D_Point(scene, 200, 200, 0),
             new Path3D_Point(scene, 400, 200, 0),
-            new Path3D_Point(scene, 400, 200, 20000)
+            new Path3D_Point(scene, 400, 200, 20000),
+            new Path3D_Point(scene, 550, 200, 20000),
+            new Path3D_Point(scene, 550, 200, 0),
+            new Path3D_Point(scene, 700, 200, 0)
         ]);
 
         this.buildTree();
@@ -49,9 +52,13 @@ export class Enemy extends Flat3D_Entity {
 
     buildTree() {
         let ritchPath3D_Point = new ExecutionBehaviorNode((()=>{
+            
             let diff = Vector3D.sub_vecs(this.flat3D_Position, this.pathSystem.target.flat3D_Position);
-            if(Math.abs(diff.x) <= 10 && Math.abs(diff.z) <= 1){
+
+            if(Math.abs(diff.x) <= 1 && Math.abs(diff.z) <= 200){
+
 console.log("REACHED TARGET " + this.pathSystem.target.flat3D_Position.toStr());
+
                 return NODE_STATUS.SUCCESS;
             }
             else {
@@ -61,7 +68,9 @@ console.log("REACHED TARGET " + this.pathSystem.target.flat3D_Position.toStr());
 
         let setNextTargetContext = new  ExecutionBehaviorNode((()=>{
             this.pathSystem.setNextTarget();
+
 console.log("CHANGE TARGET to " + this.pathSystem.target.flat3D_Position.toStr());
+            
             return NODE_STATUS.SUCCESS;
         }).bind(this));
 
@@ -70,11 +79,17 @@ console.log("CHANGE TARGET to " + this.pathSystem.target.flat3D_Position.toStr()
         pathSeq.addNode(setNextTargetContext);
 
         let move = new ExecutionBehaviorNode((()=>{
-            let dir = Vector3D.sub_vecs(this.pathSystem.target.flat3D_Position, this.flat3D_Position).normalize();
-console.log("MOVING towards " + dir.toStr());
+           let dir = Vector3D.sub_vecs(this.pathSystem.target.flat3D_Position, this.flat3D_Position).normalize();
+
+        //    if(dir.x <= 0.001) dir.x = 0;
+        //    if(dir.z <= 0.001) dir.z = 0;
+
+console.log("MOVING  (" + Math.sign(dir.x * this.groundSpeed) + ", " + 0 + ", " + Math.sign(dir.z * this.groundSpeed) + ") "
+    + this.flat3D_Position.toStr() + " to " + this.pathSystem.target.flat3D_Position.toStr());
+           
+
             this.body.setVelocityX(dir.x * this.groundSpeed);
-         //   this.body.setVelocityY(dir.y * this.groundSpeed);
-            this.flat3D_Position.z += dir.z * this.groundSpeed;
+            this.moveInZ(dir.z * this.groundSpeed);
 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -93,10 +108,9 @@ console.log("MOVING towards " + dir.toStr());
 	 */
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
-        this.body.setVelocityX(0);
 
+        this.body.setVelocityX(0);
+        
         this.behaviorTree.exec();
-console.log("POS " + this.flat3D_Position.toStr());
-console.log("TARGET " + this.pathSystem.target.flat3D_Position.toStr());
     }
 }

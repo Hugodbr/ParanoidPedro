@@ -7,8 +7,8 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
  */
 export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	/**
-	 * Abstract position that represents the "real" world position of the entity. It can only be modified 
-	 * by the Flat3D_Physics_System
+	 * Abstract position that represents the "real" world position of the entity. Its Z can only be modified 
+	 * using the `moveInZ` or `setPosZ` functions
 	 * @type {Vector3D}
 	 * */
 	flat3D_Position = new Vector3D(0, 0, 0);
@@ -33,7 +33,7 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		scene.physics.add.existing(this);
 		scene.add.existing(this); // Seems to be necessary to display the sprite, otherwise it doesn't show it
 
-		this.setFlat3D_Pos(this.x, this.y, z);
+		this.setPos(this.x, this.y, z);
 
 		//this.addToUpdateList();
 		this.setOrigin(0.5, 0.2); // For scalling reasons we set the sprite origin upper than the middle
@@ -42,7 +42,13 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		this.body.setMaxVelocityY(2000);
 	}
 
-	setFlat3D_Pos(x, y, z) {
+	/**
+	 * Custom setPosition function that sets the real Pahser's body position and the abstract flat3D_Position
+	 * @param {number} x 
+	 * @param {number} y 
+	 * @param {number} z 
+	 */
+	setPos(x, y, z) {
 		this.flat3D_Position.set(x, y, z);
 		this.body.position.x = x;
 		this.body.position.y = y;
@@ -55,6 +61,16 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	 */
 	isInDepth() {
 		return this.flat3D_Position.z > 0;
+	}
+
+	moveInZ(displacement) {
+		this.flat3D_Position.z += displacement;
+		this._applyScale();
+	}
+
+	setPosZ(axis_val) {
+		this.flat3D_Position.z = axis_val;
+		this._applyScale();
 	}
 
 	_applyScale() {
@@ -71,8 +87,9 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
 		
-		this.setFlat3D_Pos(this.body.position.x, this.body.position.y, this.flat3D_Position.z);
-
+		//this.flat3D_Position.set(this.body.position.x, this.body.position.y, this.flat3D_Position.z);
+		 this.setPos(this.body.position.x + this.body.width/2, this.body.position.y + this.body.height*0.2, this.flat3D_Position.z);
+		 
 		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
 		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
 			this.body.setVelocityY(0);
