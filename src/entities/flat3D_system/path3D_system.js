@@ -46,20 +46,21 @@ export class Path3D_System {
      * the Path3D points may not be unique in the path and can get repeated in more complex paths
      * @type {number}
      */
-    _pathArr_it = 0;ç
+    _pathArr_it = 0;
 
     /**
      * @param {Path3D_Point[]} pathPoints 
      */
     constructor(pathPoints) {
-
+        this.pathPoints = pathPoints;
+        this.target = this.pathPoints[this._pathArr_it];
     }
 
     /**
      * Returns the following target's position in the array without updating the actual one (`constatnt method`)
      * @returns {number}
      */
-    _getNextPathArr_It() {
+    _getNextPathArr_It() { // TODO Transitivity Use
         
         let pathArr_it = this._pathArr_it;
 

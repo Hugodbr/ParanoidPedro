@@ -1,8 +1,12 @@
-import { BehaviorNode } from "behavior_node.js";
+import { BehaviorNode } from "./behavior_node.js";
 
-export default class ControlBehaviorNode extends BehaviorNode {
+export class ControlBehaviorNode extends BehaviorNode {
 
 	son_nodes = new Array();
+
+	constructor() {
+        super();
+    }
 
 	/**
 	 *  @param {BehaviorNode} bh_node New son behavior node

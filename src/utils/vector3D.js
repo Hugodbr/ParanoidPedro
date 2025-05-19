@@ -8,6 +8,10 @@ export class Vector3D {
 		this.set(x, y, z);
 	}
 
+	toStr() {
+        return 'Vector3D(' + this.x + ", " + this.y + ", " + this.z + ")";
+    }
+
 	set(x, y, z) {
 		this.x = x;
 		this.y = y;
@@ -38,6 +42,18 @@ export class Vector3D {
 		this.x -= vec3d.x;
 		this.y -= vec3d.y;
 		this.z -= vec3d.z;
+
+		return this;
+	}
+
+	magnitude() {
+		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+	}
+
+	normalize() {
+		this.x /= this.magnitude();
+		this.y /= this.magnitude();
+		this.z /= this.magnitude();
 
 		return this;
 	}

@@ -2,7 +2,8 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
 
 import Character from "../entities/character.js";
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
-import { Player } from "../entities/Player.js";
+import { Player } from '../entities/player.js';
+import { Enemy } from '../entities/enemy.js';
 
 /**
  * Game main scene.
@@ -52,11 +53,12 @@ export default class MainGame extends Phaser.Scene
         classType: Character,
         key: TextureKeys.PlayerCharacter
     });*/
-    //const player = new Flat3D_Entity(this, 200, 200, 0, TextureKeys.PlayerCharacter);
-    const player = new Player(this, 200, 200, 0);
+
+    //const player = new Player(this, 200, 200, 0);
+    const enemy = new Enemy(this, 200, 200, 0);
 
     //* Collision definitions
-    this.physics.add.collider(player, groundLayer);
+    this.physics.add.collider(enemy, groundLayer);
 	}
 
 
