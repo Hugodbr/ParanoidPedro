@@ -1,5 +1,7 @@
 // import Title from './scenes/title.js';
-import MainGame from './scenes/maingame.js';
+import MainGame from './scenes/maingame.js'; //* original
+import MainGameTest from './scenes/maingame_test.js'; // ! test
+
 
 
 
@@ -24,7 +26,8 @@ let config = {
 		zoom: 1
 
 	},
-	scene: [MainGame],
+	// scene: [MainGame], //* original
+	scene: [MainGameTest], // ! test
 
 	physics: {
 		default: 'arcade',

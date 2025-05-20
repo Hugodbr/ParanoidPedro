@@ -14,6 +14,9 @@
         ":/automap-tiles.tsx": {
             "scaleInDock": 1
         },
+        "Graphic Design Test.tsx": {
+            "scaleInDock": 0.33
+        },
         "jsonmap.json": {
             "scale": 0.7184375,
             "selectedLayer": 0,
@@ -31,16 +34,30 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 518,
-                "y": 210.5
+                "y": 210
             }
         },
         "mapatiled.tmx#mapateste": {
             "scaleInDock": 1
+        },
+        "mapatiled_test_techo_alto.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 524,
+                "y": 92
+            }
+        },
+        "mapatiled_test_techo_alto.tmx#Graphic Design Test": {
+            "scaleInDock": 0.25
+        },
+        "mapatiled_test_techo_alto.tmx#mapateste": {
+            "scaleInDock": 0.25
         }
     },
     "last.exportedFilePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
     "last.externalTilesetPath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
-    "last.imagePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map",
+    "last.imagePath": "C:/Users/hugod/GitHub/ParanoidPedro/design/background_ideas",
     "map.lastUsedExportFilter": "Arquivos de mapa JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.width": 40,
@@ -55,6 +72,7 @@
         "mapatiled.tmx",
         "jsonmap.json"
     ],
+    "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "Ficheiros de conjunto de tiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx"
 }

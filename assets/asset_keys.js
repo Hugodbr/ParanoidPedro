@@ -4,7 +4,8 @@ export const TilemapKeys = {
 };
 
 export const TilesetNames = {
-    InTiled: 'mapateste',  // ! This must match the name you used in Tiled!!!!!!!!!!!!!
+    // InTiled: 'mapateste',  // ! This must match the name you used in Tiled!!!!!!!!!!!!
+    InTiled: 'Graphic Design Test', // ! test
 };
 
 export const LayerNames = {
