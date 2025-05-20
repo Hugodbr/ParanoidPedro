@@ -4,6 +4,7 @@ import Character from "../entities/character.js";
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import { Player } from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
+import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
 
 /**
  * Game main scene.
@@ -60,6 +61,15 @@ export default class MainGameTest extends Phaser.Scene
     });*/
 
     const enemy = new Enemy(this, 200, 200, 0);
+
+    enemy.pathSystem.pathPoints = [
+                new Path3D_Point(this, 400, 200, 0),
+                new Path3D_Point(this, 700, 200, 0),
+                new Path3D_Point(this, 700, 200, 30000),
+                new Path3D_Point(this, 700, 200, 0),
+                new Path3D_Point(this, 1000, 200, 0)
+            ];
+
     const player = new Player(this, 600, 200, 0);
 
     //* Collision definitions

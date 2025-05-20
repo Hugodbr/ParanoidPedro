@@ -36,7 +36,7 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		this.setPos(this.x, this.y, z);
 
 		//this.addToUpdateList();
-		this.setOrigin(0.5, 0.2); // For scalling reasons we set the sprite origin upper than the middle
+		this.setOrigin(0.5, 0); // For scalling reasons we set the sprite origin upper than the middle
 
 		this.body.setGravityY(1700);
 		this.body.setMaxVelocityY(2000);
@@ -88,7 +88,7 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		super.preUpdate(t, dt);
 		
 		//this.flat3D_Position.set(this.body.position.x, this.body.position.y, this.flat3D_Position.z);
-		 this.setPos(this.body.position.x + this.body.width/2, this.body.position.y + this.body.height*0.2, this.flat3D_Position.z);
+		 this.setPos(this.body.position.x + this.body.width/2, this.body.position.y, this.flat3D_Position.z);
 		 
 		this.body.setAllowGravity(this.flat3D_Position.z <= 0);
 		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
