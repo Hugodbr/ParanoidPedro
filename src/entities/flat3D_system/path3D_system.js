@@ -57,28 +57,68 @@ export class Path3D_System {
     }
 
     /**
+     * The number of path points that have Z greater than 0
+     * @returns {number}
+     */
+    _getNumOfDeepPoints() {
+        let n;
+
+        this.pathPoints.forEach(pathPoint => {
+            if(pathPoint.flat3D_Position.z > 0) ++n;
+        });
+
+        return n;
+    }
+
+    /**
+     * Returns the next path point given an iterator of the path list, the type of transitivity of the 
+     * path and the orientation in the search
+     * @param {number} pathArr_it 
+     * @param {PATH_ORIENTATION} pathSearch_Orientation 
+     * @returns {number}
+     */
+    _getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation) {
+
+        let initialPathArr_it = pathArr_it;
+
+        // Getting the next points array position
+        if(pathSearch_Orientation === PATH_ORIENTATION.OBVERSE) { // Positive direction in the points array
+            if(pathArr_it + 1 < this.pathPoints.length) ++pathArr_it;
+        }
+        else { // Negative direction in the points array
+            if(pathArr_it - 1 >= 0) --pathArr_it;
+        }
+
+        if(initialPathArr_it === pathArr_it) return pathArr_it; // If it finds nothing in this orientation it returns the same value
+
+        if(this.transitivityType === PATH_TRANSITIVITY.X_AXIS
+            && this.pathPoints[pathArr_it].flat3D_Position.z > 0) // Not valid point for X_AXIS transitivity
+        {
+            // Keeps on looking for points with Z = 0 in pathSearch_Orientation
+            return this._getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation);
+        }
+
+        return pathArr_it;
+    }
+
+    /**
      * Returns the following target's position in the array without updating the actual one (`constatnt method`)
      * @returns {number}
      */
     _getNextPathArr_It() { // TODO Transitivity Use
         
-        let pathArr_it = this._pathArr_it;
+        let nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, this._pathOrientation);
 
-        // Getting the next points array position
-        if(this._pathOrientation === PATH_ORIENTATION.OBVERSE) { // Positive direction in the points array
-            if(pathArr_it + 1 < this.pathPoints.length) ++pathArr_it;
-            else --pathArr_it;
+        // If it didn't find a point on one way it looks for it in the other
+        if(nextPathPoint === this._pathArr_it) 
+        {
+            if(this._pathOrientation === PATH_ORIENTATION.OBVERSE)
+                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.REVERSE);
+            else
+                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.OBVERSE);
         }
-        else { // Negative direction in the points array
-            if(pathArr_it >= 0) --pathArr_it;
-            else ++pathArr_it;
-        }
 
-        // Posible out of bounds if the path was of only one point
-        if(pathArr_it >= this.pathPoints.length) --pathArr_it;
-        else if(pathArr_it < 0) ++pathArr_it;
-
-        return pathArr_it;
+        return nextPathPoint;
     }
 
     /**

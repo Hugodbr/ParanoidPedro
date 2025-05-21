@@ -7,7 +7,7 @@ import { FallbackBehaviorNode } from "../AI_behavior/fallback_behavior_node.js";
 import { SequenceBehaviorNode } from "../AI_behavior/sequence_behavior_node.js";
 import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js";
 
-import { Path3D_System } from "./flat3D_system/path3D_system.js";
+import { Path3D_System, PATH_TRANSITIVITY } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
 
 const ENEMY_STATE = {
@@ -81,6 +81,7 @@ export class Enemy extends Flat3D_Entity {
         this.buildTree();
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
+        this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
     }
 
     buildTree() {
@@ -150,5 +151,12 @@ export class Enemy extends Flat3D_Entity {
         console.log();
 
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
+
+        if (this.tKey.isDown){
+            if(this.pathSystem.transitivityType === PATH_TRANSITIVITY.XZ_AXIS)
+                this.pathSystem.transitivityType = PATH_TRANSITIVITY.X_AXIS;
+            else
+                this.pathSystem.transitivityType = PATH_TRANSITIVITY.XZ_AXIS;
+        }
     }
 }
