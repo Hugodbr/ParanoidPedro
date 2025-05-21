@@ -158,6 +158,8 @@ export class Path3D_System {
      */
     getClosestPathPointTo(flat3D_position) {
 
+        console.assert(flat3D_position instanceof Vector3D, "flat3D_position must be a Vector3D");
+
         let closestPathPoint = null;
         let closestDistance = Infinity;
 
@@ -182,6 +184,8 @@ export class Path3D_System {
      */
     changeOriantationTowards(flat3D_position) {
 
+        console.assert(flat3D_position instanceof Vector3D, "flat3D_position must be a Vector3D");
+        
         let pathPoint = this.getClosestPathPointTo(flat3D_position);
 
         let point_it = this.pathPoints.indexOf(pathPoint);

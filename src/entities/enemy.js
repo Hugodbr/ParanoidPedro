@@ -50,7 +50,7 @@ export class Enemy extends Flat3D_Entity {
      * The action state in the last frame
      * @type {ENEMY_STATE}
      */
-    lastActionState = ENEMY_STATE.PATROLLING;
+    lastFrameActionState = ENEMY_STATE.PATROLLING;
 
     /**
      * If player is visible to the enemy
@@ -82,6 +82,18 @@ export class Enemy extends Flat3D_Entity {
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
         this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
+    }
+
+    /**
+     * Sets the current action state and keeps the old value in a `lastFrameActionState` variable
+     * @param {ENEMY_STATE} action_state 
+     */
+    setActionState(action_state) {
+
+        console.assert(action_state in ENEMY_STATE, "action_state must be a ENEMY_STATE");
+
+        this.lastFrameActionState = this.actionState;
+        this.actionState = action_state;
     }
 
     buildTree() {
