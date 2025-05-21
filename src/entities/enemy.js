@@ -10,6 +10,11 @@ import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js
 import { Path3D_System } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
 
+const ENEMY_STATE = {
+    PATROLLING: "PATROLLING",
+    CHASING: "CHASING"
+};
+
 export class Enemy extends Flat3D_Entity {
 
     /**
@@ -30,13 +35,39 @@ export class Enemy extends Flat3D_Entity {
 	groundSpeed = 280;
 
     /**
+     * The reference to the player in the scene that the enemy will follow
+     * @type {Player}
+     */
+    playerRef;
+
+    /**
+     * The current action state
+     * @type {ENEMY_STATE}
+     */
+    actionState = ENEMY_STATE.PATROLLING;
+
+    /**
+     * The action state in the last frame
+     * @type {ENEMY_STATE}
+     */
+    lastActionState = ENEMY_STATE.PATROLLING;
+
+    /**
+     * If player is visible to the enemy
+     * @type {boolean}
+     */
+    canSeePlayer = false;
+
+    /**
      * @param {Scene} scene 
      * @param {number} x 
      * @param {number} y 
      * @param {Phaser.Textures.Texture} z 
      */
-    constructor(scene, x, y, z) {
+    constructor(scene, x, y, z, playerRef) {
         super(scene, x, y, z, TextureKeys.PlayerCharacter);
+
+        this.playerRef = playerRef;
 
         this.pathSystem = new Path3D_System([
             new Path3D_Point(scene, 200, 200, 0),
@@ -48,16 +79,17 @@ export class Enemy extends Flat3D_Entity {
         ]);
 
         this.buildTree();
+
+        this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
     }
 
     buildTree() {
+
         let ritchPath3D_Point = new ExecutionBehaviorNode((()=>{
             
             let diff = Vector3D.sub_vecs(this.flat3D_Position, this.pathSystem.target.flat3D_Position);
 
             if(Math.abs(diff.x) <= 1 && Math.abs(diff.z) <= 200){
-
-console.log("REACHED TARGET " + this.pathSystem.target.flat3D_Position.toStr());
 
                 return NODE_STATUS.SUCCESS;
             }
@@ -68,25 +100,12 @@ console.log("REACHED TARGET " + this.pathSystem.target.flat3D_Position.toStr());
 
         let setNextTargetContext = new  ExecutionBehaviorNode((()=>{
             this.pathSystem.setNextTarget();
-
-console.log("CHANGE TARGET to " + this.pathSystem.target.flat3D_Position.toStr());
             
             return NODE_STATUS.SUCCESS;
         }).bind(this));
 
-        let pathSeq = new SequenceBehaviorNode();
-        pathSeq.addNode(ritchPath3D_Point);
-        pathSeq.addNode(setNextTargetContext);
-
         let move = new ExecutionBehaviorNode((()=>{
-           let dir = Vector3D.sub_vecs(this.pathSystem.target.flat3D_Position, this.flat3D_Position).normalize();
-
-        //    if(dir.x <= 0.001) dir.x = 0;
-        //    if(dir.z <= 0.001) dir.z = 0;
-
-console.log("MOVING  (" + Math.sign(dir.x * this.groundSpeed) + ", " + 0 + ", " + Math.sign(dir.z * this.groundSpeed) + ") "
-    + this.flat3D_Position.toStr() + " to " + this.pathSystem.target.flat3D_Position.toStr());
-           
+            let dir = Vector3D.sub_vecs(this.pathSystem.target.flat3D_Position, this.flat3D_Position).normalize();
 
             this.body.setVelocityX(dir.x * this.groundSpeed);
             this.moveInZ(dir.z * this.groundSpeed);
@@ -94,11 +113,26 @@ console.log("MOVING  (" + Math.sign(dir.x * this.groundSpeed) + ", " + 0 + ", " 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
 
-        let pathFall = new FallbackBehaviorNode();
-        pathFall.addNode(pathSeq);
-        pathFall.addNode(move);
+        this.behaviorTree = (  new FallbackBehaviorNode()
+                
+            .addNode( new SequenceBehaviorNode()
+            
+                .addNode(ritchPath3D_Point)
+                .addNode(setNextTargetContext)
+            )
+            .addNode(move)
+            
+        );
 
-        this.behaviorTree = pathFall;
+        let moveToPlayer = new ExecutionBehaviorNode((()=>{
+
+            let dir = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position).normalize();
+
+            this.body.setVelocityX(dir.x * this.groundSpeed);
+            this.moveInZ(dir.z * this.groundSpeed);
+
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
     }
 
      /**
@@ -112,5 +146,9 @@ console.log("MOVING  (" + Math.sign(dir.x * this.groundSpeed) + ", " + 0 + ", " 
         this.body.setVelocityX(0);
         
         this.behaviorTree.exec();
+
+        console.log();
+
+        if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
     }
 }
