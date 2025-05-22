@@ -28,4 +28,20 @@ export class ExecutionBehaviorNode extends BehaviorNode {
 
         return return_val;
     }
+
+    /**
+     * Returns a new `ExecutionBehaviorNode` that behaves as a Conditional Node that returns SUCCESS if the
+     * expression passed is true and FAILURE if the expression passed is false when executing it
+     * @param {function} condition_expression_func 
+     * @returns {ExecutionBehaviorNode}
+     */
+    static buildConditionNode(condition_expression_func) {
+        return new ExecutionBehaviorNode((() => 
+        {
+            if(condition_expression_func())
+                return NODE_STATUS.SUCCESS;
+            
+            return NODE_STATUS.FAILURE;
+        }));
+    }
 }

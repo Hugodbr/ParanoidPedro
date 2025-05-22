@@ -12,7 +12,10 @@ import { Path3D_Point } from "./flat3D_system/path3D_point.js";
 
 const ENEMY_STATE = {
     PATROLLING: "PATROLLING",
-    CHASING: "CHASING"
+    CHASING: "CHASING",
+    SEARCHING: "SEARCHING",
+    ATTACKING: "ATTACKING",
+    IDLE: "IDLE"
 };
 
 export class Enemy extends Flat3D_Entity {
@@ -59,6 +62,18 @@ export class Enemy extends Flat3D_Entity {
     canSeePlayer = false;
 
     /**
+     * The maximum distance the enemy can have with the player to be able attack it
+     * @type {number}
+     */
+    maxAttackDistance = 100;
+
+    /**
+     * The position were the enemy will start to investigate when the state is setted to `SEARCHING`
+     * @type {Vector3D}
+     */
+    searchInitTargetPos;
+
+    /**
      * @param {Scene} scene 
      * @param {number} x 
      * @param {number} y 
@@ -98,46 +113,98 @@ export class Enemy extends Flat3D_Entity {
 
     buildTree() {
 
-        let ritchPath3D_Point = new ExecutionBehaviorNode((()=>{
-            
+        const LAST_FRAME_STATE_IS_PATROLLING = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
+        })
+        .bind(this));
+
+        const LAST_FRAME_STATE_IS_SEARCHING = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
+        })
+        .bind(this));
+
+        const STATE_IS_SEARCHING = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
+        })
+        .bind(this));
+
+        const RITCH_PATH3D_POINT = ExecutionBehaviorNode.buildConditionNode((() => {
             let diff = Vector3D.sub_vecs(this.flat3D_Position, this.pathSystem.target.flat3D_Position);
+            return Math.abs(diff.x) <= 1 && Math.abs(diff.z) <= 200
+        })
+        .bind(this));
 
-            if(Math.abs(diff.x) <= 1 && Math.abs(diff.z) <= 200){
+        const SET_NEXT_TARGET_CONTEXT = new  ExecutionBehaviorNode((() => {
 
-                return NODE_STATUS.SUCCESS;
-            }
-            else {
-                return NODE_STATUS.FAILURE;
-            }   
-        }).bind(this));
-
-        let setNextTargetContext = new  ExecutionBehaviorNode((()=>{
             this.pathSystem.setNextTarget();
-            
             return NODE_STATUS.SUCCESS;
+        
         }).bind(this));
 
-        let move = new ExecutionBehaviorNode((()=>{
+        const MOVE_TOWARDS_TARGET_PATH_POINT = new ExecutionBehaviorNode((()=>{
+            
             let dir = Vector3D.sub_vecs(this.pathSystem.target.flat3D_Position, this.flat3D_Position).normalize();
 
             this.body.setVelocityX(dir.x * this.groundSpeed);
             this.moveInZ(dir.z * this.groundSpeed);
 
             return NODE_STATUS.SUCCESS;
+
         }).bind(this));
 
-        this.behaviorTree = (  new FallbackBehaviorNode()
+        const PATH_FOLLOWING_BEHAVIOR = ( new FallbackBehaviorNode()
                 
             .addNode( new SequenceBehaviorNode()
             
-                .addNode(ritchPath3D_Point)
-                .addNode(setNextTargetContext)
+                .addNode(RITCH_PATH3D_POINT)
+                .addNode(SET_NEXT_TARGET_CONTEXT)
             )
-            .addNode(move)
+            .addNode(MOVE_TOWARDS_TARGET_PATH_POINT)
             
         );
 
-        let moveToPlayer = new ExecutionBehaviorNode((()=>{
+        const SET_TRANSITIVITY_IN_X = new ExecutionBehaviorNode((() => {
+            this.pathSystem.transitivityType = PATH_TRANSITIVITY.X_AXIS;
+            return NODE_STATUS.SUCCESS;
+        })
+        .bind(this));
+
+        const SET_TRANSITIVITY_IN_XZ = new ExecutionBehaviorNode((() => {
+            this.pathSystem.transitivityType = PATH_TRANSITIVITY.XZ_AXIS;
+            return NODE_STATUS.SUCCESS;
+        })
+        .bind(this));
+
+
+        const CHANGE_ORIENTATION_TO_CLOSEST_POINT = new ExecutionBehaviorNode((() => {
+            let pathTarget = this.pathSystem.getClosestPathPointTo(this.flat3D_Position);
+            this.pathSystem.changeOriantationTowards(pathTarget.flat3D_Position);
+            return NODE_STATUS.SUCCESS;
+        })
+        .bind(true));
+
+        const IS_IN_DEPTH = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.flat3D_Position.isInDepth();
+        })
+        .bind(this));
+
+        const IS_ABOUT_TO_EXIT_Z_AXIS = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.pathSystem.target.flat3D_Position.z === 0;
+        })
+        .bind(this));
+
+        const MOVE_TOWARDS_NEGATIVE_Z = new ExecutionBehaviorNode((() => {
+            this.moveInZ(-this.groundSpeed);
+            return NODE_STATUS.SUCCESS;
+        })
+        .bind(this));
+
+        const TOO_LONG_DISTANCE_TO_PLAYER = ExecutionBehaviorNode.buildConditionNode((() => {
+            return Vector3D.distance(this.flat3D_Position, this.playerRef.flat3D_Position) > this.maxAttackDistance;
+        })
+        .bind(this));
+        
+        const MOVE_TOWARDS_PLAYER = new ExecutionBehaviorNode((()=>{
 
             let dir = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position).normalize();
 
@@ -146,6 +213,20 @@ export class Enemy extends Flat3D_Entity {
 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
+
+        const ESTABLISH_SEARCH_DIRECTION_IN_PATH = new ExecutionBehaviorNode((() => {
+            let pathTarget = this.pathSystem.getClosestPathPointTo(this.searchInitTargetPos);
+            this.pathSystem.changeOriantationTowards(pathTarget.flat3D_Position);
+
+            return NODE_STATUS.SUCCESS;
+        })
+        .bind(this));
+
+        const CONDITION_X_BIGGER_THAN_Y = ExecutionBehaviorNode.buildConditionNode((() => {
+            return Vector3D.distance(this.flat3D_Position, this.playerRef.flat3D_Position) > this.maxAttackDistance;
+        }).bind(this));
+        
+        this.behaviorTree = PATH_FOLLOWING_BEHAVIOR;
     }
 
      /**
