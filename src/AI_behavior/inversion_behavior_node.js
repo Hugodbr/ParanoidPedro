@@ -1,6 +1,9 @@
 import { NODE_STATUS } from "./behavior_node.js";
 import { DecoratorBehaviorNode } from "./decorator_behavior_node.js";
 
+/**
+ * Inverts the statut result of its son node
+ */
 export class InversionBehaviorNode extends DecoratorBehaviorNode {
 
     constructor() {

@@ -6,6 +6,8 @@ import { BehaviorNode, NODE_STATUS } from "../AI_behavior/behavior_node.js";
 import { FallbackBehaviorNode } from "../AI_behavior/fallback_behavior_node.js";
 import { SequenceBehaviorNode } from "../AI_behavior/sequence_behavior_node.js";
 import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js";
+import { InversionBehaviorNode } from "../AI_behavior/inversion_behavior_node.js";
+import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_node.js";
 
 import { Path3D_System, PATH_TRANSITIVITY } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
@@ -32,10 +34,25 @@ export class Enemy extends Flat3D_Entity {
     pathSystem;
 
     /**
-	 * Normal speed of the entity when moving
+	 * Actual speed of the entity when moving (*Changes through action states*)
 	 * @type {number}
 	 */
 	groundSpeed = 280;
+
+    /**
+	 * @type {number}
+	 */
+	patrolStateSpeed = 250;
+
+    /**
+	 * @type {number}
+	 */
+	serachStateSpeed = 280;
+
+    /**
+	 * @type {number}
+	 */
+	chaseStateSpeed = 300;
 
     /**
      * The reference to the player in the scene that the enemy will follow
@@ -112,6 +129,8 @@ export class Enemy extends Flat3D_Entity {
     }
 
     buildTree() {
+
+        // Creating the leafs of the behavior tree
 
         /**
          * Returns a Conditional Node that checks if the value of `this.lastFrameActionState` is the specified
@@ -200,7 +219,6 @@ export class Enemy extends Flat3D_Entity {
         })
         .bind(this));
 
-
         const CHANGE_ORIENTATION_TO_CLOSEST_POINT = new ExecutionBehaviorNode((() => {
             let pathTarget = this.pathSystem.getClosestPathPointTo(this.flat3D_Position);
             this.pathSystem.changeOriantationTowards(pathTarget.flat3D_Position);
@@ -247,11 +265,17 @@ export class Enemy extends Flat3D_Entity {
         })
         .bind(this));
 
-        const CONDITION_X_BIGGER_THAN_Y = ExecutionBehaviorNode.buildConditionNode((() => {
-            return Vector3D.distance(this.flat3D_Position, this.playerRef.flat3D_Position) > this.maxAttackDistance;
+        const CAN_SEE_PLAYER = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.canSeePlayer;
         }).bind(this));
+
+        // Creating the tree
         
         this.behaviorTree = PATH_FOLLOWING_BEHAVIOR;
+
+        this.behaviorTree = ( new FallbackBehaviorNode()
+
+        );
     }
 
      /**
