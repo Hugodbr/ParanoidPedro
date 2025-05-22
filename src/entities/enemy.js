@@ -113,20 +113,45 @@ export class Enemy extends Flat3D_Entity {
 
     buildTree() {
 
-        const LAST_FRAME_STATE_IS_PATROLLING = ExecutionBehaviorNode.buildConditionNode((() => {
-            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
-        })
-        .bind(this));
+        /**
+         * Returns a Conditional Node that checks if the value of `this.lastFrameActionState` is the specified
+         * @param {ENEMY_STATE} action_state 
+         * @returns {ExecutionBehaviorNode}
+         */
+        const LAST_FRAME_STATE_IS_ = (action_state) => {
+            console.assert(action_state in ENEMY_STATE, "action_state must be an ENEMY_STATE");
 
-        const LAST_FRAME_STATE_IS_SEARCHING = ExecutionBehaviorNode.buildConditionNode((() => {
-            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
-        })
-        .bind(this));
+            return ExecutionBehaviorNode.buildConditionNode((() => {
+                return this.lastFrameActionState === action_state;
+            }).bind(this));
+        };
 
-        const STATE_IS_SEARCHING = ExecutionBehaviorNode.buildConditionNode((() => {
-            return this.lastFrameActionState === ENEMY_STATE.PATROLLING;
-        })
-        .bind(this));
+        /**
+         * Returns a Conditional Node that checks if the value of `this.actionState` is the specified
+         * @param {ENEMY_STATE} action_state 
+         * @returns {ExecutionBehaviorNode}
+         */
+        const STATE_IS_ = (action_state) => {
+            console.assert(action_state in ENEMY_STATE, "action_state must be an ENEMY_STATE");
+
+            return ExecutionBehaviorNode.buildConditionNode((() => {
+                return this.actionState === action_state;
+            }).bind(this));
+        };
+
+        /**
+         * Returns an Action Node that sets `this.actionState` to the specified ENEMY_STATE
+         * @param {ENEMY_STATE} action_state 
+         * @returns {ExecutionBehaviorNode}
+         */
+        const SET_STATE_TO_ = (action_state) => {
+            console.assert(action_state in ENEMY_STATE, "action_state must be an ENEMY_STATE");
+           
+            return ExecutionBehaviorNode((() => {
+                this.setActionState(action_state);
+                return NODE_STATUS.SUCCESS;
+            }).bind(this));
+        };
 
         const RITCH_PATH3D_POINT = ExecutionBehaviorNode.buildConditionNode((() => {
             let diff = Vector3D.sub_vecs(this.flat3D_Position, this.pathSystem.target.flat3D_Position);
@@ -134,7 +159,7 @@ export class Enemy extends Flat3D_Entity {
         })
         .bind(this));
 
-        const SET_NEXT_TARGET_CONTEXT = new  ExecutionBehaviorNode((() => {
+        const SET_NEXT_TARGET_CONTEXT = new ExecutionBehaviorNode((() => {
 
             this.pathSystem.setNextTarget();
             return NODE_STATUS.SUCCESS;
