@@ -17,23 +17,24 @@ export default class MainGame extends Phaser.Scene
 {	
     // Depth for rendering order
     playerDepth = 10;
+    farBackDepth = -10; // invisible
+    enemyDepth = 9;
 
 	constructor() {
 		super({ key: 'maingame' });
-
-        this.numberOfZones; // how many
-        this.zones = []; // all zone objects
-
-        this.walls = []; // all wall objects
-
-        this.enemies = []; // all enemies
-
 	}
 
     /**
      * Initialize variables
      */
     init() {
+        this.numberOfZones; // how many
+        this.zones = []; // all zone objects
+
+        this.numberOfWalls; // how many
+        this.walls = []; // all wall objects
+
+        this.enemies = []; // all enemies
 	}
 	
     /**
