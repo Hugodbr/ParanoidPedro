@@ -15,6 +15,9 @@ import Wall from '../zones/wall.js';
  */
 export default class MainGame extends Phaser.Scene 
 {	
+    // Depth for rendering order
+    playerDepth = 10;
+
 	constructor() {
 		super({ key: 'maingame' });
 
@@ -57,20 +60,11 @@ export default class MainGame extends Phaser.Scene
 
         this.mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
 
-        //* Entity creation
-        /* const player = this.map.createFromObjects(LayerNames.Objects, {
-                name: ObjectNames.CharacterSpawn,
-                classType: Character,
-                key: TextureKeys.PlayerCharacter
-            });*/
-
-        // const enemy = new Enemy(this, 200, 200, 0);
+        //* Player creation
+        //
         this.player = new Player(this, 600, 200, 0);
-
-        //* Collision definitions
-        // ! at zones
-
-        //* Zone creation
+        this.player.setDepth(this.playerDepth);
+        
         this.numberOfZones = LayerObject.countLayerObjects(this.map.objects, Zone.type);
         // console.log(this.numberOfZones);
 
