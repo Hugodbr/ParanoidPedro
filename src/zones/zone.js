@@ -30,15 +30,7 @@ export default class Zone extends LayerObject
         // Initialize the zone's Enemies
         this.createEnemies();
 
-        // Define collisions between objects and layers
-        this.entityCollisionGroup = [
-            [this.scene.player], 
-            this.enemies
-        ];
-        this.defineCollisions(this.entityCollisionGroup); // ! move to main scene
-
         this.regiterWallsReferences();
-
 	}
 
     /**
@@ -52,27 +44,28 @@ export default class Zone extends LayerObject
     {
         // console.log(this.scene.map.objects);
 
-        const enemyObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/enemies/"));
+        const enemyObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/enemies/")); // ! string
 
         // console.log(enemyObjects);
 
-        enemyObjects.forEach(enemyObj => {
+        for (let i = 0; i < enemyObjects.length; ++i) {
             let pathPoints = [];
 
-            enemyObj.objects.forEach(point => {
+            enemyObjects[i].objects.forEach(point => {
                 pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
             });
 
             this.enemies.push(new Enemy(this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
-        });
 
+            this.visibleObjects.push(this.enemies[i]);
+        }
     }
 
     regiterWallsReferences()
     {
         const wallObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.zoneGroupName + "/wallRefs")); // ! string
 
-        console.log(wallObjects);
+        // console.log(wallObjects);
 
         // enemyObjects.forEach(enemyObj => {
         //     let pathPoints = [];

@@ -55,6 +55,12 @@ export default class LayerObject
         this.groupName = type + userID; // group name in tiled
 
         /**
+         * All visible layers and objects
+         * @type {Array<Object>}
+         */
+        this.visibleObjects = [];
+
+        /**
          * Layers that have collision
          * @type {Phaser.Tilemaps.TilemapLayer[]}
          */
@@ -62,6 +68,9 @@ export default class LayerObject
 
         // Initialize the layers
         this.createLayers();
+
+        // Starts invisible by default
+        this.hide();
     }
 
     /**
@@ -77,15 +86,17 @@ export default class LayerObject
         // Create ground layer
         this.groundLayerName = this.groupName + "/" + LayerNames.Ground;
         this.groundLayer = this.scene.map.createLayer(this.groundLayerName, this.scene.mapTileset, 0, 0);
-        console.log(this.groundLayer);
         this.groundLayer.setCollisionByExclusion(-1); // In JSON the index appears as 0
 
         this.collisionLayers.push(this.groundLayer);
+        this.visibleObjects.push(this.groundLayer);
 
         //* Non collision layers
         // Create backgorund scenery layer
         this.backgroundSceneryLayerName = this.groupName + "/" + LayerNames.BackgroundScenery;
         this.backgroundSceneryLayer = this.scene.map.createLayer(this.backgroundSceneryLayerName, this.scene.mapTileset, 0, 0);
+
+        this.visibleObjects.push(this.backgroundSceneryLayer);
     }
 
     /**
@@ -95,16 +106,34 @@ export default class LayerObject
      * 
      * @returns {void}
      */
-    defineCollisions(entitiesGroup) 
-    {    
-        // console.log(entitiesGroup);
-
+    defineCollisions(entityGroup) 
+    {
         this.collisionLayers.forEach(layer => {
-            entitiesGroup.forEach(entityGroup => {
-                entityGroup.forEach(entity => {
-                    this.scene.physics.add.collider(entity, layer);
-                });
+            entityGroup.forEach(entity => {
+                this.scene.physics.add.collider(entity, layer);
             });
+        });
+    }
+
+    /**
+     * Reveal all visible objects (layers and entities)
+     */
+    reveal() {
+        // Fade-in effect
+        this.scene.tweens.add({
+        targets: this.visibleObjects,
+        alpha: 1,
+        duration: 1000,
+        ease: 'Linear'
+        });
+    }
+
+    /**
+     * Hide all visible objects (layers and entities)
+     */
+    hide() {
+        this.visibleObjects.forEach(object => {
+            object.alpha = 0;
         });
     }
 }
