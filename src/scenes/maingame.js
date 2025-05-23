@@ -22,10 +22,11 @@ export default class MainGame extends Phaser.Scene
 		super({ key: 'maingame' });
 
         this.numberOfZones; // how many
-        this.zones = []; // Ids of all zones
-        this.revealedZones = []; // Ids of revealed/active zones
+        this.zones = []; // all zone objects
 
-        this.enemies = [];
+        this.walls = []; // all wall objects
+
+        this.enemies = []; // all enemies
 
 	}
 
@@ -51,12 +52,13 @@ export default class MainGame extends Phaser.Scene
 	create() {
 
         //* Map creation
+        //
         this.map = this.make.tilemap({
             key: TilemapKeys.MapJSON,
             tileWidth: 32,
             tileHeight: 32
         });
-        console.log(this.map);
+        // console.log(this.map);
 
         this.mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
 
@@ -65,16 +67,44 @@ export default class MainGame extends Phaser.Scene
         this.player = new Player(this, 600, 200, 0);
         this.player.setDepth(this.playerDepth);
         
+        //* Zones creation
+        //
         this.numberOfZones = LayerObject.countLayerObjects(this.map.objects, Zone.type);
         // console.log(this.numberOfZones);
-
+        
+        // Create all zones
         for (let i = 0; i < this.numberOfZones; ++i) {
             this.zones.push(new Zone(this, i + 1));
+            this.zones[i].enemies.forEach(enemy => {
+                this.enemies.push(enemy);
+            });
+        }
+        
+        // Reveal the first zone
+        this.zones[0].reveal();
+        
+        //* Walls creation
+        //
+        this.numberOfWalls = LayerObject.countLayerObjects(this.map.objects, Wall.type);
+        
+        // Create all walls
+        for (let i = 0; i < this.numberOfWalls; ++i) {
+            this.walls.push(new Wall(this, i + 1));
         }
 
-        let wall = new Wall(this, 1);
+        //* Collision definitions
+        //
+        this.zones.forEach(zone => {
+            zone.defineCollisions([this.player]);
+            zone.defineCollisions(this.enemies);
+        });
 
+        this.walls.forEach(wall => {
+            wall.defineCollisions([this.player]);
+            wall.defineCollisions(this.enemies);
+        });
 
+        
         // ! DEBUG
 		// Enable arrow key input
 		this.cursors = this.input.keyboard.createCursorKeys();
@@ -86,16 +116,6 @@ export default class MainGame extends Phaser.Scene
 	update(time, dt) {
         this.scrollAround(dt);
 	}
-
-    revealLayer(layer) {
-        // Fade-in effect
-        this.tweens.add({
-        targets: layer,
-        alpha: 1,
-        duration: 1000,
-        ease: 'Linear'
-        });
-    }
 
     // ! DEBUG
     scrollAround(delta)
