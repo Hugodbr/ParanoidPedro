@@ -19,7 +19,6 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 	 * */
 	depthScalingFactor = 0.99996;
 
-
 	/**
 	 * @param {Scene} scene - escena en la que aparece
 	 * @param {number} x - coordenada x
@@ -94,5 +93,14 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 		if(!this.body.allowGravity) { // Gravity 0 does not set velocity to 0 by itself
 			this.body.setVelocityY(0);
 		}
+
+		// ! HARDCODED z max 17000
+		this.flat3D_Position.z < 17000 ? this.toggleVisible(true) : this.toggleVisible(false);
+		console.log(this.flat3D_Position.z);
+	}
+
+	toggleVisible(visible)
+	{
+		visible ? this.setDepth(this.scene.enemyDepth) : this.setDepth(this.scene.farBackDepth);
 	}
 }
