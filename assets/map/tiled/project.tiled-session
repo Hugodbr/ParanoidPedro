@@ -1,11 +1,6 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "mapatiled.tmx",
     "expandedProjectPaths": [
-        "."
     ],
     "fileStates": {
         "": {
@@ -13,9 +8,6 @@
         },
         ":/automap-tiles.tsx": {
             "scaleInDock": 1
-        },
-        "Graphic Design Test.tsx": {
-            "scaleInDock": 0.33
         },
         "jsonmap.json": {
             "scale": 0.7184375,
@@ -30,49 +22,36 @@
             "scaleInEditor": 1
         },
         "mapatiled.tmx": {
-            "scale": 1,
-            "selectedLayer": 0,
+            "expandedGroupLayers": [
+                6,
+                14,
+                8,
+                5
+            ],
+            "scale": 0.5,
+            "selectedLayer": 14,
             "viewCenter": {
-                "x": 518,
-                "y": 210
+                "x": 698,
+                "y": 172
             }
         },
         "mapatiled.tmx#mapateste": {
-            "scaleInDock": 1
-        },
-        "mapatiled_test_techo_alto.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 3,
-            "viewCenter": {
-                "x": 524,
-                "y": 92
-            }
-        },
-        "mapatiled_test_techo_alto.tmx#Graphic Design Test": {
-            "scaleInDock": 0.25
-        },
-        "mapatiled_test_techo_alto.tmx#mapateste": {
             "scaleInDock": 0.25
         }
     },
     "last.exportedFilePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
     "last.externalTilesetPath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map/tiled",
-    "last.imagePath": "C:/Users/hugod/GitHub/ParanoidPedro/design/background_ideas",
+    "last.imagePath": "C:/Users/hugod/GitHub/ParanoidPedro/assets/map",
     "map.lastUsedExportFilter": "Arquivos de mapa JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
-    "map.width": 40,
     "openFiles": [
-        "mapatiled.tmx",
-        "mapateste.tsx"
+        "mapatiled.tmx"
     ],
     "project": "project.tiled-project",
-    "property.type": "int",
+    "property.type": "object",
     "recentFiles": [
-        "mapateste.tsx",
-        "mapatiled.tmx",
-        "jsonmap.json"
+        "mapatiled.tmx"
     ],
-    "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "Ficheiros de conjunto de tiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx"
 }

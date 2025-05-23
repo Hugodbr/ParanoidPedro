@@ -96,19 +96,12 @@ export class Enemy extends Flat3D_Entity {
      * @param {number} y 
      * @param {Phaser.Textures.Texture} z 
      */
-    constructor(scene, x, y, z, playerRef) {
+    constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, TextureKeys.PlayerCharacter);
 
         this.playerRef = playerRef;
 
-        this.pathSystem = new Path3D_System([
-            new Path3D_Point(scene, 200, 200, 0),
-            new Path3D_Point(scene, 400, 200, 0),
-            new Path3D_Point(scene, 400, 200, 20000),
-            new Path3D_Point(scene, 550, 200, 20000),
-            new Path3D_Point(scene, 550, 200, 0),
-            new Path3D_Point(scene, 700, 200, 0)
-        ]);
+        this.pathSystem = new Path3D_System(pathPoints);
 
         this.buildTree();
 
