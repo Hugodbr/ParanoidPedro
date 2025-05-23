@@ -292,9 +292,10 @@ export class Enemy extends Flat3D_Entity {
 
         this.behaviorTree = ( new FallbackBehaviorNode()
 
-       /*     .addNode( new ForceFailureBehaviorNode()
+            .addNode( new ForceFailureBehaviorNode()
 
                 .setNode( new FallbackBehaviorNode()
+
                     .addNode( new SequenceBehaviorNode()
                         .addNode(CAN_SEE_PLAYER)
                         .addNode( new InversionBehaviorNode()
@@ -303,12 +304,15 @@ export class Enemy extends Flat3D_Entity {
                         .addNode(SET_STATE_TO_(ENEMY_STATE.CHASING))
                     )
                     .addNode( new SequenceBehaviorNode()
+                        .addNode( new InversionBehaviorNode()
+                            .setNode(CAN_SEE_PLAYER)
+                        )
                         .addNode(STATE_IS_(ENEMY_STATE.CHASING))
                         .addNode(SET_STATE_TO_(ENEMY_STATE.SEARCHING))
                     )
                 )
             )
-*/
+
             .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.PATROLLING))
@@ -344,7 +348,7 @@ export class Enemy extends Flat3D_Entity {
                                 .setNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
                             )
                             .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
-                            //.addNode() SET THE DIRECTION
+                            .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT) // TODO SET THE SEARCH DIRECTION
                         )
                     )
                     /*.addNode( new SequenceBehaviorNode()
@@ -394,9 +398,9 @@ export class Enemy extends Flat3D_Entity {
         
         this.behaviorTree.exec();
 
-        console.log(this.actionState);
-
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
+
+        console.log(this.actionState);
 
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
