@@ -66,15 +66,19 @@ export default class MainGame extends Phaser.Scene
 
         //* Zone creation
         this.zones.push(new Zone(this, 1));
+        this.zones.push(new Zone(this, 2));
 
 
+        // ! DEBUG
+		// Enable arrow key input
+		this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
     /**
      * Scene loop
      */
-	update(time, dt){
-
+	update(time, dt) {
+        this.scrollAround(dt);
 	}
 
     revealLayer(layer) {
@@ -85,6 +89,27 @@ export default class MainGame extends Phaser.Scene
         duration: 1000,
         ease: 'Linear'
         });
+    }
+
+    // ! DEBUG
+    scrollAround(delta)
+    {
+        const cam = this.cameras.main;
+		const speed = 300; // pixels per second
+
+		if (this.cursors.left.isDown) {
+			cam.scrollX -= speed * delta / 1000;
+		}
+		else if (this.cursors.right.isDown) {
+			cam.scrollX += speed * delta / 1000;
+		}
+
+		if (this.cursors.up.isDown) {
+			cam.scrollY -= speed * delta / 1000;
+		}
+		else if (this.cursors.down.isDown) {
+			cam.scrollY += speed * delta / 1000;
+		}
     }
 
 }

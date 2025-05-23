@@ -87,7 +87,7 @@
     <properties>
      <property name="type" value="enemy1"/>
     </properties>
-    <object id="14" name="0" x="2088" y="443.333">
+    <object id="14" name="0" x="2324.87" y="405.128">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="26"/>
@@ -127,7 +127,7 @@
     <properties>
      <property name="type" value="enemy1"/>
     </properties>
-    <object id="38" name="0" x="2088" y="443.333">
+    <object id="38" name="0" x="2100.74" y="397.487">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="39"/>
