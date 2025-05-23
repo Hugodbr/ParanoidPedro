@@ -110,6 +110,8 @@ export class Enemy extends Flat3D_Entity {
             new Path3D_Point(scene, 700, 200, 0)
         ]);
 
+        this.pathSystem.transitivityType = PATH_TRANSITIVITY.XZ_AXIS;
+
         this.buildTree();
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
@@ -187,7 +189,6 @@ export class Enemy extends Flat3D_Entity {
         };
 
         const SET_GROUND_SPEED_TO_ = (speed) => {
-            console.log(typeof speed === "number", "speed must be a number");
 
             return new ExecutionBehaviorNode((() => {
                 this.groundSpeed = speed;
@@ -250,7 +251,7 @@ export class Enemy extends Flat3D_Entity {
         .bind(true));
 
         const IS_IN_DEPTH = ExecutionBehaviorNode.buildConditionNode((() => {
-            return this.flat3D_Position.isInDepth();
+            return this.isInDepth();
         })
         .bind(this));
 
@@ -323,41 +324,49 @@ export class Enemy extends Flat3D_Entity {
                         
                     .addNode( new SequenceBehaviorNode()
     
+                        .addNode(SET_TRANSITIVITY_IN_XZ)
                         .addNode( new InversionBehaviorNode()
                             .setNode( new FallbackBehaviorNode()
                                 .addNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.PATROLLING))
                                 .addNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
                             )
                         )
-                        .addNode(SET_TRANSITIVITY_IN_XZ)
+                        .addNode(DEBUG_SEQUENCE_POINT("LOOKING FOR CLOSEST POINT"))
                         .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT)
                     )
-    //.addNode(DEBUG_SEQUENCE_POINT("Mmmmmmmm"))
+
                     .addNode(PATH_FOLLOWING_BEHAVIOR)
                 )
             )
 
-       /*     .addNode( new SequenceBehaviorNode()
+            .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.SEARCHING))
 
                 .addNode( new FallbackBehaviorNode()
 
-                    .addNode( new SequenceBehaviorNode()
-                        .addNode(new InversionBehaviorNode()
-                            .setNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
+                    .addNode( new ForceFailureBehaviorNode()
+
+                        .setNode( new SequenceBehaviorNode() // Setting the speed and the search direction
+                            .addNode(new InversionBehaviorNode()
+                                .setNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
+                            )
+                            .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
+                            //.addNode() SET THE DIRECTION
                         )
-                        .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
-                        //.addNode() SET THE DIRECTION
                     )
-                    .addNode( new SequenceBehaviorNode()
+                    /*.addNode( new SequenceBehaviorNode()
                         //.addNode() TIMEOUT
                         .addNode(SET_STATE_TO_(ENEMY_STATE.PATROLLING))
+                    )*/
+                    .addNode( new ForceFailureBehaviorNode()
+                        
+                        .setNode( new SequenceBehaviorNode()
+                            .addNode(IS_ABOUT_TO_EXIT_Z_AXIS)
+                            .addNode(SET_TRANSITIVITY_IN_X)
+                        )
                     )
-                    .addNode( new SequenceBehaviorNode()
-                        .addNode(IS_ABOUT_TO_EXIT_Z_AXIS)
-                        .addNode(SET_TRANSITIVITY_IN_X)
-                    )
+
                     .addNode(PATH_FOLLOWING_BEHAVIOR)
                 )
             )
@@ -377,7 +386,7 @@ export class Enemy extends Flat3D_Entity {
                     )
                     //.addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
-            )*/
+            )
         );
     }
 
@@ -396,12 +405,12 @@ export class Enemy extends Flat3D_Entity {
         console.log(this.actionState);
 
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
-
+        this.setActionState(this.actionState);
         if (this.tKey.isDown){
-            if(this.pathSystem.transitivityType === PATH_TRANSITIVITY.XZ_AXIS)
-                this.pathSystem.transitivityType = PATH_TRANSITIVITY.X_AXIS;
+            if(this.actionState === ENEMY_STATE.PATROLLING)
+                this.setActionState(ENEMY_STATE.CHASING);
             else
-                this.pathSystem.transitivityType = PATH_TRANSITIVITY.XZ_AXIS;
+                this.setActionState(ENEMY_STATE.PATROLLING);
         }
     }
 }
