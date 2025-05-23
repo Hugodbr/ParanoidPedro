@@ -5,7 +5,9 @@ import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import Player from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
 
+import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
+import Wall from '../zones/wall.js';
 
 /**
  * Game main scene.
@@ -16,8 +18,11 @@ export default class MainGame extends Phaser.Scene
 	constructor() {
 		super({ key: 'maingame' });
 
+        this.numberOfZones; // how many
         this.zones = []; // Ids of all zones
         this.revealedZones = []; // Ids of revealed/active zones
+
+        this.enemies = [];
 
 	}
 
@@ -48,6 +53,7 @@ export default class MainGame extends Phaser.Scene
             tileWidth: 32,
             tileHeight: 32
         });
+        console.log(this.map);
 
         this.mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
 
@@ -65,8 +71,14 @@ export default class MainGame extends Phaser.Scene
         // ! at zones
 
         //* Zone creation
-        this.zones.push(new Zone(this, 1));
-        this.zones.push(new Zone(this, 2));
+        this.numberOfZones = LayerObject.countLayerObjects(this.map.objects, Zone.type);
+        // console.log(this.numberOfZones);
+
+        for (let i = 0; i < this.numberOfZones; ++i) {
+            this.zones.push(new Zone(this, i + 1));
+        }
+
+        let wall = new Wall(this, 1);
 
 
         // ! DEBUG
