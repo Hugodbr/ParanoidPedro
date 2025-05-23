@@ -17,5 +17,7 @@ export class DecoratorBehaviorNode extends BehaviorNode {
 		console.assert(bh_node instanceof BehaviorNode, "son node bh_node must be a BehaviorNode");
 		
 		this.son_node = bh_node;
+
+		return this;
 	}
 }

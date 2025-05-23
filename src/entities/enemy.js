@@ -166,8 +166,31 @@ export class Enemy extends Flat3D_Entity {
         const SET_STATE_TO_ = (action_state) => {
             console.assert(action_state in ENEMY_STATE, "action_state must be an ENEMY_STATE");
            
-            return ExecutionBehaviorNode((() => {
+            return new ExecutionBehaviorNode((() => {
                 this.setActionState(action_state);
+                return NODE_STATUS.SUCCESS;
+            }).bind(this));
+        };
+
+        const DEBUG_FALLBACK_POINT = (message) => {
+            return new ExecutionBehaviorNode(() => {
+                console.log(message)
+                return NODE_STATUS.FAILURE;
+            });
+        };
+
+        const DEBUG_SEQUENCE_POINT = (message) => {
+            return new ExecutionBehaviorNode(() => {
+                console.log(message)
+                return NODE_STATUS.SUCCESS;
+            });
+        };
+
+        const SET_GROUND_SPEED_TO_ = (speed) => {
+            console.log(typeof speed === "number", "speed must be a number");
+
+            return new ExecutionBehaviorNode((() => {
+                this.groundSpeed = speed;
                 return NODE_STATUS.SUCCESS;
             }).bind(this));
         };
@@ -271,10 +294,90 @@ export class Enemy extends Flat3D_Entity {
 
         // Creating the tree
         
-        this.behaviorTree = PATH_FOLLOWING_BEHAVIOR;
+        //this.behaviorTree = PATH_FOLLOWING_BEHAVIOR;
 
         this.behaviorTree = ( new FallbackBehaviorNode()
 
+       /*     .addNode( new ForceFailureBehaviorNode()
+
+                .setNode( new FallbackBehaviorNode()
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(CAN_SEE_PLAYER)
+                        .addNode( new InversionBehaviorNode()
+                            .setNode(STATE_IS_(ENEMY_STATE.ATTACKING))
+                        )
+                        .addNode(SET_STATE_TO_(ENEMY_STATE.CHASING))
+                    )
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(STATE_IS_(ENEMY_STATE.CHASING))
+                        .addNode(SET_STATE_TO_(ENEMY_STATE.SEARCHING))
+                    )
+                )
+            )
+*/
+            .addNode( new SequenceBehaviorNode()
+
+                .addNode(STATE_IS_(ENEMY_STATE.PATROLLING))
+                
+                .addNode( new FallbackBehaviorNode()
+                        
+                    .addNode( new SequenceBehaviorNode()
+    
+                        .addNode( new InversionBehaviorNode()
+                            .setNode( new FallbackBehaviorNode()
+                                .addNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.PATROLLING))
+                                .addNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
+                            )
+                        )
+                        .addNode(SET_TRANSITIVITY_IN_XZ)
+                        .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT)
+                    )
+    //.addNode(DEBUG_SEQUENCE_POINT("Mmmmmmmm"))
+                    .addNode(PATH_FOLLOWING_BEHAVIOR)
+                )
+            )
+
+       /*     .addNode( new SequenceBehaviorNode()
+
+                .addNode(STATE_IS_(ENEMY_STATE.SEARCHING))
+
+                .addNode( new FallbackBehaviorNode()
+
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(new InversionBehaviorNode()
+                            .setNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
+                        )
+                        .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
+                        //.addNode() SET THE DIRECTION
+                    )
+                    .addNode( new SequenceBehaviorNode()
+                        //.addNode() TIMEOUT
+                        .addNode(SET_STATE_TO_(ENEMY_STATE.PATROLLING))
+                    )
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(IS_ABOUT_TO_EXIT_Z_AXIS)
+                        .addNode(SET_TRANSITIVITY_IN_X)
+                    )
+                    .addNode(PATH_FOLLOWING_BEHAVIOR)
+                )
+            )
+
+            .addNode( new SequenceBehaviorNode()
+
+                .addNode(STATE_IS_(ENEMY_STATE.CHASING))
+
+                .addNode( new FallbackBehaviorNode()
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(IS_IN_DEPTH)
+                        .addNode(MOVE_TOWARDS_NEGATIVE_Z)
+                    )
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(TOO_LONG_DISTANCE_TO_PLAYER)
+                        .addNode(MOVE_TOWARDS_PLAYER)
+                    )
+                    //.addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
+                )
+            )*/
         );
     }
 
@@ -290,7 +393,7 @@ export class Enemy extends Flat3D_Entity {
         
         this.behaviorTree.exec();
 
-        console.log();
+        console.log(this.actionState);
 
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
 
