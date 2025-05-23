@@ -72,12 +72,13 @@ export class Path3D_System {
 
     /**
      * Returns the next path point given an iterator of the path list, the type of transitivity of the 
-     * path and the orientation in the search
+     * path, the orientation and the zone of the search
      * @param {number} pathArr_it 
      * @param {PATH_ORIENTATION} pathSearch_Orientation 
+     * @param {number} pathZoneID
      * @returns {number}
      */
-    _getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation) {
+    _getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation, pathZoneID) {
 
         let initialPathArr_it = pathArr_it;
 
@@ -89,13 +90,18 @@ export class Path3D_System {
             if(pathArr_it - 1 >= 0) --pathArr_it;
         }
 
-        if(initialPathArr_it === pathArr_it) return pathArr_it; // If it finds nothing in this orientation it returns the same value
-
+        if(initialPathArr_it === pathArr_it  // If it finds nothing in this orientation it returns the same value
+            && this.transitivityType === PATH_TRANSITIVITY.X_AXIS // If cannot use corridors and the next point is in other zone
+            && this.pathPoints[pathArr_it].zoneID !== pathZoneID) 
+        {
+            return pathArr_it;
+        }
+        
         if(this.transitivityType === PATH_TRANSITIVITY.X_AXIS
             && this.pathPoints[pathArr_it].flat3D_Position.z > 0) // Not valid point for X_AXIS transitivity
         {
             // Keeps on looking for points with Z = 0 in pathSearch_Orientation
-            return this._getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation);
+            return this._getFollowingPathArr_It_From(pathArr_it, pathSearch_Orientation, pathZoneID);
         }
 
         return pathArr_it;
@@ -105,17 +111,19 @@ export class Path3D_System {
      * Returns the following target's position in the array without updating the actual one (`constatnt method`)
      * @returns {number}
      */
-    _getNextPathArr_It() { // TODO Transitivity Use
-        
-        let nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, this._pathOrientation);
+    _getNextPathArr_It() {
+
+        let pathZoneID = this.pathPoints[this._pathArr_it].zoneID;
+
+        let nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, this._pathOrientation, pathZoneID);
 
         // If it didn't find a point on one way it looks for it in the other
         if(nextPathPoint === this._pathArr_it) 
         {
             if(this._pathOrientation === PATH_ORIENTATION.OBVERSE)
-                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.REVERSE);
+                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.REVERSE, pathZoneID);
             else
-                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.OBVERSE);
+                nextPathPoint = this._getFollowingPathArr_It_From(this._pathArr_it, PATH_ORIENTATION.OBVERSE, pathZoneID);
         }
 
         return nextPathPoint;
