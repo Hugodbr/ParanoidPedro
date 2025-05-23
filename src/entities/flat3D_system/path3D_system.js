@@ -192,11 +192,15 @@ export class Path3D_System {
 
         if(this._pathArr_it < point_it && this._pathOrientation === PATH_ORIENTATION.REVERSE) {
             this._pathOrientation === PATH_ORIENTATION.OBVERSE;
-            this.setNextTarget();
+        //    this.setNextTarget();
         }
         else if(this._pathArr_it > point_it && this._pathOrientation === PATH_ORIENTATION.OBVERSE) {
             this._pathOrientation === PATH_ORIENTATION.REVERSE;
-            this.setNextTarget();
+        //    this.setNextTarget();
         }
+
+        this._pathArr_it = point_it; // Update the index in the array
+
+        this.target = this.pathPoints[this._pathArr_it]; // Update the returning Path3D_Point of variable target
     }
 }

@@ -241,7 +241,7 @@ export class Enemy extends Flat3D_Entity {
             this.pathSystem.changeOriantationTowards(pathTarget.flat3D_Position);
             return NODE_STATUS.SUCCESS;
         })
-        .bind(true));
+        .bind(this));
 
         const IS_IN_DEPTH = ExecutionBehaviorNode.buildConditionNode((() => {
             return this.isInDepth();
@@ -324,7 +324,6 @@ export class Enemy extends Flat3D_Entity {
                                 .addNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
                             )
                         )
-                        .addNode(DEBUG_SEQUENCE_POINT("LOOKING FOR CLOSEST POINT"))
                         .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT)
                     )
 
@@ -398,7 +397,9 @@ export class Enemy extends Flat3D_Entity {
         console.log(this.actionState);
 
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
-        this.setActionState(this.actionState);
+
+        this.setActionState(this.actionState); // To update de lastFrameActionState variable
+
         if (this.tKey.isDown){
             if(this.actionState === ENEMY_STATE.PATROLLING)
                 this.setActionState(ENEMY_STATE.CHASING);
