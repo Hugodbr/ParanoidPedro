@@ -6,6 +6,8 @@ import { Player } from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
 import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
 
+import Zone from '../zones/zone.js';
+
 /**
  * Game main scene.
  * @extends Phaser.Scene

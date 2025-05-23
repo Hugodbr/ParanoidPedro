@@ -1,7 +1,7 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
 
-export class Player extends Flat3D_Entity {
+export default class Player extends Flat3D_Entity {
 
 	/**
 	 * Normal speed of the entity when moving
