@@ -20,5 +20,53 @@ export default class Wall extends LayerObject
     {
         super(scene, userID, Wall.type);
 
+        // Starts invisible by default
+        // Walls are revealed by zones
+        this.hide(); 
+
+        /**
+         * Wall object to be used to spawn a wall at x, y location
+         * @type {Object}
+        */
+        this.wallObject = this.getThisWallObject();
+        this.spawnPos = {x: this.wallObject.x, y: this.wallObject.y};
+
+        /**
+         * Number as a reference to a zone so this wall can be associated with its zone
+         * @type {int}
+        */
+        this.zonesIDs = this.getThisZonesIDs();
     }
+
+    /**
+     * Finds in json map this wall object
+     * 
+     * @remarks -
+     * 
+     * @returns {Object}
+     */
+    getThisWallObject() 
+    {
+        const wallObjects = this.scene.map.objects.find(obj => obj.name === this.groupName + "/wall").objects; // ! string
+
+        return wallObjects.find(obj => obj.name === "wallSpawn");
+    }
+
+    /**
+     * Finds the ids of zones that share this wall
+     * 
+     * @remarks -
+     * 
+     * @returns {int}
+     */
+    getThisZonesIDs() 
+    {
+        const zoneIDs = [];
+        this.wallObject.properties.forEach(obj => {
+            zoneIDs.push(obj.value);
+        });
+
+        return zoneIDs;
+    }
+
 }

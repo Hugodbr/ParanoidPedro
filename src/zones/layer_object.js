@@ -68,9 +68,6 @@ export default class LayerObject
 
         // Initialize the layers
         this.createLayers();
-
-        // Starts invisible by default
-        this.hide();
     }
 
     /**
@@ -119,6 +116,7 @@ export default class LayerObject
      * Reveal all visible objects (layers and entities)
      */
     reveal() {
+        console.log(this.visibleObjects);
         // Fade-in effect
         this.scene.tweens.add({
         targets: this.visibleObjects,

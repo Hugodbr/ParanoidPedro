@@ -124,11 +124,11 @@
     </object>
    </objectgroup>
   </group>
-  <objectgroup id="34" name="wallRefs">
+  <objectgroup id="34" name="refs">
    <properties>
     <property name="type" value="wall"/>
    </properties>
-   <object id="37" name="wall" x="2140.51" y="80.906">
+   <object id="37" name="zoneRef" x="2081.93" y="80.906">
     <point/>
    </object>
   </objectgroup>
@@ -234,11 +234,11 @@
     </object>
    </objectgroup>
   </group>
-  <objectgroup id="11" name="wallRefs">
+  <objectgroup id="11" name="refs">
    <properties>
     <property name="type" value="wall"/>
    </properties>
-   <object id="16" name="wall" x="1834.61" y="92.188">
+   <object id="16" name="zoneRef" x="1834.61" y="92.188">
     <point/>
    </object>
   </objectgroup>

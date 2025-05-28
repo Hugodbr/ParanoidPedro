@@ -80,9 +80,7 @@ export default class MainGame extends Phaser.Scene
                 this.enemies.push(enemy);
             });
         }
-        
-        // Reveal the first zone
-        this.zones[0].reveal();
+    
         
         //* Walls creation
         //
@@ -92,6 +90,23 @@ export default class MainGame extends Phaser.Scene
         for (let i = 0; i < this.numberOfWalls; ++i) {
             this.walls.push(new Wall(this, i + 1));
         }
+
+        //* Link wall to zones
+        //
+        this.zones.forEach(zone => {
+            this.walls.forEach(wall => {
+                wall.zonesIDs.forEach(zoneID => {
+                    if (zoneID == zone.refID) {
+                        zone.registerWall(wall);
+                    }
+                });
+            });
+        });
+
+
+        // ! Reveal the first zone
+        this.zones[0].reveal();
+
 
         //* Collision definitions
         //

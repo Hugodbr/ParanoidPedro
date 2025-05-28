@@ -21,17 +21,42 @@ export default class Zone extends LayerObject
     {
         super(scene, userID, Zone.type);
 
+        this.refID = this.parseThisRefID();
+        // console.log(this.refID);
+
         /**
          * Zone enemies
          * @type {Enemy[]}
         */
         this.enemies = [];
 
+
+        this.walls = [];
+
         // Initialize the zone's Enemies
         this.createEnemies();
 
-        this.regiterWallsReferences();
+        // Starts invisible by default
+        this.hide();
 	}
+
+    parseThisRefID()
+    {
+        const zoneRef = this.scene.map.objects.find(obj => obj.name === this.groupName + "/refs").objects; // ! string
+        const ref = zoneRef.find(obj => obj.name === "zoneRef"); // ! string
+
+        return ref.id;
+    }
+
+    registerWall(wall) 
+    {
+        this.walls.push(wall);
+
+        wall.visibleObjects.forEach(obj => {
+            this.visibleObjects.push(obj);
+        });
+
+    }
 
     /**
      * Create all enemies for this zone
@@ -61,21 +86,6 @@ export default class Zone extends LayerObject
         }
     }
 
-    regiterWallsReferences()
-    {
-        const wallObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.zoneGroupName + "/wallRefs")); // ! string
 
-        // console.log(wallObjects);
-
-        // enemyObjects.forEach(enemyObj => {
-        //     let pathPoints = [];
-
-        //     enemyObj.objects.forEach(point => {
-        //         pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
-        //     });
-
-        //     this.enemies.push(new Enemy(this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
-        // });
-    }
 
 }
