@@ -402,7 +402,7 @@ zone;
 
         if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
 
-        console.log(this.actionState);
+        // console.log(this.actionState);
 
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 

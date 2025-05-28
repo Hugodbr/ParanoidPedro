@@ -22,6 +22,7 @@ export default class MainGame extends Phaser.Scene
 
 	constructor() {
 		super({ key: 'maingame' });
+
 	}
 
     /**
@@ -51,6 +52,13 @@ export default class MainGame extends Phaser.Scene
 	}
 	
 	create() {
+
+        /**
+         * Variable that hold the debug configuration value of phaser
+         * Use to show rects if in debug mode, for example
+         * @type {bool}
+        */
+        this.isDebug = this.physics.config.debug;
 
         //* Map creation
         //
@@ -98,11 +106,11 @@ export default class MainGame extends Phaser.Scene
                 wall.zonesIDs.forEach(zoneID => {
                     if (zoneID == zone.refID) {
                         zone.registerWall(wall);
+                        wall.registerZone(zone);
                     }
                 });
             });
         });
-
 
         // ! Reveal the first zone
         this.zones[0].reveal();
@@ -123,21 +131,33 @@ export default class MainGame extends Phaser.Scene
         
         // ! DEBUG
 		// Enable arrow key input
-		this.cursors = this.input.keyboard.createCursorKeys();
+        if (this.isDebug) {
+            this.cursors = this.input.keyboard.createCursorKeys();
+            this.bKey = this.input.keyboard.addKey('B'); // break wall
+        }
 	}
 
     /**
      * Scene loop
      */
 	update(time, dt) {
-        this.scrollAround(dt);
+
+        // ! DEBUG
+        if (this.isDebug) {
+            this.scrollAround(dt);
+
+            if (this.bKey.isDown) {
+                this.walls[0].break();
+            }
+        }
+
 	}
 
     // ! DEBUG
     scrollAround(delta)
     {
         const cam = this.cameras.main;
-		const speed = 300; // pixels per second
+		const speed = 1000; // pixels per second
 
 		if (this.cursors.left.isDown) {
 			cam.scrollX -= speed * delta / 1000;

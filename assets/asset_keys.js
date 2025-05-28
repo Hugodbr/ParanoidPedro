@@ -12,6 +12,7 @@ export const LayerNames = {
     Ground: 'ground',
     BackgroundFar: 'backgroundFar',
     BackgroundScenery: 'backgroundScenery',
+    Wall: 'wall',
     Objects: 'objects'
 };
 
