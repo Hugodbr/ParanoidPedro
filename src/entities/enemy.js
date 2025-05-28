@@ -89,7 +89,7 @@ export class Enemy extends Flat3D_Entity {
      * @type {Vector3D}
      */
     searchInitTargetPos;
-
+zone;
     /**
      * @param {Scene} scene 
      * @param {number} x 
@@ -106,6 +106,10 @@ export class Enemy extends Flat3D_Entity {
         this.pathSystem.transitivityType = PATH_TRANSITIVITY.XZ_AXIS;
 
         this.buildTree();
+
+        this.zone = scene.add.zone(x, y, 400, 200);
+        scene.physics.add.existing(this.zone);
+        this.zone.body.setAllowGravity(false);
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
         this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
@@ -287,8 +291,6 @@ export class Enemy extends Flat3D_Entity {
         }).bind(this));
 
         // Creating the tree
-        
-        //this.behaviorTree = PATH_FOLLOWING_BEHAVIOR;
 
         this.behaviorTree = ( new FallbackBehaviorNode()
 
@@ -348,7 +350,7 @@ export class Enemy extends Flat3D_Entity {
                                 .setNode(LAST_FRAME_STATE_IS_(ENEMY_STATE.SEARCHING))
                             )
                             .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
-                            .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT) // TODO SET THE SEARCH DIRECTION
+                            .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT) // TODO: SET THE SEARCH DIRECTION
                         )
                     )
                     /*.addNode( new SequenceBehaviorNode()
@@ -409,6 +411,15 @@ export class Enemy extends Flat3D_Entity {
                 this.setActionState(ENEMY_STATE.CHASING);
             else
                 this.setActionState(ENEMY_STATE.PATROLLING);
+        }
+
+        this.zone.x = this.body.position.x;
+        this.zone.y = this.body.position.y;
+        if (this.scene.physics.overlap(this.playerRef, this.zone)) {
+            this.canSeePlayer = true;
+        }
+        else{
+            this.canSeePlayer = false;
         }
     }
 }
