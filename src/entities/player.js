@@ -44,6 +44,15 @@ export default class Player extends Flat3D_Entity {
 		this.dKey = this.scene.input.keyboard.addKey('D'); // Right
 		this.sKey = this.scene.input.keyboard.addKey('S'); // Exit Z
 		this.spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Jump
+
+        // idle
+        // standing golpe
+        // correr
+        // correr golpe
+        // saltar
+        // saltar golpe
+        // rodar
+        // rodar golpe
     }
 
     /**
