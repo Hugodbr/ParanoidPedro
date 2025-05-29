@@ -44,7 +44,9 @@ let config = {
 		}
 
 	},
-
+	input: {
+        gamepad: true
+    },
 
 	title: "Paranoid Pedro",
 	version: "1.0.0"

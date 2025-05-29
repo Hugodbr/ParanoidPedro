@@ -14,11 +14,52 @@ export default class Player extends Flat3D_Entity {
 	 * @type {number}
 	 */
 	groundSpeed = 500;
-	//patrollingGroundSpeed = 100;
 
+    /**
+     * @type {number}
+     */
 	jumpSpeed = 850;
 
+    /**
+     * @type {number}
+     */
     cameraOffsetX = 400;
+
+    /**
+     * Reference to the gamepad controller
+     * @type {Phaser.Input.Gamepad}
+     */
+    gamepad = null;
+
+    /**
+     * Whether a left movement input is being pressed or not
+     * @type {bool}
+     */
+    leftMoveInput;
+
+    /**
+     * Whether a right movement input is being pressed or not
+     * @type {bool}
+     */
+    rightMoveInput;
+
+    /**
+     * Whether a jump movement input is being pressed or not
+     * @type {bool}
+     */
+    jumpMoveInput;
+
+    /**
+     * Whether a roll movement input is being pressed or not
+     * @type {bool}
+     */
+    rollMoveInput;
+    
+    /**
+     * Whether an attack action input is being pressed or not
+     * @type {bool}
+     */
+    attackActionInput;
     
     /**
 	 * @param {Scene} scene - scene where it appears
@@ -45,6 +86,8 @@ export default class Player extends Flat3D_Entity {
 		this.sKey = this.scene.input.keyboard.addKey('S'); // Exit Z
 		this.spaceBar = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Jump
 
+        this.scene.input.gamepad.once("connected", pad => { this.gamepad = pad; });
+        
         // idle
         // standing golpe
         // correr
@@ -63,8 +106,21 @@ export default class Player extends Flat3D_Entity {
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
 
+        // Updating the state of the input
+        this.leftMoveInput = (
+            this.aKey.isDown 
+            || this.gamepad !== null && this.gamepad.left
+            || this.gamepad !== null && this.gamepad.leftStick.x < -0.5
+        );
+        this.rightMoveInput = (
+            this.dKey.isDown 
+            || this.gamepad !== null && this.gamepad.right
+            || this.gamepad !== null && this.gamepad.leftStick.x > 0.5
+        );
+        this.jumpMoveInput = this.spaceBar.isDown || this.gamepad !== null && this.gamepad.A;
+
 		// Move LEFT
-		if (this.aKey.isDown) {
+		if (this.leftMoveInput) {
 			this.body.setVelocityX(-this.groundSpeed * this.scale);
 
             if (this.facing != FACING.LEFT){
@@ -72,7 +128,7 @@ export default class Player extends Flat3D_Entity {
             }
 		}
 		// Move RIGHT
-		else if (this.dKey.isDown) {
+		else if (this.rightMoveInput) {
 			this.body.setVelocityX(this.groundSpeed * this.scale);
 
             if (this.facing != FACING.RIGHT){
@@ -84,15 +140,15 @@ export default class Player extends Flat3D_Entity {
 		}
 
 		// JUMP
-		if (this.wKey.isDown) {
+		if (this.wKey.isDown || this.gamepad !== null && this.gamepad.up) {
 			this.moveInZ(this.groundSpeed);
 		}
 		// DOWN
-		else if (this.sKey.isDown) {
+		else if (this.sKey.isDown || this.gamepad !== null && this.gamepad.down) {
 			this.moveInZ(-this.groundSpeed);
 		}
-		
-		if(this.spaceBar.isDown && this.body.onFloor()) {
+        
+		if(this.jumpMoveInput && this.body.onFloor()) {
 			this.body.setVelocityY(-this.jumpSpeed);
 		}
 		
