@@ -45,7 +45,7 @@ export default class MainGame extends Phaser.Scene
 
         //* Preload tilemap assets
         this.load.tilemapTiledJSON(TilemapKeys.MapJSON, 'assets/map/tiled/map_structured.json');        
-        this.load.image(TilemapKeys.TilesetImage, 'assets/map/Graphic Design Test.png');
+        this.load.image(TilemapKeys.TilesetImage, 'assets/map/Map Tileset.png');
 
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');

@@ -3,6 +3,9 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "Graphic Design Test.tsx": {
             "scaleInDock": 0.33
         },
@@ -22,7 +25,8 @@
             }
         },
         "map_structured.tmx#Graphic Design Test": {
-            "scaleInDock": 0.25
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
         },
         "map_structured.tmx#mapateste": {
             "scaleInDock": 1
