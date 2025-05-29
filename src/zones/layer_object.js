@@ -116,7 +116,8 @@ export default class LayerObject
      * Reveal all visible objects (layers and entities)
      */
     reveal() {
-        console.log(this.visibleObjects);
+        // console.log(this.visibleObjects);
+        
         // Fade-in effect
         this.scene.tweens.add({
         targets: this.visibleObjects,

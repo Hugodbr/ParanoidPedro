@@ -1,6 +1,6 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
-import Character from "../entities/character.js";
+// import Character from "../entities/character.js";
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import Player from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
@@ -74,7 +74,7 @@ export default class MainGame extends Phaser.Scene
         //* Player creation
         //
         this.player = new Player(this, 600, 200, 0);
-        this.player.setDepth(this.playerDepth);
+
         
         //* Zones creation
         //
