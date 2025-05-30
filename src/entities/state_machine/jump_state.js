@@ -1,0 +1,105 @@
+import State from "./state.js";
+import {Player, FACING} from "../player.js";
+
+import FallState from "./fall_state.js";
+
+/**
+ * Class for jumping state.
+ * Handles movement and action in the context of jumping.
+ */
+export default class JumpState extends State
+{
+    /**
+     * @param {Player} player 
+     */
+    constructor(player) {
+        super(player);
+    }
+
+    /**
+     * Handles player input and transitions between motion states while jumping.
+     * Called every frame by the player during the 'jump' state.
+     *
+     * @param {number} t
+     * @param {number} dt
+     */
+    update(t, dt) 
+    {
+        // Commom state update logic
+        super.update();
+
+        //* Handle horizontal movement
+        // Left movement
+        if (this.leftKey.isDown) 
+        {
+            if (this.facing != FACING.LEFT) {
+                this.player.changeFacing(FACING.LEFT)
+            }
+            this.goLeft();
+        }
+        // Right movement
+        else if (this.rightKey.isDown) 
+        {
+            if (this.facing != FACING.RIGHT) {
+                this.player.changeFacing(FACING.RIGHT)
+            }
+            this.goRight();
+        }
+
+        //* Handle action inputs while jumping
+        // Jump
+        if (this.jumpKey.isDown) {
+            // this.player.setState(JumpState); // ! if double jump later
+        }
+        // Attack
+        else if (this.atkKey.isDown) {
+            this.attack();
+        }
+        // Spin
+        else if (this.spinKey.isDown) {
+            // this.player.setState(SpinState); // TODO: dash downward?
+        }
+        // Stop
+        else if (this.leftKey.isDown === this.rightKey.isDown) {
+            this.stop();
+        }
+
+        // Fall state after reaching highest point
+        if (this.isFalling()) {
+            this.player.setState(FallState);
+        }
+    }
+
+    /**
+     * Called when the player enters the 'jump' state.
+     * Starts vertical movement upward.
+     */
+    enter() 
+    {
+        if (this.debugState)
+            console.log("Enter jump");
+
+        // TODO: Implement play 'jump' animation.
+
+        this.body.setVelocityY(-this.jumpSpeed);
+    }
+
+    exit() 
+    {
+        if (this.debugState)
+            console.log("Exit jump");
+    }
+
+    /**
+     * Executes an attack while the player is in the 'jump' state.
+     */
+    attack()
+    {
+        // TODO: Implement logic.
+        // TODO: Implement 'jump' attack animation.
+
+        if (this.debugState)
+            console.log("Attacking");
+    }
+
+}

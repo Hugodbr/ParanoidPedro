@@ -2,7 +2,7 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
 
 // import Character from "../entities/character.js";
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
-import Player from '../entities/player.js';
+import { Player } from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
 
 import LayerObject from '../zones/layer_object.js';
