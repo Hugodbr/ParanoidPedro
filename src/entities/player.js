@@ -107,9 +107,9 @@ export class Player extends Flat3D_Entity {
         this.scene.cameras.main.startFollow(this, true, 0.08, 0, -this.cameraOffsetX, 0);
         this.scene.cameras.main.setDeadzone(300, 300);
 
-        this.scene.input.gamepad.once("connected", pad => { this.gamepad = pad; }); // TODO: FROM TELMO
+        //this.scene.input.gamepad.once("connected", pad => { this.gamepad = pad; }); // TODO: FROM TELMO
 
-        //this.scene.cameras.main.setBounds(0, 0, 100000, 100000); // TODO hardcoded
+        this.scene.cameras.main.setBounds(0, 0, 100000, 100000); // TODO hardcoded
 
 
         /**
