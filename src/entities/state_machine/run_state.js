@@ -3,7 +3,6 @@ import {Player, FACING} from "../player.js";
 
 import StandState from "./stand_state.js";
 import JumpState from "./jump_state.js";
-import SpinState from "./spin_state.js";
 import FallState from "./fall_state.js";
 
 /**
@@ -33,7 +32,7 @@ export default class RunState extends State
 
         //* Handle horizontal movement
         // Left movement
-        if (this.leftKey.isDown) 
+        if (this.input.leftMoveInput()) 
         {
             if (this.facing !== FACING.LEFT) {
                 this.goLeft();
@@ -41,7 +40,7 @@ export default class RunState extends State
             }
         } 
         // Right movement
-        else if (this.rightKey.isDown) 
+        else if (this.input.rightMoveInput()) 
         {
             if (this.facing !== FACING.RIGHT) {
                 this.goRight();
@@ -51,22 +50,22 @@ export default class RunState extends State
 
         //* Handle action inputs while moving
         // Jump
-        if (this.jumpKey.isDown) 
+        if (this.input.jumpMoveInput()) 
         {
             this.player.setState(JumpState);
         } 
         // Attack
-        else if (this.atkKey.isDown) 
+        else if (this.input.attackActionInput()) 
         {
             this.attack();
         } 
-        // Spin
-        else if (this.spinKey.isDown) 
+        // Roll
+        else if (this.input.rollMoveInput()) 
         {
-            this.player.setState(SpinState);
+            // this.player.setState(RollState); // TODO: implement
         } 
         // Stop
-        else if (this.leftKey.isDown === this.rightKey.isDown) // Stop if no direction is held OR if both directions are being held
+        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
         {
             this.player.setState(StandState); 
         }

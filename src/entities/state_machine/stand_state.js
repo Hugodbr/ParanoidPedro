@@ -3,7 +3,6 @@ import {Player, FACING} from "../player.js";
 
 import RunState from "./run_state.js";
 import JumpState from "./jump_state.js";
-import SpinState from "./spin_state.js";
 import FallState from "./fall_state.js";
 
 /**
@@ -34,7 +33,7 @@ export default class StandState extends State
 
         //* Handle starting horizontal movement
         // Start left movement
-        if (this.leftKey.isDown && this.rightKey.isUp) 
+        if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 
         {
             if (this.facing != FACING.LEFT) {
                 this.player.changeFacing(FACING.LEFT)
@@ -42,7 +41,7 @@ export default class StandState extends State
             this.player.setState(RunState);
         }
         // Start right movement
-        else if (this.rightKey.isDown && this.leftKey.isUp) 
+        else if (this.input.rightMoveInput() && !this.input.leftMoveInput()) 
         {
             if (this.facing != FACING.RIGHT) {
                 this.player.changeFacing(FACING.RIGHT)
@@ -51,16 +50,16 @@ export default class StandState extends State
         }
         //* Handle action inputs while moving
         // Jump
-        else if (this.jumpKey.isDown) {
+        else if (this.input.jumpMoveInput()) {
             this.player.setState(JumpState);
         }
         // Attack
-        else if (this.atkKey.isDown) {
+        else if (this.input.attackActionInput()) {
             this.attack();
         }
-        // Spin
-        else if (this.spinKey.isDown) {
-            // this.player.setState(SpinState); // TODO: implement
+        // Roll
+        else if (this.input.rollMoveInput()) {
+            // this.player.setState(RollState); // TODO: implement
         }      
 
 

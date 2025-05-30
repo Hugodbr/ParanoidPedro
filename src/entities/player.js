@@ -37,42 +37,6 @@ export class Player extends Flat3D_Entity {
 	 * @type {number}
      */
     cameraOffsetX = 400;
-
-    /**
-     * Reference to the gamepad controller
-     * @type {Phaser.Input.Gamepad}
-     */
-    gamepad = null;
-
-    /**
-     * Whether a left movement input is being pressed or not
-     * @type {bool}
-     */
-    leftMoveInput;
-
-    /**
-     * Whether a right movement input is being pressed or not
-     * @type {bool}
-     */
-    rightMoveInput;
-
-    /**
-     * Whether a jump movement input is being pressed or not
-     * @type {bool}
-     */
-    jumpMoveInput;
-
-    /**
-     * Whether a roll movement input is being pressed or not
-     * @type {bool}
-     */
-    rollMoveInput;
-    
-    /**
-     * Whether an attack action input is being pressed or not
-     * @type {bool}
-     */
-    attackActionInput;
     
     /**
 	 * @param {Scene} scene - scene where it appears
@@ -106,8 +70,6 @@ export class Player extends Flat3D_Entity {
          */
         this.scene.cameras.main.startFollow(this, true, 0.08, 0, -this.cameraOffsetX, 0);
         this.scene.cameras.main.setDeadzone(300, 300);
-
-        //this.scene.input.gamepad.once("connected", pad => { this.gamepad = pad; }); // TODO: FROM TELMO
 
         this.scene.cameras.main.setBounds(0, 0, 100000, 100000); // TODO hardcoded
 
@@ -159,54 +121,6 @@ export class Player extends Flat3D_Entity {
 	 */
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
-
-/* TODO: FROM TELMO
-        // Updating the state of the input
-        this.leftMoveInput = (
-            this.aKey.isDown 
-            || this.gamepad !== null && this.gamepad.left
-            || this.gamepad !== null && this.gamepad.leftStick.x < -0.5
-        );
-        this.rightMoveInput = (
-            this.dKey.isDown 
-            || this.gamepad !== null && this.gamepad.right
-            || this.gamepad !== null && this.gamepad.leftStick.x > 0.5
-        );
-        this.jumpMoveInput = this.spaceBar.isDown || this.gamepad !== null && this.gamepad.A;
-
-		// Move LEFT
-		if (this.leftMoveInput) {
-			this.body.setVelocityX(-this.groundSpeed * this.scale);
-
-            if (this.facing != FACING.LEFT){
-                this.changeFacing(FACING.LEFT)
-            }
-		}
-		// Move RIGHT
-		else if (this.rightMoveInput) {
-			this.body.setVelocityX(this.groundSpeed * this.scale);
-
-            if (this.facing != FACING.RIGHT){
-                this.changeFacing(FACING.RIGHT)
-            }
-		}
-		else {
-			this.body.setVelocityX(0);
-		}
-
-		// JUMP
-		if (this.wKey.isDown || this.gamepad !== null && this.gamepad.up) {
-			this.moveInZ(this.groundSpeed);
-		}
-		// DOWN
-		else if (this.sKey.isDown || this.gamepad !== null && this.gamepad.down) {
-			this.moveInZ(-this.groundSpeed);
-		}
-        
-		if(this.jumpMoveInput && this.body.onFloor()) {
-			this.body.setVelocityY(-this.jumpSpeed);
-		}
-		*/
 
         // Updates current state player is in.
 		this.currentState.update(t, dt);

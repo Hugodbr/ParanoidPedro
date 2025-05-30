@@ -1,5 +1,7 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
+import InputManager from '../managers/input_manager.js';
+
 // import Character from "../entities/character.js";
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import { Player } from '../entities/player.js';
@@ -59,6 +61,9 @@ export default class MainGame extends Phaser.Scene
          * @type {bool}
         */
         this.isDebug = this.physics.config.debug;
+
+        //* Input manager singleton
+        this.inputManager = new InputManager(this);
 
         //* Map creation
         //

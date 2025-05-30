@@ -30,7 +30,7 @@ export default class JumpState extends State
 
         //* Handle horizontal movement
         // Left movement
-        if (this.leftKey.isDown) 
+        if (this.input.leftMoveInput()) 
         {
             if (this.facing != FACING.LEFT) {
                 this.player.changeFacing(FACING.LEFT)
@@ -38,7 +38,7 @@ export default class JumpState extends State
             this.goLeft();
         }
         // Right movement
-        else if (this.rightKey.isDown) 
+        else if (this.input.rightMoveInput()) 
         {
             if (this.facing != FACING.RIGHT) {
                 this.player.changeFacing(FACING.RIGHT)
@@ -48,19 +48,19 @@ export default class JumpState extends State
 
         //* Handle action inputs while jumping
         // Jump
-        if (this.jumpKey.isDown) {
+        if (this.input.jumpMoveInput()) {
             // this.player.setState(JumpState); // ! if double jump later
         }
         // Attack
-        else if (this.atkKey.isDown) {
+        else if (this.input.attackActionInput()) {
             this.attack();
         }
-        // Spin
-        else if (this.spinKey.isDown) {
-            // this.player.setState(SpinState); // TODO: dash downward?
+        // Roll
+        else if (this.input.rollMoveInput()) {
+            // this.player.setState(RollState); // TODO: dash downward?
         }
         // Stop
-        else if (this.leftKey.isDown === this.rightKey.isDown) {
+        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
             this.stop();
         }
 

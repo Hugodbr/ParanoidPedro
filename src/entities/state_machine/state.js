@@ -1,4 +1,5 @@
 import {Player, FACING} from "../player.js";
+import InputManager from '../../managers/input_manager.js';
 
 
 /**
@@ -28,12 +29,7 @@ export default class State
 
         this.scene = this.player.scene;
 
-        // Key bindings 
-		this.jumpKey = this.scene.input.keyboard.addKey('W');
-		this.leftKey = this.scene.input.keyboard.addKey('A');
-		this.rightKey = this.scene.input.keyboard.addKey('D');
-		this.spinKey = this.scene.input.keyboard.addKey('S');
-		this.atkKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.input = InputManager.getInstance();
     }
 
     /**
