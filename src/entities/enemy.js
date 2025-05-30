@@ -27,6 +27,12 @@ export class Enemy extends Flat3D_Entity {
      * @type {BehaviorNode}
      */
     behaviorTree;
+    
+    /**
+     * Behavior tree fragment that fits in the attack state part of the main tree
+     * @type {BehaviorNode}
+     */
+    attackStateBehavior = new BehaviorNode();
 
     /**
      * @type {Path3D_System}
@@ -82,14 +88,20 @@ export class Enemy extends Flat3D_Entity {
      * The maximum distance the enemy can have with the player to be able attack it
      * @type {number}
      */
-    maxAttackDistance = 100;
+    maxAttackDistance = 200;
 
     /**
      * The position were the enemy will start to investigate when the state is setted to `SEARCHING`
      * @type {Vector3D}
      */
     searchInitTargetPos;
-zone;
+    
+    /**
+     * Zone that detects the player in orther to set the `canSeePlayer` to true
+     * @type {Phaser.GameObjects.Zone}
+     */
+    visionArea;
+    
     /**
      * @param {Scene} scene 
      * @param {number} x 
@@ -107,9 +119,9 @@ zone;
 
         this.buildTree();
 
-        this.zone = scene.add.zone(x, y, 400, 200);
-        scene.physics.add.existing(this.zone);
-        this.zone.body.setAllowGravity(false);
+        this.visionArea = scene.add.zone(x, y, 400, 200);
+        scene.physics.add.existing(this.visionArea);
+        this.visionArea.body.setAllowGravity(false);
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
         this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
@@ -382,8 +394,16 @@ zone;
                         .addNode(TOO_LONG_DISTANCE_TO_PLAYER)
                         .addNode(MOVE_TOWARDS_PLAYER)
                     )
-                    //.addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
+                    .addNode(DEBUG_FALLBACK_POINT("ATTACK"))
+                //    .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
+            )
+
+            .addNode( new SequenceBehaviorNode()
+
+                .addNode(STATE_IS_(ENEMY_STATE.ATTACKING))
+
+                .addNode(this.attackStateBehavior)
             )
         );
     }
@@ -400,10 +420,6 @@ zone;
         
         this.behaviorTree.exec();
 
-        if (this.pKey.isDown) this.canSeePlayer = !this.canSeePlayer;
-
-        // console.log(this.actionState);
-
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
         if (this.tKey.isDown){
@@ -413,12 +429,12 @@ zone;
                 this.setActionState(ENEMY_STATE.PATROLLING);
         }
 
-        this.zone.x = this.body.position.x;
-        this.zone.y = this.body.position.y;
-        if (this.scene.physics.overlap(this.playerRef, this.zone)) {
+        this.visionArea.x = this.body.position.x;
+        this.visionArea.y = this.body.position.y;
+        if (this.scene.physics.overlap(this.playerRef, this.visionArea)) {
             this.canSeePlayer = true;
         }
-        else{
+        else {
             this.canSeePlayer = false;
         }
     }
