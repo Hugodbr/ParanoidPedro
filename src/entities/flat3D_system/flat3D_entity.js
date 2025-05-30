@@ -96,6 +96,9 @@ export class Flat3D_Entity extends Phaser.GameObjects.Sprite {
 
 		// ! HARDCODED z max 17000
 		this.flat3D_Position.z < 17000 ? this.toggleVisible(true) : this.toggleVisible(false);
+
+		// So body won't oscilate between very small y values creating visual artifacts.
+        this.y = Math.round(this.y);       
 	}
 
 	toggleVisible(visible)
