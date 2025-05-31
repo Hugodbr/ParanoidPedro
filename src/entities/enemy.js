@@ -1,6 +1,7 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
 import { Vector3D } from "../utils/vector3D.js";
+import { Cooldown } from "../utils/cooldown.js";
 
 import { BehaviorNode, NODE_STATUS } from "../AI_behavior/behavior_node.js";
 import { FallbackBehaviorNode } from "../AI_behavior/fallback_behavior_node.js";
@@ -103,6 +104,17 @@ export class Enemy extends Flat3D_Entity {
     visionArea;
     
     /**
+     * ´time´ variable value from the `preUpdate` function in orther to control cooldowns
+     * @type {number}
+     */
+    gameTime;
+
+    /**
+     * @type {Cooldown}
+     */
+    searchStateCooldown;
+    
+    /**
      * @param {Scene} scene 
      * @param {number} x 
      * @param {number} y 
@@ -179,6 +191,15 @@ export class Enemy extends Flat3D_Entity {
            
             return new ExecutionBehaviorNode((() => {
                 this.setActionState(action_state);
+                return NODE_STATUS.SUCCESS;
+            }).bind(this));
+        };
+
+        const START_SEARCH_TIMER_ = (time) => {
+            console.assert(typeof time === "number", "time must be a number");
+
+            return new ExecutionBehaviorNode((() => {
+                this.searchStateCooldown = new Cooldown(time);
                 return NODE_STATUS.SUCCESS;
             }).bind(this));
         };
@@ -301,7 +322,11 @@ export class Enemy extends Flat3D_Entity {
         const CAN_SEE_PLAYER = ExecutionBehaviorNode.buildConditionNode((() => {
             return this.canSeePlayer;
         }).bind(this));
-
+        
+        const SEARCH_TIME_FINISHED = ExecutionBehaviorNode.buildConditionNode((() => {
+            return this.searchStateCooldown.canUse(this.gameTime);
+        }).bind(this));
+    
         // Creating the tree
 
         this.behaviorTree = ( new FallbackBehaviorNode()
@@ -363,12 +388,14 @@ export class Enemy extends Flat3D_Entity {
                             )
                             .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
                             .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT) // TODO: SET THE SEARCH DIRECTION
+                            .addNode(START_SEARCH_TIMER_(10000))
                         )
                     )
-                    /*.addNode( new SequenceBehaviorNode()
-                        //.addNode() TIMEOUT
+                    .addNode( new SequenceBehaviorNode()
+                        .addNode(SEARCH_TIME_FINISHED) // TIMEOUT
+                        .addNode(DEBUG_SEQUENCE_POINT("IT WAS NOTHING, LETS KEEP PATROLLING"))
                         .addNode(SET_STATE_TO_(ENEMY_STATE.PATROLLING))
-                    )*/
+                    )
                     .addNode( new ForceFailureBehaviorNode()
                         
                         .setNode( new SequenceBehaviorNode()
@@ -415,6 +442,8 @@ export class Enemy extends Flat3D_Entity {
 	 */
 	preUpdate(t, dt) {
 		super.preUpdate(t, dt);
+
+        this.gameTime = t;
 
         this.body.setVelocityX(0);
         

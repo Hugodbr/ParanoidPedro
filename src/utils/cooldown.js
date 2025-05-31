@@ -4,7 +4,7 @@
  * @param cooldownTime for an action
  * Example of use: An entity may create a this.jumpCooldown = new Cooldown(500) and ask for bool this.jumpCooldown.canUse(time) at update(time, delta) to check if can perform a jump after an input.
  */
-export default class Cooldown 
+export class Cooldown 
 {
     constructor(cooldownTime) {
         this.cooldownTime = cooldownTime;
