@@ -451,13 +451,6 @@ export class Enemy extends Flat3D_Entity {
 
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
-        if (this.tKey.isDown){
-            if(this.actionState === ENEMY_STATE.PATROLLING)
-                this.setActionState(ENEMY_STATE.CHASING);
-            else
-                this.setActionState(ENEMY_STATE.PATROLLING);
-        }
-
         this.visionArea.x = this.body.position.x;
         this.visionArea.y = this.body.position.y;
         if (this.scene.physics.overlap(this.playerRef, this.visionArea)) {
