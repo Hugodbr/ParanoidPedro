@@ -121,7 +121,7 @@ export class Enemy extends Flat3D_Entity {
      * @param {Phaser.Textures.Texture} z 
      */
     constructor(scene, x, y, z, playerRef, pathPoints) {
-        super(scene, x, y, z, TextureKeys.PlayerCharacter);
+        super(scene, x, y, z, TextureKeys.Agent5G);
 
         this.playerRef = playerRef;
 

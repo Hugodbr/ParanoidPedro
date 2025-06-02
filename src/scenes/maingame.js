@@ -6,10 +6,12 @@ import InputManager from '../managers/input_manager.js';
 import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import { Player } from '../entities/player.js';
 import { Enemy } from '../entities/enemy.js';
+import { Agent5G } from '../entities/agent_5G.js';
 
 import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
 import Wall from '../zones/wall.js';
+import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
 
 /**
  * Game main scene.
@@ -51,6 +53,7 @@ export default class MainGame extends Phaser.Scene
 
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
+        this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
 	}
 	
 	create() {
@@ -79,7 +82,7 @@ export default class MainGame extends Phaser.Scene
         //* Player creation
         //
         this.player = new Player(this, 600, 200, 0);
-
+let agent = new Agent5G(this, 500, 200, 0, this.player, [new Path3D_Point(this, 400, 200, 0)]);
         
         //* Zones creation
         //

@@ -17,7 +17,8 @@ export const LayerNames = {
 };
 
 export const TextureKeys = {
-    PlayerCharacter: 'player-character'
+    PlayerCharacter: 'player-character',
+    Agent5G: 'Agent5G'
 };
 
 export const ObjectNames = {
@@ -29,7 +30,11 @@ export const ObjectNames = {
 };
 
 export const AnimationKeys = {
-    PlayerIdle: 'player-idle'
+    PlayerIdle: 'player-idle',
+    Agent5G_Idle: 'Agent5G_Idle',
+    Agent5G_Walk: 'Agent5G_Walk',
+    Agent5G_Run: 'Agent5G_Run',
+    Agent5G_Shoot: 'Agent5G_Shoot'
 };
 
 export const SoundKeys = {
