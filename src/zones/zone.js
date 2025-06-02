@@ -6,6 +6,10 @@ import { Agent5G } from '../entities/agent_5G.js';
 import { Path3D_Point } from "../entities/flat3D_system/path3D_point.js";
 import LayerObject from './layer_object.js';
 
+const enemyMap = {
+    Agent5G
+}
+
 
 /**
  * Class responsable for creating map zones, its enemies and position points
@@ -82,7 +86,9 @@ export default class Zone extends LayerObject
                 pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
             });
 
-            this.enemies.push(new Agent5G(this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
+            const enemyType = enemyObjects[i].properties.find(prop => prop.name === "type").value;
+
+            this.enemies.push(new enemyMap[enemyType](this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
 
             this.visibleObjects.push(this.enemies[i]);
         }

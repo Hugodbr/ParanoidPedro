@@ -226,7 +226,7 @@
                                 {
                                  "name":"type",
                                  "type":"string",
-                                 "value":"enemy1"
+                                 "value":"Agent5G"
                                 }],
                          "type":"objectgroup",
                          "visible":true,
@@ -492,7 +492,7 @@
                                 {
                                  "name":"type",
                                  "type":"string",
-                                 "value":"enemy1"
+                                 "value":"Agent5G"
                                 }],
                          "type":"objectgroup",
                          "visible":true,

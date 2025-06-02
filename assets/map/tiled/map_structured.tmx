@@ -82,7 +82,7 @@
   <group id="31" name="enemies">
    <objectgroup id="35" name="enemy1">
     <properties>
-     <property name="type" value="enemy1"/>
+     <property name="type" value="Agent5G"/>
     </properties>
     <object id="38" name="0" x="3109.35" y="412.769">
      <properties>
@@ -185,7 +185,7 @@
   <group id="32" name="enemies">
    <objectgroup id="33" name="enemy1">
     <properties>
-     <property name="type" value="enemy1"/>
+     <property name="type" value="Agent5G"/>
     </properties>
     <object id="32" name="0" x="1822.89" y="409.128">
      <properties>
