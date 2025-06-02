@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, AnimationKeys } from '../../assets/asset_keys.js';
 import { Vector3D } from "../utils/vector3D.js";
 import { Cooldown } from "../utils/cooldown.js";
 
@@ -13,7 +13,7 @@ import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_
 import { Path3D_System, PATH_TRANSITIVITY } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
 
-const ENEMY_STATE = {
+export const ENEMY_STATE = {
     PATROLLING: "PATROLLING",
     CHASING: "CHASING",
     SEARCHING: "SEARCHING",
@@ -113,6 +113,36 @@ export class Enemy extends Flat3D_Entity {
      * @type {Cooldown}
      */
     searchStateCooldown;
+
+    /**
+     * Idle state animation key
+     * @type {String}
+     */
+    idleAnimation = "";
+    
+    /**
+     * Patrolling state animation key
+     * @type {String}
+     */
+    patrolAnimation = "";
+    
+    /**
+     * Searching state animation key
+     * @type {String}
+     */
+    searchAnimation = "";
+
+    /**
+     * Chasing state animation key
+     * @type {String}
+     */
+    chaseAnimation = "";
+    
+    /**
+     * Attacking state animation key
+     * @type {String}
+     */
+    attackAnimation = "";
     
     /**
      * @param {Scene} scene 
@@ -326,6 +356,36 @@ export class Enemy extends Flat3D_Entity {
         const SEARCH_TIME_FINISHED = ExecutionBehaviorNode.buildConditionNode((() => {
             return this.searchStateCooldown.canUse(this.gameTime);
         }).bind(this));
+
+        const PLAY_IDLE_ANIMATION = new ExecutionBehaviorNode((() => {
+            this.play(this.idleAnimation, true);
+
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
+        
+        const PLAY_PATROL_ANIMATION = new ExecutionBehaviorNode((() => {
+            this.play(this.patrolAnimation, true);
+            
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
+        
+        const PLAY_SEARCH_ANIMATION = new ExecutionBehaviorNode((() => {
+            this.play(this.searchAnimation, true);
+
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
+        
+        const PLAY_CHASE_ANIMATION = new ExecutionBehaviorNode((() => {
+            this.play(this.chaseAnimation, true);
+            
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
+        
+        const PLAY_ATTACK_ANIMATION = new ExecutionBehaviorNode((() => {
+            this.play(this.attackAnimation, true);
+            
+            return NODE_STATUS.SUCCESS;
+        }).bind(this));
     
         // Creating the tree
 
@@ -355,6 +415,8 @@ export class Enemy extends Flat3D_Entity {
             .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.PATROLLING))
+
+                .addNode(PLAY_PATROL_ANIMATION)
                 
                 .addNode( new FallbackBehaviorNode()
                         
@@ -377,6 +439,8 @@ export class Enemy extends Flat3D_Entity {
             .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.SEARCHING))
+
+                .addNode(PLAY_SEARCH_ANIMATION)
 
                 .addNode( new FallbackBehaviorNode()
 
@@ -412,6 +476,8 @@ export class Enemy extends Flat3D_Entity {
 
                 .addNode(STATE_IS_(ENEMY_STATE.CHASING))
 
+                .addNode(PLAY_CHASE_ANIMATION)
+
                 .addNode( new FallbackBehaviorNode()
                     .addNode( new SequenceBehaviorNode()
                         .addNode(IS_IN_DEPTH)
@@ -422,13 +488,15 @@ export class Enemy extends Flat3D_Entity {
                         .addNode(MOVE_TOWARDS_PLAYER)
                     )
                     .addNode(DEBUG_FALLBACK_POINT("ATTACK"))
-                //    .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
+                    .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
             )
 
             .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.ATTACKING))
+
+                .addNode(PLAY_ATTACK_ANIMATION)
 
                 .addNode(this.attackStateBehavior)
             )
@@ -458,6 +526,15 @@ export class Enemy extends Flat3D_Entity {
         }
         else {
             this.canSeePlayer = false;
+        }
+
+        let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
+
+        if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
+            this.flipX = true;
+        }
+        else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
+            this.flipX = false;
         }
     }
 }
