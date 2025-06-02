@@ -82,7 +82,6 @@ export default class MainGame extends Phaser.Scene
         //* Player creation
         //
         this.player = new Player(this, 600, 200, 0);
-let agent = new Agent5G(this, 500, 200, 0, this.player, [new Path3D_Point(this, 400, 200, 0)]);
         
         //* Zones creation
         //

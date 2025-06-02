@@ -35,11 +35,14 @@ export class Agent5G extends Enemy {
             frameRate: 25, // Velocidad de la animación
             repeat: -1    // Animación en bucle
         });
-    }
-
-    preUpdate(t, dt) {
-		super.preUpdate(t, dt);
 
         this.play(AnimationKeys.Agent5G_Idle, true);
+
+        this.setFlipX(true);
+    }
+    
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);
+
     }
 }

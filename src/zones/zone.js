@@ -1,6 +1,8 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
 import { Enemy } from '../entities/enemy.js';
+import { Agent5G } from '../entities/agent_5G.js';
+
 import { Path3D_Point } from "../entities/flat3D_system/path3D_point.js";
 import LayerObject from './layer_object.js';
 
@@ -80,7 +82,7 @@ export default class Zone extends LayerObject
                 pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
             });
 
-            this.enemies.push(new Enemy(this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
+            this.enemies.push(new Agent5G(this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
 
             this.visibleObjects.push(this.enemies[i]);
         }
