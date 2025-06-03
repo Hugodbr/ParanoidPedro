@@ -102,6 +102,12 @@ export class Enemy extends Flat3D_Entity {
      * @type {Phaser.GameObjects.Zone}
      */
     visionArea;
+
+    /**
+     * Lenght that defines de width of the vision area
+     * @type {number}
+     */
+    visionScope = 400;
     
     /**
      * ´time´ variable value from the `preUpdate` function in orther to control cooldowns
@@ -161,7 +167,10 @@ export class Enemy extends Flat3D_Entity {
 
         this.buildTree();
 
-        this.visionArea = scene.add.zone(x, y, 400, 200);
+        this.visionArea = scene.add.zone(x, y, this.width + this.visionScope, 240);
+
+        let visionAreaOriginX = (this.width*0.5 / this.visionArea.width)
+        this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         scene.physics.add.existing(this.visionArea);
         this.visionArea.body.setAllowGravity(false);
 
@@ -521,7 +530,9 @@ export class Enemy extends Flat3D_Entity {
 
         this.visionArea.x = this.body.position.x;
         this.visionArea.y = this.body.position.y;
-        if (this.scene.physics.overlap(this.playerRef, this.visionArea)) {
+
+        if (this.scene.physics.overlap(this.playerRef, this.visionArea) && this.flat3D_Position.z <= 0) 
+        {
             this.canSeePlayer = true;
         }
         else {
@@ -532,9 +543,15 @@ export class Enemy extends Flat3D_Entity {
 
         if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
             this.flipX = true;
+
+            let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
+            this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
         else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
             this.flipX = false;
+
+            let visionAreaOriginX = (this.width*0.5 / this.visionArea.width);
+            this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
     }
 }
