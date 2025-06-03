@@ -5,15 +5,15 @@
  * Example of use: An entity may create a this.jumpCooldown = new Cooldown(500) and ask for bool this.jumpCooldown.canUse(time) at update(time, delta) to check if can perform a jump after an input.
  */
 export class Cooldown 
-{
-    constructor(cooldownTime) {
+{lastUsed = 0;
+    constructor(cooldownTime, currentTime = 0) {
         this.cooldownTime = cooldownTime;
-        this.lastUsed = 0;
+        this.lastUsed = currentTime;
     }
 
     canUse(currentTime) {
         if (currentTime - this.lastUsed >= this.cooldownTime) {
-            this.lastUsed = currentTime;
+            //this.lastUsed = currentTime;
             return true;
         }
         return false;

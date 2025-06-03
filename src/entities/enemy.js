@@ -229,7 +229,7 @@ export class Enemy extends Flat3D_Entity {
             console.assert(typeof time === "number", "time must be a number");
 
             return new ExecutionBehaviorNode((() => {
-                this.searchStateCooldown = new Cooldown(time);
+                this.searchStateCooldown = new Cooldown(time, this.gameTime);
                 return NODE_STATUS.SUCCESS;
             }).bind(this));
         };
@@ -452,7 +452,7 @@ export class Enemy extends Flat3D_Entity {
                             )
                             .addNode(SET_GROUND_SPEED_TO_(this.serachStateSpeed))
                             .addNode(CHANGE_ORIENTATION_TO_CLOSEST_POINT) // TODO: SET THE SEARCH DIRECTION
-                            .addNode(START_SEARCH_TIMER_(10000))
+                            .addNode(START_SEARCH_TIMER_(15000))
                         )
                     )
                     .addNode( new SequenceBehaviorNode()
