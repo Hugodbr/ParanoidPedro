@@ -18,7 +18,8 @@ export const LayerNames = {
 
 export const TextureKeys = {
     PlayerCharacter: 'player-character',
-    Agent5G: 'Agent5G'
+    Agent5G: 'Agent5G',
+    Wave5G: 'Wave5G'
 };
 
 export const ObjectNames = {

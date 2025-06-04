@@ -54,6 +54,8 @@ export default class MainGame extends Phaser.Scene
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
         this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
+        
+        this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
 	}
 	
 	create() {

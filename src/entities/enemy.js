@@ -89,7 +89,7 @@ export class Enemy extends Flat3D_Entity {
      * The maximum distance the enemy can have with the player to be able attack it
      * @type {number}
      */
-    maxAttackDistance = 200;
+    maxAttackDistance = 300;
 
     /**
      * The position were the enemy will start to investigate when the state is setted to `SEARCHING`
@@ -466,7 +466,6 @@ export class Enemy extends Flat3D_Entity {
                     )
                     .addNode( new SequenceBehaviorNode()
                         .addNode(SEARCH_TIME_FINISHED) // TIMEOUT
-                        .addNode(DEBUG_SEQUENCE_POINT("IT WAS NOTHING, LETS KEEP PATROLLING"))
                         .addNode(SET_STATE_TO_(ENEMY_STATE.PATROLLING))
                     )
                     .addNode( new ForceFailureBehaviorNode()
@@ -496,7 +495,6 @@ export class Enemy extends Flat3D_Entity {
                         .addNode(TOO_LONG_DISTANCE_TO_PLAYER)
                         .addNode(MOVE_TOWARDS_PLAYER)
                     )
-                    .addNode(DEBUG_FALLBACK_POINT("ATTACK"))
                     .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
             )

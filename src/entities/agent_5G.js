@@ -1,10 +1,19 @@
 import { Enemy, ENEMY_STATE } from "./enemy.js";
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, AnimationKeys } from '../../assets/asset_keys.js';
+import { Cooldown } from "../utils/cooldown.js";
+import { Vector3D } from "../utils/vector3D.js";
+import { Pulse5G } from "./pulse_5G_proyectile.js";
 
 import { BehaviorNode, NODE_STATUS } from "../AI_behavior/behavior_node.js";
 import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js";
 
 export class Agent5G extends Enemy {
+
+    /**
+     * The time that the enemy takes before repeting the attack or changing the state
+     * @type {Cooldown}
+     */
+    attackCooldown;
 
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
@@ -47,10 +56,12 @@ export class Agent5G extends Enemy {
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + AnimationKeys.Agent5G_Shoot, (() => {
             this.actionState = ENEMY_STATE.CHASING;
+            //attackCooldown = new Cooldown(1000);
         }).bind(this))
 
         //this.setFlipX(true);
         this.attackStateBehavior = new ExecutionBehaviorNode((() => {
+            new Pulse5G(this.scene, this.flat3D_Position, new Vector3D(100, 0, 0));
             return NODE_STATUS.SUCCESS;
         }).bind(this));
 
