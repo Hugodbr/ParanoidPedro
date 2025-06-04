@@ -495,7 +495,7 @@ export class Enemy extends Flat3D_Entity {
                         .addNode(TOO_LONG_DISTANCE_TO_PLAYER)
                         .addNode(MOVE_TOWARDS_PLAYER)
                     )
-                    .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
+                    //.addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
             )
 
@@ -524,6 +524,9 @@ export class Enemy extends Flat3D_Entity {
         
         this.behaviorTree.exec();
 
+        if(this.lastFrameActionState !== this.actionState)
+            console.log(this.actionState);
+
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
         this.visionArea.x = this.body.position.x;
@@ -539,13 +542,13 @@ export class Enemy extends Flat3D_Entity {
 
         let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
 
-        if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
+        if(this.body.velocity.x < 0 /*|| this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0*/) {
             this.flipX = true;
 
             let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
             this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
-        else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
+        else if(this.body.velocity.x > 0 /*|| this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0*/) {
             this.flipX = false;
 
             let visionAreaOriginX = (this.width*0.5 / this.visionArea.width);
