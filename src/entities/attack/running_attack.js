@@ -3,7 +3,7 @@ import Attack from "./attack.js";
 import { TextureKeys, AnimationKeys, SoundKeys } from "../../../assets/asset_keys.js"
 import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
-export default class NormalAttack extends Attack
+export default class RunningAttack extends Attack
 {
     constructor(scene, player){
         super(scene, player, TextureKeys.NormalAttack)
@@ -23,22 +23,22 @@ export default class NormalAttack extends Attack
         this.setAttackColliderActive(false);
 
         scene.anims.create({
-			key: AnimationKeys.Normal_Attack,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:0, end:0}),
-			frameRate: 10,
-			repeat: 1
-		});
+            key: AnimationKeys.Running_Attack,
+            frames: scene.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:0, end:3}),
+            frameRate: 10,
+            repeat: 1
+        });
 
         this.on('animationcomplete', this.onAnimationComplete, this);
 
     }
 
     /**
-	 * @param {number} t - Total time
-	 * @param {number} dt - Time between frames
-	 */
-	preUpdate(t, dt) {
-		super.preUpdate(t, dt);
+     * @param {number} t - Total time
+     * @param {number} dt - Time between frames
+     */
+    preUpdate(t, dt) {
+        super.preUpdate(t, dt);
 
     }
 
@@ -49,12 +49,12 @@ export default class NormalAttack extends Attack
         this.setAttackSpriteActive(true);
         this.setAttackColliderActive(true);
 
-        this.play(AnimationKeys.Normal_Attack);
+        this.play(AnimationKeys.Running_Attack);
 
-        this.scene.sound.play(SoundKeys.Normal_Attack, {
+        this.scene.sound.play(SoundKeys.Running_Attack, {
             volume: 1,
             loop: false,
-            rate: 2.5
+            rate: 2
         });
 
     }
@@ -75,7 +75,7 @@ export default class NormalAttack extends Attack
 
     onAnimationComplete(anim, frame)
     {
-        if (anim.key === AnimationKeys.Normal_Attack) {
+        if (anim.key === AnimationKeys.Running_Attack) {
             this.setAttackSpriteActive(false);
             this.performing = false;
         }

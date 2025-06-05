@@ -1,5 +1,7 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
+import RunningAttack from "../attack/running_attack.js";
+import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
 /**
  * Class for running state.
@@ -12,6 +14,10 @@ export default class RunState extends State
      */
     constructor(player) {
         super(player);
+
+        this.runATK = new RunningAttack(this.scene, player);
+
+        this.attackCooldown = new PersistentCooldown(1200);
     }
 
     /**
@@ -51,7 +57,9 @@ export default class RunState extends State
         // Attack
         else if (this.input.attackActionInput()) 
         {
-            this.attack();
+            if (this.attackCooldown.canUse(t)) { 
+                this.attack(t);
+            }
         } 
         // Roll
         else if (this.input.rollMoveInput()) 
@@ -101,6 +109,7 @@ export default class RunState extends State
     attack()
     {
         // TODO: Implement logic.
+        this.runATK.attack();
         // TODO: Implement 'run' attack animation.
 
         if (this.debugState)

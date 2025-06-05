@@ -1,4 +1,4 @@
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, SoundKeys } from '../../assets/asset_keys.js'
 
 import InputManager from '../managers/input_manager.js';
 
@@ -39,7 +39,8 @@ export default class MainGame extends Phaser.Scene
         this.numberOfWalls; // how many
         this.walls = []; // all wall objects
 
-        this.enemies = []; // all enemies
+        this.enemiesArray = []; // all enemies in array
+        this.enemiesGroup = this.physics.add.group(); // all enemies in group
 	}
 	
     /**
@@ -58,7 +59,12 @@ export default class MainGame extends Phaser.Scene
         this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
 
         //* Attacks
-        this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
+        // this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
+        this.load.spritesheet(TextureKeys.Punch_Attack, 'assets/character/attacks/stand_attack.png', { frameWidth: 64, frameHeight: 96});
+        this.load.audio(SoundKeys.Normal_Attack, 'assets/sfx/attack/punches-single.mp3');
+        this.load.audio(SoundKeys.Running_Attack, 'assets/sfx/attack/punches-4x.mp3');
+
+
 	}
 	
 	create() {
@@ -97,7 +103,8 @@ export default class MainGame extends Phaser.Scene
         for (let i = 0; i < this.numberOfZones; ++i) {
             this.zones.push(new Zone(this, i + 1));
             this.zones[i].enemies.forEach(enemy => {
-                this.enemies.push(enemy);
+                this.enemiesGroup.add(enemy);
+                this.enemiesArray.push(enemy);
             });
         }
     
@@ -132,12 +139,12 @@ export default class MainGame extends Phaser.Scene
         //
         this.zones.forEach(zone => {
             zone.defineCollisions([this.player]);
-            zone.defineCollisions(this.enemies);
+            zone.defineCollisions(this.enemiesArray);
         });
 
         this.walls.forEach(wall => {
             wall.defineCollisions([this.player]);
-            wall.defineCollisions(this.enemies);
+            wall.defineCollisions(this.enemiesArray);
         });
 
         

@@ -53,6 +53,9 @@ export class Player extends Flat3D_Entity {
     constructor(scene, x, y, z) {
         super(scene, x, y, z, TextureKeys.PlayerCharacter);
 
+        // Reference to the scene
+        this.scene = scene;
+
         /**
          * Player starts facing right.
          */
