@@ -37,7 +37,7 @@ export class Player extends Flat3D_Entity {
      */
 	jumpSpeed = 850;
 
-    /**
+        /**
      * Camera offset in X axis. Player will be further from the side it's facing.
 	 * @type {number}
      */
@@ -61,6 +61,11 @@ export class Player extends Flat3D_Entity {
          // Limit Y velocity
         this.body.setMaxVelocityY(1000);
 
+        /**
+         * Camera offset in Y axis.
+         * @type {number}
+         */
+        this.cameraOffsetY = this.body.height;
         
         /**
          * Sets initial player state and enters it.
@@ -76,10 +81,10 @@ export class Player extends Flat3D_Entity {
         /**
          * Set up camera parameters to follow the player.
          */
-        this.scene.cameras.main.startFollow(this, true, 0.08, 0, -this.cameraOffsetX, 0);
+        this.scene.cameras.main.startFollow(this, true, 0.08, 0.08, -this.cameraOffsetX, -this.cameraOffsetY);
         this.scene.cameras.main.setDeadzone(300, 300);
 
-        this.scene.cameras.main.setBounds(0, 0, 100000, 100000); // TODO hardcoded
+        this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 
 
         /**
@@ -134,7 +139,7 @@ export class Player extends Flat3D_Entity {
 		this.currentState.update(t, dt);
 
         // So player body won't oscilate between very small y values creating visual artifacts.
-        this.y = Math.round(this.y);        
+        this.y = Math.round(this.y);
 	}
 
     /**
