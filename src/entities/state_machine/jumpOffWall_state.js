@@ -1,13 +1,12 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 
-import FallState from "./fall_state.js";
 
 /**
  * Class for jumping state.
  * Handles movement and action in the context of jumping.
  */
-export default class JumpState extends State
+export default class JumpOffWallState extends State
 {
     /**
      * @param {Player} player 
@@ -28,17 +27,7 @@ export default class JumpState extends State
         // Commom state update logic
         super.update();
 
-        //* Handle horizontal movement
-        // Left movement
-        if (this.input.leftMoveInput()) 
-        {
-            this.goLeft();
-        }
-        // Right movement
-        else if (this.input.rightMoveInput()) 
-        {
-            this.goRight();
-        }
+
 
         //* Handle action inputs while jumping
         // Attack
@@ -48,10 +37,6 @@ export default class JumpState extends State
         // Roll
         else if (this.input.rollMoveInput()) {
             // this.player.setState(RollState); // TODO: dash downward?
-        }
-        // Stop
-        else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
-            this.stop();
         }
 
         if (this.onWall()) {
