@@ -344,8 +344,7 @@ export class Enemy extends Flat3D_Entity {
 
             let dir = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position).normalize();
 
-            this.body.setVelocityX(dir.x * this.groundSpeed);
-            this.moveInZ(dir.z * this.groundSpeed);
+            this.body.setVelocityX(Math.sign(dir.x) * this.groundSpeed);
 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -524,8 +523,8 @@ export class Enemy extends Flat3D_Entity {
         
         this.behaviorTree.exec();
 
-        if(this.lastFrameActionState !== this.actionState)
-            console.log(this.actionState);
+       /* if(this.lastFrameActionState !== this.actionState)
+            console.log(this.actionState);*/
 
         this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
@@ -542,13 +541,13 @@ export class Enemy extends Flat3D_Entity {
 
         let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
 
-        if(this.body.velocity.x < 0 /*|| this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0*/) {
+        if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
             this.flipX = true;
 
             let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
             this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
-        else if(this.body.velocity.x > 0 /*|| this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0*/) {
+        else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
             this.flipX = false;
 
             let visionAreaOriginX = (this.width*0.5 / this.visionArea.width);
