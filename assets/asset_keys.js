@@ -1,3 +1,4 @@
+
 export const TilemapKeys = {
     MapJSON: 'tilemap',
     TilesetImage: 'tilesetMapImage',
@@ -19,7 +20,9 @@ export const LayerNames = {
 export const TextureKeys = {
     PlayerCharacter: 'player-character',
     Agent5G: 'Agent5G',
-    Wave5G: 'Wave5G'
+    Wave5G: 'Wave5G',
+
+    NormalAttack: 'normal-attack'
 };
 
 export const ObjectNames = {

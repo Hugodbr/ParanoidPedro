@@ -1,10 +1,6 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 
-import StandState from "./stand_state.js";
-import JumpState from "./jump_state.js";
-import FallState from "./fall_state.js";
-
 /**
  * Class for running state.
  * Handles movement and action in the context of running.
@@ -36,7 +32,6 @@ export default class RunState extends State
         {
             if (this.facing !== FACING.LEFT) {
                 this.goLeft();
-                this.player.changeFacing(FACING.LEFT);
             }
         } 
         // Right movement
@@ -44,7 +39,6 @@ export default class RunState extends State
         {
             if (this.facing !== FACING.RIGHT) {
                 this.goRight();
-                this.player.changeFacing(FACING.RIGHT);
             }
         }
 
@@ -52,7 +46,7 @@ export default class RunState extends State
         // Jump
         if (this.input.jumpMoveInput()) 
         {
-            this.player.setState(JumpState);
+            this.player.setState(this.player.jumpState);
         } 
         // Attack
         else if (this.input.attackActionInput()) 
@@ -67,12 +61,12 @@ export default class RunState extends State
         // Stop
         else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
         {
-            this.player.setState(StandState); 
+            this.player.setState(this.player.standState); 
         }
 
         // Check if the player is airborne and sets 'fall' state if it is
         if (!this.isGrounded()) {
-            this.player.setState(FallState);
+            this.player.setState(this.player.fallState);
         }
     }
 

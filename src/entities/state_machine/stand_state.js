@@ -1,9 +1,9 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 
-import RunState from "./run_state.js";
-import JumpState from "./jump_state.js";
-import FallState from "./fall_state.js";
+
+import NormalAttack from "../attack/normal_attack.js";
+import { Cooldown } from "../../utils/cooldown.js";
 
 /**
  * Class for standing/idling state.
@@ -16,6 +16,11 @@ export default class StandState extends State
      */
     constructor(player) {
         super(player);
+
+        this.normalATK = new NormalAttack(this.player.scene, this.player.x, this.player.y);
+        this.normalATK.active = false;
+
+        this.attackCooldown = new Cooldown(500);
     }
 
     /**
@@ -35,38 +40,39 @@ export default class StandState extends State
         // Start left movement
         if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 
         {
-            if (this.facing != FACING.LEFT) {
-                this.player.changeFacing(FACING.LEFT)
-            }
-            this.player.setState(RunState);
+            this.player.changeFacing(FACING.LEFT);
+            this.player.setState(this.player.runState);
         }
         // Start right movement
         else if (this.input.rightMoveInput() && !this.input.leftMoveInput()) 
         {
-            if (this.facing != FACING.RIGHT) {
-                this.player.changeFacing(FACING.RIGHT)
-            }
-            this.player.setState(RunState);
+            this.player.changeFacing(FACING.RIGHT);
+            this.player.setState(this.player.runState);
         }
         //* Handle action inputs while moving
         // Jump
-        else if (this.input.jumpMoveInput()) {
-            this.player.setState(JumpState);
+        else if (this.input.jumpMoveInput()) 
+        {
+            this.player.setState(this.player.jumpState);
         }
         // Attack
-        else if (this.input.attackActionInput()) {
-            this.attack();
+        else if (this.input.attackActionInput()) 
+        {
+            if (this.attackCooldown.canUse()) 
+                this.attack();
         }
         // Roll
-        else if (this.input.rollMoveInput()) {
+        else if (this.input.rollMoveInput()) 
+        {
             // this.player.setState(RollState); // TODO: implement
         }      
 
 
         // Fall while standing still 
         // Not clear about how this could happen
-        if (!this.isGrounded) {
-            this.player.setState(FallState);
+        if (!this.isGrounded) 
+        {
+            this.player.setState(this.player.fallState);
         }
     }
 
@@ -96,6 +102,9 @@ export default class StandState extends State
     attack()
     {
         // TODO: Implement logic.
+
+
+
         // TODO: Implememnt 'stand' attack animation.
 
         if (this.debugState)

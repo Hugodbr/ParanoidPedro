@@ -1,7 +1,6 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 
-import StandState from "./stand_state.js";
 
 /**
  * Class for falling state.
@@ -29,32 +28,23 @@ export default class FallState extends State
         // Commom state update logic
         super.update();
 
-
+        // console.log("right:" + this.body.blocked.right);
+        
+        // console.log("left:" + this.isOnRightWall);
         //* Handle starting horizontal movement
         // Left movement
         if (this.input.leftMoveInput()) 
         {
-            if (this.facing != FACING.LEFT) {
-                this.player.changeFacing(FACING.LEFT)
-            }
             this.goLeft();
         }
         // Right movement
         else if (this.input.rightMoveInput()) 
         {
-            if (this.facing != FACING.RIGHT) {
-                this.player.changeFacing(FACING.RIGHT)
-            }
             this.goRight();
         }
 
         //* Handle action inputs while jumping
-        // Jump
-        if (this.input.jumpMoveInput()) {
-            // this.player.setState(JumpState); // ! if double jump later
-        }
-        // Attack
-        else if (this.input.attackActionInput()) {
+        if (this.input.attackActionInput()) {
             this.attack();
         }
         // Roll
@@ -62,13 +52,16 @@ export default class FallState extends State
             // this.player.setState(RollState); // TODO: dash downward?
         }
         // Stop
-        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
+        else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
             this.stop();
         }
   
         // When reaching the ground sets a 'stand' state
         if (this.isGrounded()) {
-            this.player.setState(StandState);
+            this.player.setState(this.player.standState);
+        }
+        else if (this.onWall()) {
+            this.player.setState(this.player.wallState);
         }
     }
 

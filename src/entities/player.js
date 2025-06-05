@@ -2,6 +2,11 @@ import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
 
 import StandState from "./state_machine/stand_state.js";
+import RunState from "./state_machine/run_state.js";
+import JumpState from "./state_machine/jump_state.js";
+import FallState from "./state_machine/fall_state.js";
+import WallState from "./state_machine/wall_state.js";
+import JumpOffWallState from "./state_machine/jumpOffWall_state.js";
 
 /**
  * Enumeration for player facing directions.
@@ -53,11 +58,11 @@ export class Player extends Flat3D_Entity {
          */
         this.facing = FACING.RIGHT;
 
+        
         /**
          * Sets initial player state and enters it.
          */
-        this.currentState = new StandState(this);
-        this.currentState.enter();
+        this.createStates();
 
         /**
          * Sets player depth so player is in front of the map.
@@ -136,7 +141,7 @@ export class Player extends Flat3D_Entity {
     setState(newState)
     {
         this.currentState.exit();
-        this.currentState = new newState(this);
+        this.currentState = newState;
         this.currentState.enter();
     }
 
@@ -148,7 +153,7 @@ export class Player extends Flat3D_Entity {
     {
         this.facing = facing;
 
-        // TODO: flip sprite
+        facing == FACING.LEFT ? this.setFlipX(true) : this.setFlipX(false);
 
         this.changeCameraOffset(facing);
     }
@@ -203,5 +208,18 @@ export class Player extends Flat3D_Entity {
         this.body.setSize(this.body.width, this.body.height);
         this.body.setOffset(0, 0);
     }    
+
+    createStates()
+    {
+        this.standState = new StandState(this);
+        this.runState = new RunState(this);
+        this.jumpState = new JumpState(this);
+        this.fallState = new FallState(this);
+        this.wallState = new WallState(this);
+        this.jumpOffWallState = new JumpOffWallState(this);
+
+        this.currentState = this.standState;
+        this.currentState.enter();
+    }
 
 }

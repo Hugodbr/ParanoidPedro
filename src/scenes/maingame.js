@@ -56,6 +56,9 @@ export default class MainGame extends Phaser.Scene
         this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
         
         this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
+
+        //* Attacks
+        this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
 	}
 	
 	create() {

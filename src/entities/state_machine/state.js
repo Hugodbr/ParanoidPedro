@@ -38,7 +38,9 @@ export default class State
      * @param {number} t 
      * @param {number} dt 
      */
-    update(t, dt) {}
+    update(t, dt) {
+
+    }
 
     /**
      * Called when entering state.
@@ -60,11 +62,13 @@ export default class State
     //
     goLeft()
     {
+        this.player.changeFacing(FACING.LEFT);
         this.body.setVelocityX(-this.groundSpeed);
     }
 
     goRight()
     {
+        this.player.changeFacing(FACING.RIGHT);
         this.body.setVelocityX(this.groundSpeed);
     }
 
@@ -91,6 +95,21 @@ export default class State
      */
     isGrounded()
     {
-        return this.body.velocity.y === 0;
+        return this.body.blocked.down;
+    }
+
+    onLeftWall()
+    {
+        return this.body.blocked.left && (!this.body.blocked.down && !this.body.blocked.up);
+    }
+
+    onRightWall()
+    {
+        return this.body.blocked.right && (!this.body.blocked.down && !this.body.blocked.up);
+    }
+
+    onWall()
+    {
+        return this.onLeftWall() || this.onRightWall(); 
     }
 }
