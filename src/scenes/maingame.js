@@ -48,6 +48,9 @@ export default class MainGame extends Phaser.Scene
      */
 	preload() {
 
+        //* Music
+        this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')
+
         //* Preload tilemap assets
         this.load.tilemapTiledJSON(TilemapKeys.MapJSON, 'assets/map/tiled/map_structured.json');        
         this.load.image(TilemapKeys.TilesetImage, 'assets/map/Map Tileset.png');
@@ -145,6 +148,14 @@ export default class MainGame extends Phaser.Scene
         this.walls.forEach(wall => {
             wall.defineCollisions([this.player]);
             wall.defineCollisions(this.enemiesArray);
+        });
+
+        //* Play music
+        //
+        this.sound.play(SoundKeys.Ambiance, {
+            volume: 1,
+            loop: true,
+            rate: 1
         });
 
         
