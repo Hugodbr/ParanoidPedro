@@ -58,6 +58,9 @@ export class Player extends Flat3D_Entity {
          */
         this.facing = FACING.RIGHT;
 
+         // Limit Y velocity
+        this.body.setMaxVelocityY(1000);
+
         
         /**
          * Sets initial player state and enters it.
