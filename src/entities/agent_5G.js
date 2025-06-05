@@ -7,6 +7,8 @@ import { Pulse5G } from "./pulse_5G_proyectile.js";
 import { BehaviorNode, NODE_STATUS } from "../AI_behavior/behavior_node.js";
 import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js";
 
+import { FACING } from "./player.js";
+
 export class Agent5G extends Enemy {
 
     /**
@@ -14,6 +16,12 @@ export class Agent5G extends Enemy {
      * @type {Cooldown}
      */
     attackCooldown;
+
+    /**
+     * Whether the shoot attack has been performed or not in the current attack iteration
+     * @type {boolean}
+     */
+    shootAttackDone = false;
 
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
@@ -38,7 +46,7 @@ export class Agent5G extends Enemy {
             key: AnimationKeys.Agent5G_Shoot,
             frames: this.anims.generateFrameNumbers(TextureKeys.Agent5G, { start: 11, end: 13 }),
             frameRate: 5, // Velocidad de la animación
-            repeat: 0    // Animación en bucle
+        //    repeat: 2    // Animación en bucle
         });
 
         this.anims.create({
@@ -55,13 +63,22 @@ export class Agent5G extends Enemy {
         this.attackAnimation = AnimationKeys.Agent5G_Shoot;
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + AnimationKeys.Agent5G_Shoot, (() => {
-            this.actionState = ENEMY_STATE.CHASING;
-            //attackCooldown = new Cooldown(1000);
-        }).bind(this))
+            //this.actionState = ENEMY_STATE.CHASING;
+            this.attackCooldown = new Cooldown(1000, this.gameTime);
+            this.shootAttackDone = true;
+        }).bind(this));
 
-        //this.setFlipX(true);
+        const SHOOT_FRAME = "12";
+
+        this.on(Phaser.Animations.Events.ANIMATION_UPDATE, (() => {
+            if(this.anims.currentAnim.key === AnimationKeys.Agent5G_Shoot && this.frame.name == SHOOT_FRAME)
+                new Pulse5G(this.scene, this.flat3D_Position, new Vector3D(100, 0, 0));
+        }).bind(this));
+
         this.attackStateBehavior = new ExecutionBehaviorNode((() => {
-            new Pulse5G(this.scene, this.flat3D_Position, new Vector3D(100, 0, 0));
+            if(this.shootAttackDone === false)
+                this.play(AnimationKeys.Agent5G_Shoot, true);
+
             return NODE_STATUS.SUCCESS;
         }).bind(this));
 
@@ -71,5 +88,13 @@ export class Agent5G extends Enemy {
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
 
+        if(this.actionState === ENEMY_STATE.ATTACKING && this.shootAttackDone === true && this.attackCooldown.canUse(t)) {
+            
+            if(Vector3D.distance(this.flat3D_Position, this.playerRef.flat3D_Position) > this.maxAttackDistance)
+                this.actionState = ENEMY_STATE.CHASING;
+
+            this.shootAttackDone = false;
+        }
+            
     }
 }

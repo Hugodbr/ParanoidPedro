@@ -12,6 +12,7 @@ import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_
 
 import { Path3D_System, PATH_TRANSITIVITY } from "./flat3D_system/path3D_system.js";
 import { Path3D_Point } from "./flat3D_system/path3D_point.js";
+import { FACING } from "./player.js";
 
 export const ENEMY_STATE = {
     PATROLLING: "PATROLLING",
@@ -121,6 +122,11 @@ export class Enemy extends Flat3D_Entity {
     searchStateCooldown;
 
     /**
+     * @type {FACING}
+     */
+    facing;
+
+    /**
      * Idle state animation key
      * @type {String}
      */
@@ -168,6 +174,8 @@ export class Enemy extends Flat3D_Entity {
         this.buildTree();
 
         this.visionArea = scene.add.zone(x, y, this.width + this.visionScope, 240);
+
+        this.facing = FACING.RIGHT;
 
         let visionAreaOriginX = (this.width*0.5 / this.visionArea.width)
         this.visionArea.setOrigin(visionAreaOriginX, 0.5);
@@ -388,12 +396,6 @@ export class Enemy extends Flat3D_Entity {
             
             return NODE_STATUS.SUCCESS;
         }).bind(this));
-        
-        const PLAY_ATTACK_ANIMATION = new ExecutionBehaviorNode((() => {
-            this.play(this.attackAnimation, true);
-            
-            return NODE_STATUS.SUCCESS;
-        }).bind(this));
     
         // Creating the tree
 
@@ -494,15 +496,13 @@ export class Enemy extends Flat3D_Entity {
                         .addNode(TOO_LONG_DISTANCE_TO_PLAYER)
                         .addNode(MOVE_TOWARDS_PLAYER)
                     )
-                    //.addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
+                    .addNode(SET_STATE_TO_(ENEMY_STATE.ATTACKING))
                 )
             )
 
             .addNode( new SequenceBehaviorNode()
 
                 .addNode(STATE_IS_(ENEMY_STATE.ATTACKING))
-
-                .addNode(PLAY_ATTACK_ANIMATION)
 
                 .addNode(this.attackStateBehavior)
             )
@@ -542,16 +542,18 @@ export class Enemy extends Flat3D_Entity {
         let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
 
         if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
-            this.flipX = true;
+            this.facing = FACING.RIGHT;
 
             let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
             this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
         else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
-            this.flipX = false;
+            this.facing = FACING.LEFT;
 
             let visionAreaOriginX = (this.width*0.5 / this.visionArea.width);
             this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
+
+        this.flipX = (this.facing === FACING.RIGHT);
     }
 }
