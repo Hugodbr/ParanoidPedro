@@ -12,6 +12,7 @@ export default class Attack extends Phaser.GameObjects.Sprite
         this.scene = scene;
         this.player = player;
         this.enemies = scene.enemiesGroup;
+        this.walls = scene.wallColliders;
 
         this.scene.add.existing(this);
         this.setDepth(scene.playerDepth + 1);

@@ -38,6 +38,7 @@ export default class MainGame extends Phaser.Scene
 
         this.numberOfWalls; // how many
         this.walls = []; // all wall objects
+        this.wallColliders = this.physics.add.staticGroup(); 
 
         this.enemiesArray = []; // all enemies in array
         this.enemiesGroup = this.physics.add.group(); // all enemies in group
@@ -118,7 +119,9 @@ export default class MainGame extends Phaser.Scene
         
         // Create all walls
         for (let i = 0; i < this.numberOfWalls; ++i) {
-            this.walls.push(new Wall(this, i + 1));
+            const wall = new Wall(this, i + 1);
+            this.walls.push(wall);
+            this.wallColliders.add(wall.wallSensor);
         }
 
         //* Link wall to zones

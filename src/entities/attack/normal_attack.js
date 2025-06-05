@@ -3,6 +3,7 @@ import Attack from "./attack.js";
 import { TextureKeys, AnimationKeys, SoundKeys } from "../../../assets/asset_keys.js"
 import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
+
 export default class NormalAttack extends Attack
 {
     constructor(scene, player){
@@ -62,6 +63,7 @@ export default class NormalAttack extends Attack
     defineCollisions()
     {
         this.scene.physics.add.overlap(this, this.enemies, this.hitCallback);
+        this.scene.physics.add.overlap(this, this.walls, this.hitWallCallback);
     }
 
     hitCallback(attack, enemy)
@@ -71,6 +73,15 @@ export default class NormalAttack extends Attack
         attack.setAttackColliderActive(false);
 
         // TODO HIT DAMAGE
+    }
+
+    hitWallCallback(attack, wallSensor)
+    {
+        console.log("wall hit");
+
+        attack.setAttackColliderActive(false);
+
+        wallSensor.parentWall.break();
     }
 
     onAnimationComplete(anim, frame)

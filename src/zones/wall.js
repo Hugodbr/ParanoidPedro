@@ -48,6 +48,7 @@ export default class Wall extends LayerObject
          * @type {Phaser.GameObjects.Rectangle}
         */
         this.wallSensor = this.createWallSensor();
+        this.wallSensor.parentWall = this;
 
 
         /**
