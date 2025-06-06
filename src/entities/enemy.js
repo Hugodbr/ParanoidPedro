@@ -184,6 +184,9 @@ export class Enemy extends Flat3D_Entity {
 
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
         this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
+
+        this.life = 3;
+        this.blinkTween = null;
     }
 
     /**
@@ -555,5 +558,55 @@ export class Enemy extends Flat3D_Entity {
         }
 
         this.flipX = (this.facing === FACING.RIGHT);
+    }
+
+    blinkRedDamaged(duration)
+    {
+        if (this.blinkTween) {
+            this.blinkTween.stop();
+            this.blinkTween.remove();
+            this.clearTint();
+            this.setAlpha(1);
+            console.log("tween remove");
+        }
+
+        this.setTint(0xff0000);
+
+        this.blinkTween = this.scene.tweens.add({
+            targets: this,
+            alpha: {from:1, to:0.5},
+            duration: duration,
+            yoyo: true,
+            repeat: -1,
+        });
+    }
+
+    slowDown()
+    {
+        this.groundSpeed = this.groundSpeed * 0;
+        this.patrolStateSpeed = this.patrolStateSpeed * 0;
+        this.serachStateSpeed = this.serachStateSpeed * 0;
+        this.chaseStateSpeed = this.chaseStateSpeed * 0;
+    }
+
+    getHit()
+    {
+        this.life--;
+
+        this.slowDown(); // TODO OPTIONAL DOESNT WORK
+
+        if (this.life > 0) {
+            let duration = 50 * (this.life * 2);
+            this.blinkRedDamaged(duration);
+        }
+        else {
+            // TODO DEATH ANIMATION. ON COMPLETE DIE()
+            this.die();
+        }
+    }
+
+    die()
+    {
+        this.destroy();
     }
 }

@@ -1,4 +1,4 @@
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, SoundKeys } from '../../assets/asset_keys.js'
 
 import InputManager from '../managers/input_manager.js';
 
@@ -12,6 +12,7 @@ import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
 import Wall from '../zones/wall.js';
 import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
+import PersistentCooldown from '../utils/persistent_cooldown.js';
 
 /**
  * Game main scene.
@@ -38,14 +39,19 @@ export default class MainGame extends Phaser.Scene
 
         this.numberOfWalls; // how many
         this.walls = []; // all wall objects
+        this.wallColliders = this.physics.add.staticGroup(); 
 
-        this.enemies = []; // all enemies
+        this.enemiesArray = []; // all enemies in array
+        this.enemiesGroup = this.physics.add.group(); // all enemies in group
 	}
 	
     /**
      * Image, sounds, tilemaps
      */
 	preload() {
+
+        //* Music
+        this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')
 
         //* Preload tilemap assets
         this.load.tilemapTiledJSON(TilemapKeys.MapJSON, 'assets/map/tiled/map_structured.json');        
@@ -54,11 +60,19 @@ export default class MainGame extends Phaser.Scene
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
         this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
+        // Audio
+        this.load.audio(SoundKeys.Player_Life, 'assets/sfx/player/life-beat.mp3');
         
+        //* Enemy
         this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
 
         //* Attacks
-        this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
+        // this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
+        this.load.spritesheet(TextureKeys.Punch_Attack, 'assets/character/attacks/stand_attack.png', { frameWidth: 64, frameHeight: 96});
+        this.load.audio(SoundKeys.Normal_Attack, 'assets/sfx/attack/punches-single.mp3');
+        this.load.audio(SoundKeys.Running_Attack, 'assets/sfx/attack/punches-4x.mp3');
+
+
 	}
 	
 	create() {
@@ -97,7 +111,8 @@ export default class MainGame extends Phaser.Scene
         for (let i = 0; i < this.numberOfZones; ++i) {
             this.zones.push(new Zone(this, i + 1));
             this.zones[i].enemies.forEach(enemy => {
-                this.enemies.push(enemy);
+                this.enemiesGroup.add(enemy);
+                this.enemiesArray.push(enemy);
             });
         }
     
@@ -108,7 +123,9 @@ export default class MainGame extends Phaser.Scene
         
         // Create all walls
         for (let i = 0; i < this.numberOfWalls; ++i) {
-            this.walls.push(new Wall(this, i + 1));
+            const wall = new Wall(this, i + 1);
+            this.walls.push(wall);
+            this.wallColliders.add(wall.wallSensor);
         }
 
         //* Link wall to zones
@@ -132,12 +149,20 @@ export default class MainGame extends Phaser.Scene
         //
         this.zones.forEach(zone => {
             zone.defineCollisions([this.player]);
-            zone.defineCollisions(this.enemies);
+            zone.defineCollisions(this.enemiesArray);
         });
 
         this.walls.forEach(wall => {
             wall.defineCollisions([this.player]);
-            wall.defineCollisions(this.enemies);
+            wall.defineCollisions(this.enemiesArray);
+        });
+
+        //* Play music
+        //
+        this.sound.play(SoundKeys.Ambiance, {
+            volume: 0.3,
+            loop: true,
+            rate: 1
         });
 
         
@@ -146,7 +171,9 @@ export default class MainGame extends Phaser.Scene
         if (this.isDebug) {
             this.cursors = this.input.keyboard.createCursorKeys();
             this.bKey = this.input.keyboard.addKey('B'); // break wall
+            this.hitCooldown = new PersistentCooldown(500);
         }
+
 	}
 
     /**
@@ -160,10 +187,23 @@ export default class MainGame extends Phaser.Scene
 
             if (this.bKey.isDown) {
                 this.walls[0].break();
+
+                if (this.hitCooldown.canUse(time)) {
+                    this.player.getHit();
+                }
             }
         }
 
 	}
+
+    restart()
+    {
+        this.cameras.main.fadeOut(500, 70, 0, 0);
+
+        this.time.delayedCall(900, () => {
+            this.scene.start('maingame');
+        });
+    }
 
     // ! DEBUG
     scrollAround(delta)

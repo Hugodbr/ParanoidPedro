@@ -1,11 +1,11 @@
 
 /**
- * Singleton to centralize input logic.
+ * Centralize input logic.
  */
 export default class InputManager
 {
     /**
-     * Get the instance of the InputManager singleton.
+     * Get the instance of the InputManager
      * @remarks - InputManager must first be created before calling this method. Otherwise, the scene would be required as a parameter, which is not desired.
      * @returns {InputManager} InputManager instance.
      */
@@ -23,13 +23,6 @@ export default class InputManager
      */
     constructor(scene) 
     {
-        /**
-         * Enforces singleton pattern
-         */
-        if (InputManager._instance) {
-            return InputManager._instance;
-        }
-        // If is the first instance
         InputManager._instance = this;
 
         this.scene = scene;

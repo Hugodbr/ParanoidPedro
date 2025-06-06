@@ -50,7 +50,7 @@ export default class JumpState extends State
             // this.player.setState(RollState); // TODO: dash downward?
         }
         // Stop
-        else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
+        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
             this.stop();
         }
 

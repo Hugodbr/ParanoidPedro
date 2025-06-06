@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js';
 
 import StandState from "./state_machine/stand_state.js";
 import RunState from "./state_machine/run_state.js";
@@ -35,9 +35,9 @@ export class Player extends Flat3D_Entity {
      * Vertical speed when starting a jump movement.
 	 * @type {number}
      */
-	jumpSpeed = 850;
+	jumpSpeed = 650;
 
-    /**
+        /**
      * Camera offset in X axis. Player will be further from the side it's facing.
 	 * @type {number}
      */
@@ -53,11 +53,22 @@ export class Player extends Flat3D_Entity {
     constructor(scene, x, y, z) {
         super(scene, x, y, z, TextureKeys.PlayerCharacter);
 
+        // Reference to the scene
+        this.scene = scene;
+
         /**
          * Player starts facing right.
          */
         this.facing = FACING.RIGHT;
 
+         // Limit Y velocity
+        this.body.setMaxVelocityY(1000);
+
+        /**
+         * Camera offset in Y axis.
+         * @type {number}
+         */
+        this.cameraOffsetY = this.body.height;
         
         /**
          * Sets initial player state and enters it.
@@ -69,14 +80,20 @@ export class Player extends Flat3D_Entity {
          */
         this.setDepth(this.scene.playerDepth);
 
+        this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
+        this.life = 4;
+        this.currentLife = this.life;
+        
+        this.performingAttack = false;
+
 
         /**
          * Set up camera parameters to follow the player.
          */
-        this.scene.cameras.main.startFollow(this, true, 0.08, 0, -this.cameraOffsetX, 0);
+        this.scene.cameras.main.startFollow(this, true, 0.08, 0.08, -this.cameraOffsetX, -this.cameraOffsetY);
         this.scene.cameras.main.setDeadzone(300, 300);
 
-        this.scene.cameras.main.setBounds(0, 0, 100000, 100000); // TODO hardcoded
+        this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 
 
         /**
@@ -131,7 +148,7 @@ export class Player extends Flat3D_Entity {
 		this.currentState.update(t, dt);
 
         // So player body won't oscilate between very small y values creating visual artifacts.
-        this.y = Math.round(this.y);        
+        this.y = Math.round(this.y);
 	}
 
     /**
@@ -220,6 +237,34 @@ export class Player extends Flat3D_Entity {
 
         this.currentState = this.standState;
         this.currentState.enter();
+    }
+
+    getHit() {
+        this.currentLife--;
+
+        if (this.playerLifeSound.isPlaying) {
+            this.playerLifeSound.stop();
+        }
+
+        if (this.currentLife > 0) {
+            let aux = this.life - (this.currentLife) / this.life;
+            let s_volume = 1 * aux;
+            let s_rate = 0.5 * aux;
+
+            this.playerLifeSound.setVolume(s_volume);
+            this.playerLifeSound.setRate(s_rate);
+            this.playerLifeSound.setLoop(true);
+            this.playerLifeSound.play();
+        } else {
+            console.log("dead");
+            this.die();
+        }
+    }
+
+    // ! restart game
+    die()
+    {
+        this.scene.restart();
     }
 
 }

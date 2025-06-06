@@ -22,7 +22,7 @@ export const TextureKeys = {
     Agent5G: 'Agent5G',
     Wave5G: 'Wave5G',
 
-    NormalAttack: 'normal-attack'
+    Punch_Attack: 'punch-attack'
 };
 
 export const ObjectNames = {
@@ -38,9 +38,19 @@ export const AnimationKeys = {
     Agent5G_Idle: 'Agent5G_Idle',
     Agent5G_Walk: 'Agent5G_Walk',
     Agent5G_Run: 'Agent5G_Run',
-    Agent5G_Shoot: 'Agent5G_Shoot'
+    Agent5G_Shoot: 'Agent5G_Shoot',
+
+    Normal_Attack: 'normal-attack-anim',
+    Running_Attack: 'running-attack-anim'
 };
 
 export const SoundKeys = {
-    Jump: 'jump-sound'
+    Jump: 'jump-sound',
+
+    Player_Life: 'player-life',
+
+    Ambiance: 'ambiance-sound',
+
+    Normal_Attack: 'normal-attack-sound',
+    Running_Attack: 'running-attack-sound'
 };

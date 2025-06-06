@@ -62,13 +62,17 @@ export default class State
     //
     goLeft()
     {
-        this.player.changeFacing(FACING.LEFT);
+        if (!this.player.performingAttack) {
+            this.player.changeFacing(FACING.LEFT);
+        }
         this.body.setVelocityX(-this.groundSpeed);
     }
 
     goRight()
     {
-        this.player.changeFacing(FACING.RIGHT);
+        if (!this.player.performingAttack) {
+            this.player.changeFacing(FACING.RIGHT);
+        }
         this.body.setVelocityX(this.groundSpeed);
     }
 
