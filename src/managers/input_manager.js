@@ -85,7 +85,7 @@ export default class InputManager
     rollMoveInput()
     {
         return this.rollKey.isDown
-            || this.gamepad !== null && this.gamepad.down; // TODO: ?
+            || this.gamepad !== null && this.gamepad.B; // TODO: ?
     }
     
     /**
@@ -95,6 +95,6 @@ export default class InputManager
     attackActionInput()
     {
         return this.attackKey.isDown
-            || this.gamepad !== null && this.gamepad.down; // TODO: ?
+            || this.gamepad !== null && this.gamepad.X; // TODO: ?
     }
 }
