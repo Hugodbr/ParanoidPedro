@@ -70,6 +70,8 @@ export default class RunningAttack extends Attack
 
         attack.setAttackColliderActive(false);
 
+        enemy.getHit();
+
         // TODO HIT DAMAGE
     }
 

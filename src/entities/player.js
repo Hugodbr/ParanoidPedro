@@ -35,7 +35,7 @@ export class Player extends Flat3D_Entity {
      * Vertical speed when starting a jump movement.
 	 * @type {number}
      */
-	jumpSpeed = 850;
+	jumpSpeed = 650;
 
         /**
      * Camera offset in X axis. Player will be further from the side it's facing.

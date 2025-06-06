@@ -13,7 +13,7 @@ export default class NormalAttack extends Attack
         this.defineCollisions();
 
         // Offset distance from the character
-        this.offsetX = player.body.width/1.5;
+        this.offsetX = player.body.width/1.1;
         this.offsetY = player.body.height/2;
 
         this.cooldown = new PersistentCooldown(1000);
@@ -71,6 +71,8 @@ export default class NormalAttack extends Attack
         console.log("hit");
 
         attack.setAttackColliderActive(false);
+
+        enemy.getHit();
 
         // TODO HIT DAMAGE
     }
