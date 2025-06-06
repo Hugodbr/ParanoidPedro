@@ -12,6 +12,7 @@ import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
 import Wall from '../zones/wall.js';
 import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
+import PersistentCooldown from '../utils/persistent_cooldown.js';
 
 /**
  * Game main scene.
@@ -59,7 +60,10 @@ export default class MainGame extends Phaser.Scene
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
         this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
+        // Audio
+        this.load.audio(SoundKeys.Player_Life, 'assets/sfx/player/life-beat.mp3');
         
+        //* Enemy
         this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
 
         //* Attacks
@@ -156,7 +160,7 @@ export default class MainGame extends Phaser.Scene
         //* Play music
         //
         this.sound.play(SoundKeys.Ambiance, {
-            volume: 1,
+            volume: 0.3,
             loop: true,
             rate: 1
         });
@@ -167,7 +171,9 @@ export default class MainGame extends Phaser.Scene
         if (this.isDebug) {
             this.cursors = this.input.keyboard.createCursorKeys();
             this.bKey = this.input.keyboard.addKey('B'); // break wall
+            this.hitCooldown = new PersistentCooldown(500);
         }
+
 	}
 
     /**
@@ -181,6 +187,10 @@ export default class MainGame extends Phaser.Scene
 
             if (this.bKey.isDown) {
                 this.walls[0].break();
+
+                if (this.hitCooldown.canUse(time)) {
+                    this.player.getHit();
+                }
             }
         }
 

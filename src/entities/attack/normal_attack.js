@@ -53,7 +53,7 @@ export default class NormalAttack extends Attack
         this.play(AnimationKeys.Normal_Attack);
 
         this.scene.sound.play(SoundKeys.Normal_Attack, {
-            volume: 1,
+            volume: 0.5,
             loop: false,
             rate: 2.5
         });
@@ -89,6 +89,7 @@ export default class NormalAttack extends Attack
     onAnimationComplete(anim, frame)
     {
         if (anim.key === AnimationKeys.Normal_Attack) {
+            this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
             this.performing = false;
         }

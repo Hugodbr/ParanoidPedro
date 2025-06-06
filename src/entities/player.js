@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js';
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js';
 
 import StandState from "./state_machine/stand_state.js";
 import RunState from "./state_machine/run_state.js";
@@ -79,6 +79,10 @@ export class Player extends Flat3D_Entity {
          * Sets player depth so player is in front of the map.
          */
         this.setDepth(this.scene.playerDepth);
+
+        this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
+        this.life = 3;
+        this.currentLife = this.life;
 
 
         /**
@@ -231,6 +235,28 @@ export class Player extends Flat3D_Entity {
 
         this.currentState = this.standState;
         this.currentState.enter();
+    }
+
+    getHit() {
+        this.currentLife--;
+
+        if (this.playerLifeSound.isPlaying) {
+            this.playerLifeSound.stop();
+        }
+
+        if (this.currentLife > 0) {
+            let aux = this.life - (this.currentLife - 1) / this.life;
+            let s_volume = 1 * aux;
+            let s_rate = 0.5 * aux;
+
+            this.playerLifeSound.setVolume(s_volume);
+            this.playerLifeSound.setRate(s_rate);
+            this.playerLifeSound.setLoop(true);
+            this.playerLifeSound.play();
+        } else {
+            console.log("dead");
+            // TODO: Restart handle death
+        }
     }
 
 }

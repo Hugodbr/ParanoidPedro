@@ -52,7 +52,7 @@ export default class RunningAttack extends Attack
         this.play(AnimationKeys.Running_Attack);
 
         this.scene.sound.play(SoundKeys.Running_Attack, {
-            volume: 1,
+            volume: 0.5,
             loop: false,
             rate: 2
         });
@@ -78,6 +78,7 @@ export default class RunningAttack extends Attack
     onAnimationComplete(anim, frame)
     {
         if (anim.key === AnimationKeys.Running_Attack) {
+            this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
             this.performing = false;
         }

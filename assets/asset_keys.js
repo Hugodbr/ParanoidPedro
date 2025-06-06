@@ -47,6 +47,8 @@ export const AnimationKeys = {
 export const SoundKeys = {
     Jump: 'jump-sound',
 
+    Player_Life: 'player-life',
+
     Ambiance: 'ambiance-sound',
 
     Normal_Attack: 'normal-attack-sound',
