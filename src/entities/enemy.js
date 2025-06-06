@@ -201,6 +201,14 @@ export class Enemy extends Flat3D_Entity {
         this.actionState = action_state;
     }
 
+    facePlayer() {
+
+        let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
+
+        if(diffWithPlayer.x > 0) this.facing = FACING.RIGHT;
+        else if(diffWithPlayer.x < 0) this.facing = FACING.LEFT;
+    }
+
     buildTree() {
 
         // Creating the leafs of the behavior tree
@@ -544,20 +552,23 @@ export class Enemy extends Flat3D_Entity {
 
         let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
 
-        if(this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
-            this.facing = FACING.RIGHT;
-
-            let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
-            this.visionArea.setOrigin(visionAreaOriginX, 0.5);
-        }
-        else if(this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
+        if (this.body.velocity.x < 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x < 0) {
             this.facing = FACING.LEFT;
+        }
+        else if (this.body.velocity.x > 0 || this.actionState === ENEMY_STATE.CHASING && diffWithPlayer.x > 0) {
+            this.facing = FACING.RIGHT;
+        }
 
+        if (this.facing === FACING.RIGHT) {
             let visionAreaOriginX = (this.width*0.5 / this.visionArea.width);
             this.visionArea.setOrigin(visionAreaOriginX, 0.5);
         }
+        else {
+            let visionAreaOriginX = (1 - this.width*0.5 / this.visionArea.width);
+            this.visionArea.setOrigin(visionAreaOriginX, 0.5);
+        }
 
-        this.flipX = (this.facing === FACING.RIGHT);
+        this.flipX = (this.facing === FACING.LEFT);
     }
 
     blinkRedDamaged(duration)

@@ -23,6 +23,12 @@ export class Agent5G extends Enemy {
      */
     shootAttackDone = false;
 
+    /**
+     * The relative position where the proyectiles are instanciated
+     * @type {Vector3D}
+     */
+    gunRelativePosition = new Vector3D(40, 60, 0);
+
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
 
@@ -64,15 +70,29 @@ export class Agent5G extends Enemy {
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + AnimationKeys.Agent5G_Shoot, (() => {
             //this.actionState = ENEMY_STATE.CHASING;
-            this.attackCooldown = new Cooldown(1000, this.gameTime);
+            this.attackCooldown = new Cooldown(2000, this.gameTime);
             this.shootAttackDone = true;
+
+            this.facePlayer();
         }).bind(this));
 
         const SHOOT_FRAME = "12";
 
         this.on(Phaser.Animations.Events.ANIMATION_UPDATE, (() => {
-            if(this.anims.currentAnim.key === AnimationKeys.Agent5G_Shoot && this.frame.name == SHOOT_FRAME)
-                new Pulse5G(this.scene, this.flat3D_Position, new Vector3D(100, 0, 0));
+
+            if(this.anims.currentAnim.key === AnimationKeys.Agent5G_Shoot && this.frame.name == SHOOT_FRAME) {
+                
+                let sign = 1;
+                if(this.flipX) sign = -1;
+
+                let gunPos = this.gunRelativePosition.copy();
+                gunPos.x *= sign;
+
+                let pos = Vector3D.add_vecs(this.flat3D_Position, gunPos);
+
+                new Pulse5G(this.scene, pos, new Vector3D(100 * sign, 0, 0));
+            }
+                
         }).bind(this));
 
         this.attackStateBehavior = new ExecutionBehaviorNode((() => {
@@ -95,8 +115,5 @@ export class Agent5G extends Enemy {
 
             this.shootAttackDone = false;
         }
-        
-        if(this.lastFrameActionState !== this.actionState)
-            console.log(this.actionState);
     }
 }
