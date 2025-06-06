@@ -83,6 +83,8 @@ export class Player extends Flat3D_Entity {
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
         this.life = 4;
         this.currentLife = this.life;
+        
+        this.performingAttack = false;
 
 
         /**

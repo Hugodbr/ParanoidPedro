@@ -35,7 +35,7 @@ export default class StandState extends State
         super.update();
 
         // Can't move if is attacking standing
-        if (!this.normalATK.performing) {
+        if (!this.player.performingAttack) {
             //* Handle starting horizontal movement
             // Start left movement
             if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 

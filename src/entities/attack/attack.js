@@ -29,8 +29,6 @@ export default class Attack extends Phaser.GameObjects.Sprite
         this.offsetY = 0;
 
         this.cooldown = 0;
-
-        this.performing = false;
     }
 
     /**

@@ -36,16 +36,12 @@ export default class RunState extends State
         // Left movement
         if (this.input.leftMoveInput()) 
         {
-            if (this.facing !== FACING.LEFT) {
                 this.goLeft();
-            }
         } 
         // Right movement
         else if (this.input.rightMoveInput()) 
         {
-            if (this.facing !== FACING.RIGHT) {
                 this.goRight();
-            }
         }
 
         //* Handle action inputs while moving

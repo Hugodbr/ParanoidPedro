@@ -45,7 +45,7 @@ export default class NormalAttack extends Attack
 
     attack(t)
     {
-        this.performing = true;
+        this.player.performingAttack = true;
 
         this.setAttackSpriteActive(true);
         this.setAttackColliderActive(true);
@@ -91,7 +91,7 @@ export default class NormalAttack extends Attack
         if (anim.key === AnimationKeys.Normal_Attack) {
             this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
-            this.performing = false;
+            this.player.performingAttack = false;
         }
     }
 }
