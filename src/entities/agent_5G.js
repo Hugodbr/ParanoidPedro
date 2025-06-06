@@ -91,10 +91,12 @@ export class Agent5G extends Enemy {
         if(this.actionState === ENEMY_STATE.ATTACKING && this.shootAttackDone === true && this.attackCooldown.canUse(t)) {
             
             if(Vector3D.distance(this.flat3D_Position, this.playerRef.flat3D_Position) > this.maxAttackDistance)
-                this.actionState = ENEMY_STATE.CHASING;
+                this.setActionState(ENEMY_STATE.CHASING);//this.actionState = ENEMY_STATE.CHASING;
 
             this.shootAttackDone = false;
         }
-            
+        
+        if(this.lastFrameActionState !== this.actionState)
+            console.log(this.actionState);
     }
 }

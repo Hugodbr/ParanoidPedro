@@ -521,13 +521,6 @@ export class Enemy extends Flat3D_Entity {
 
         this.body.setVelocityX(0);
         
-        this.behaviorTree.exec();
-
-       /* if(this.lastFrameActionState !== this.actionState)
-            console.log(this.actionState);*/
-
-        this.setActionState(this.actionState); // To update de lastFrameActionState variable
-
         this.visionArea.x = this.body.position.x;
         this.visionArea.y = this.body.position.y;
 
@@ -538,6 +531,13 @@ export class Enemy extends Flat3D_Entity {
         else {
             this.canSeePlayer = false;
         }
+
+        this.behaviorTree.exec();
+
+        /*if(this.lastFrameActionState !== this.actionState)
+            console.log(this.actionState);*/
+
+        this.setActionState(this.actionState); // To update de lastFrameActionState variable
 
         let diffWithPlayer = Vector3D.sub_vecs(this.playerRef.flat3D_Position, this.flat3D_Position);
 
