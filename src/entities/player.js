@@ -81,7 +81,7 @@ export class Player extends Flat3D_Entity {
         this.setDepth(this.scene.playerDepth);
 
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
-        this.life = 3;
+        this.life = 4;
         this.currentLife = this.life;
 
 
@@ -245,7 +245,7 @@ export class Player extends Flat3D_Entity {
         }
 
         if (this.currentLife > 0) {
-            let aux = this.life - (this.currentLife - 1) / this.life;
+            let aux = this.life - (this.currentLife) / this.life;
             let s_volume = 1 * aux;
             let s_rate = 0.5 * aux;
 
@@ -255,8 +255,14 @@ export class Player extends Flat3D_Entity {
             this.playerLifeSound.play();
         } else {
             console.log("dead");
-            // TODO: Restart handle death
+            this.die();
         }
+    }
+
+    // ! restart game
+    die()
+    {
+        this.scene.restart();
     }
 
 }

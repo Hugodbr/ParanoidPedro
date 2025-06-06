@@ -196,6 +196,15 @@ export default class MainGame extends Phaser.Scene
 
 	}
 
+    restart()
+    {
+        this.cameras.main.fadeOut(500, 70, 0, 0);
+
+        this.time.delayedCall(900, () => {
+            this.scene.start('maingame');
+        });
+    }
+
     // ! DEBUG
     scrollAround(delta)
     {
