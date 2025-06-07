@@ -87,12 +87,12 @@ export default class RunState extends State
         // TODO: Implememnt play 'run' animation.
         this.player.play(AnimationKeys.Player_Running);
 
-        if (this.facing == FACING.RIGHT) {
-            this.goRight();
-        }
-        else {
-            this.goLeft();
-        }
+        // if (this.facing == FACING.RIGHT) {
+        //     this.goRight();
+        // }
+        // else {
+        //     this.goLeft();
+        // }
     }
 
     exit() 

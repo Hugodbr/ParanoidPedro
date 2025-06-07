@@ -69,12 +69,8 @@ export default class RollState extends State
 
         console.log(this.facing);
         
-        if (this.facing == FACING.LEFT) {
-            this.body.setVelocityX(-this.rollSpeed);
-        }
-        else {
-            this.body.setVelocityX(this.rollSpeed);
-        }
+        this.body.setVelocityX(this.body.velocity.x * 1.5);
+
 
     }
 

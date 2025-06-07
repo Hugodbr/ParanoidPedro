@@ -41,13 +41,13 @@ export default class StandState extends State
             // Start left movement
             if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 
             {
-                this.player.changeFacing(FACING.LEFT);
+                this.goLeft();
                 this.player.setState(this.player.runState);
             }
             // Start right movement
             else if (this.input.rightMoveInput() && !this.input.leftMoveInput()) 
             {
-                this.player.changeFacing(FACING.RIGHT);
+                this.goRight();
                 this.player.setState(this.player.runState);
             }
             //* Handle action inputs while moving
@@ -62,12 +62,7 @@ export default class StandState extends State
                 if (this.attackCooldown.canUse(t)) { 
                     this.attack(t);
                 }
-            }
-            // Roll
-            else if (this.input.rollMoveInput()) 
-            {
-                // this.player.setState(RollState); // TODO: implement
-            }      
+            }  
 
 
             // Fall while standing still 
@@ -89,10 +84,9 @@ export default class StandState extends State
         if (this.debugState)
             console.log("Enter stand");
         
-        // TODO: Implememnt play 'stand' animation.
+        // Implememnt play 'stand' animation.
         this.player.play(AnimationKeys.Player_Idle);
         
-
         this.stop(); // Horizontal movement
     }
 
@@ -107,11 +101,11 @@ export default class StandState extends State
      */
     attack(t)
     {
-        // TODO: Implement logic.
+        // Implement logic.
         this.normalATK.attack(t);
         console.log("Attaking");
 
-        // TODO: Implememnt 'stand' attack animation.
+        // Implememnt 'stand' attack animation.
         this.player.play(AnimationKeys.Player_Idle_Attacking);
 
         if (this.debugState)
