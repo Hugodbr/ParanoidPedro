@@ -478,6 +478,7 @@ export class Enemy extends Flat3D_Entity {
                     )
                     .addNode( new SequenceBehaviorNode()
                         .addNode(SEARCH_TIME_FINISHED) // TIMEOUT
+                        .addNode(DEBUG_SEQUENCE_POINT("It was nothing, lets keep patrolling"))
                         .addNode(SET_STATE_TO_(ENEMY_STATE.PATROLLING))
                     )
                     .addNode( new ForceFailureBehaviorNode()
