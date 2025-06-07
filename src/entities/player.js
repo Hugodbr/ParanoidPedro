@@ -91,7 +91,7 @@ export class Player extends Flat3D_Entity {
          * Set up camera parameters to follow the player.
          */
         this.scene.cameras.main.startFollow(this, true, 0.08, 0.08, -this.cameraOffsetX, -this.cameraOffsetY);
-        this.scene.cameras.main.setDeadzone(300, 300);
+        this.scene.cameras.main.setDeadzone(300, 150);
 
         this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 

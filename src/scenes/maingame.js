@@ -100,7 +100,11 @@ export default class MainGame extends Phaser.Scene
 
         //* Player creation
         //
-        this.player = new Player(this, 600, 200, 0);
+        console.log(this.map.objects);
+        // Tiled
+        const playerObjects = this.map.objects.find(obj => obj.name === "player").objects; // ! string
+        const spawn = playerObjects.find(obj => obj.name === "spawn"); // ! string
+        this.player = new Player(this, spawn.x, spawn.y, 0);
         
         //* Zones creation
         //

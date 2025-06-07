@@ -77,6 +77,11 @@ export default class Zone extends LayerObject
 
         const enemyObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/enemies/")); // ! string
 
+        // No enemies to create in this zone
+        if (enemyObjects.length === 0) {
+            return;
+        }
+
         // console.log(enemyObjects);
 
         for (let i = 0; i < enemyObjects.length; ++i) {
