@@ -17,26 +17,12 @@ export default class RollState extends State
     constructor(player) {
         super(player);
 
-        this.rollSpeed = this.player.groundSpeed * 2;
-        // this.normalATK = new NormalAttack(this.scene, player);
-
-        this.attackCooldown = new PersistentCooldown(700);
+        this.rollSpeed = this.player.groundSpeed * 1.5;
 
         this.nextState = null;
-
-        this.scene.anims.create({
-            key: AnimationKeys.Roll_State,
-            frames: scene.anims.generateFrameNumbers(TextureKeys.Player_RollState, {start:0, end:3}),
-            frameRate: 5,
-            repeat: 1
-        });
-
-        this.on('animationcomplete', this.onAnimationComplete, this);
     }
 
     /**
-     * Handles player input and transitions between motion states while standing still.
-     * Called every frame by the player during the 'stand' state.
      *
      * @param {number} t
      * @param {number} dt
@@ -46,45 +32,29 @@ export default class RollState extends State
         // Commom state update logic
         super.update();
 
-        // Can't move if is attacking standing
-        if (!this.player.performingAttack) {
-            //* Handle starting horizontal movement
-            // Start left movement
-            if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 
-            {
-                this.player.changeFacing(FACING.LEFT);
-                this.nextState = this.player.runState;
-            }
-            // Start right movement
-            else if (this.input.rightMoveInput() && !this.input.leftMoveInput()) 
-            {
-                this.player.changeFacing(FACING.RIGHT);
-                this.nextState = this.player.runState;
-            }
-            //* Handle action inputs while moving
-            // Jump
-            // Attack
-            else if (this.input.attackActionInput()) // TODO
-            {
-                // if (this.attackCooldown.canUse(t)) { 
-                //     this.attack(t);
-                // }
-            }
+
+        if (this.input.leftMoveInput() && !this.input.rightMoveInput()) 
+        {
+            this.nextState = this.player.runState;
+        }
+        else if (this.input.rightMoveInput() && !this.input.leftMoveInput()) 
+        {
+            this.nextState = this.player.runState;
+        }
+        else {
+            this.nextState = this.player.standState;
+        }
 
 
-            // Fall while standing still 
-            // Not clear about how this could happen
-            if (!this.isGrounded) 
-            {
-                this.player.setState(this.player.fallState);
-            }
+        // Fall 
+        if (!this.isGrounded) 
+        {
+            this.player.setState(this.player.fallState);
         }
 
     }
 
-    /**
-     * Called when the player enters the 'stand' state.
-     * Stops any horizontal movement
+    /**aaaaaa
      */
     enter() 
     {
@@ -93,10 +63,13 @@ export default class RollState extends State
         
         // TODO: Implememnt play 'roll' animation.
         // TODO ON ANIMATION END change state
+        this.player.play(AnimationKeys.Player_Rolling);
 
         this.player.setShortBody();
+
+        console.log(this.facing);
         
-        if (this.facing === FACING.LEFT) {
+        if (this.facing == FACING.LEFT) {
             this.body.setVelocityX(-this.rollSpeed);
         }
         else {
@@ -107,8 +80,7 @@ export default class RollState extends State
 
     exit() 
     {
-        if (this.debugState)
-            console.log("Exit roll");
+        this.player.setNormalBody();
     }
 
     /**
@@ -126,10 +98,4 @@ export default class RollState extends State
             console.log("Attaking");
     }
 
-    onAnimationComplete(anim, frame)
-    {
-        if (anim.key === AnimationKeys.Roll_State) {
-
-        }
-    }
 }

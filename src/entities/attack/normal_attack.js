@@ -92,6 +92,7 @@ export default class NormalAttack extends Attack
             this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
             this.player.performingAttack = false;
+            this.player.play(AnimationKeys.Player_Idle);
         }
     }
 }

@@ -61,7 +61,7 @@ export default class RunState extends State
         // Roll
         else if (this.input.rollMoveInput()) 
         {
-            // this.player.setState(RollState); // TODO: implement
+            this.player.setState(this.player.rollState);
         } 
         // Stop
         else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
@@ -106,9 +106,9 @@ export default class RunState extends State
      */
     attack()
     {
-        // TODO: Implement logic.
+        // Implement logic.
         this.runATK.attack();
-        // TODO: Implement 'run' attack animation.
+        //Implement 'run' attack animation.
         this.player.play(AnimationKeys.Player_Running_Attacking);
 
         if (this.debugState)

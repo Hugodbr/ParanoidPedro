@@ -112,6 +112,7 @@ export default class StandState extends State
         console.log("Attaking");
 
         // TODO: Implememnt 'stand' attack animation.
+        this.player.play(AnimationKeys.Player_Idle_Attacking);
 
         if (this.debugState)
             console.log("Attaking");
