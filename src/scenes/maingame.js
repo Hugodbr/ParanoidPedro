@@ -59,11 +59,13 @@ export default class MainGame extends Phaser.Scene
 
         //* Preload player character
         this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
-        this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
+        this.load.spritesheet(TextureKeys.Player_Spritesheet, 'assets/character/playerSpritesheet.png', { frameWidth: 96, frameHeight: 128 });
+        this.load.spritesheet(TextureKeys.Player_RollState, 'assets/character/movement/roll_state.png', { frameWidth: 96, frameHeight: 64 });
         // Audio
         this.load.audio(SoundKeys.Player_Life, 'assets/sfx/player/life-beat.mp3');
         
         //* Enemy
+        this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
         this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
 
         //* Attacks
