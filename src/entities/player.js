@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js';
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys, AnimationKeys } from '../../assets/asset_keys.js';
 
 import StandState from "./state_machine/stand_state.js";
 import RunState from "./state_machine/run_state.js";
@@ -51,7 +51,7 @@ export class Player extends Flat3D_Entity {
 	 * @param {Phaser.Textures.Texture} texture - aspect of the entity
 	 */
     constructor(scene, x, y, z) {
-        super(scene, x, y, z, TextureKeys.PlayerCharacter);
+        super(scene, x, y, z, TextureKeys.Player_Spritesheet);
 
         // Reference to the scene
         this.scene = scene;
@@ -103,12 +103,12 @@ export class Player extends Flat3D_Entity {
         // !!!!!!!!!! EXAMPLE FOR LATER
         // // Creamos las animaciones de nuestro caballero
 		// // Acordaros, las animaciones son comunes a todo el juego. Por ello lo correcto es crear las animaciones en la escena principal o en una de boot
-		// this.scene.anims.create({
-		// 	key: 'idle',
-		// 	frames: scene.anims.generateFrameNumbers('knight', {start:0, end:3}),
-		// 	frameRate: 5,
-		// 	repeat: -1
-		// });
+		this.scene.anims.create({
+			key: AnimationKeys.Player_Idle,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
+			frameRate: 5,
+			repeat: -1
+		});
 		// this.scene.anims.create({
 		// 	key: 'attack',
 		// 	frames: scene.anims.generateFrameNumbers('knight', {start:4, end:7}),
@@ -130,7 +130,7 @@ export class Player extends Flat3D_Entity {
 		// })
 
 		// // La animación a ejecutar según se genere el personaje será 'idle'
-		// this.play('idle');
+		this.play(AnimationKeys.Player_Idle);
         // !!!!!!!!!!!
 
 

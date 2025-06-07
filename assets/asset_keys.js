@@ -19,6 +19,9 @@ export const LayerNames = {
 
 export const TextureKeys = {
     PlayerCharacter: 'player-character',
+    Player_Spritesheet: 'player-spritesheet',
+    Player_RollState: 'player-roll-state',
+
     Agent5G: 'Agent5G',
     Wave5G: 'Wave5G',
 
@@ -34,14 +37,17 @@ export const ObjectNames = {
 };
 
 export const AnimationKeys = {
-    PlayerIdle: 'player-idle',
+    Player_Idle: 'player-idle',
+    
     Agent5G_Idle: 'Agent5G_Idle',
     Agent5G_Walk: 'Agent5G_Walk',
     Agent5G_Run: 'Agent5G_Run',
     Agent5G_Shoot: 'Agent5G_Shoot',
 
     Normal_Attack: 'normal-attack-anim',
-    Running_Attack: 'running-attack-anim'
+    Running_Attack: 'running-attack-anim',
+
+    Roll_State: 'roll-state'
 };
 
 export const SoundKeys = {
