@@ -1,4 +1,5 @@
 
+
 export const TilemapKeys = {
     MapJSON: 'tilemap',
     TilesetImage: 'tilesetMapImage',
@@ -38,7 +39,13 @@ export const ObjectNames = {
 
 export const AnimationKeys = {
     Player_Idle: 'player-idle',
-    
+    Player_Running: 'player-running',
+    Player_Running_Attacking: 'player-running_attacking',
+    Player_Jumping: 'player-jumping',
+    Player_Jumping_Attacking: 'player-jumping-attacking',
+    Player_Falling: 'player-falling',
+    Player_Falling_Attacking: 'player-falling-attacking',
+
     Agent5G_Idle: 'Agent5G_Idle',
     Agent5G_Walk: 'Agent5G_Walk',
     Agent5G_Run: 'Agent5G_Run',

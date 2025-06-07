@@ -1,5 +1,6 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
+import { AnimationKeys } from "../../../assets/asset_keys.js";
 
 
 /**
@@ -75,6 +76,7 @@ export default class FallState extends State
             console.log("Enter fall");
 
         // TODO: Implememnt play 'fall' animation.
+        this.player.play(AnimationKeys.Player_Falling);
     }
 
     exit() 

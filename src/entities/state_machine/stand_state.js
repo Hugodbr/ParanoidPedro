@@ -4,6 +4,7 @@ import {Player, FACING} from "../player.js";
 
 import NormalAttack from "../attack/normal_attack.js";
 import PersistentCooldown from "../../utils/persistent_cooldown.js";
+import { AnimationKeys } from "../../../assets/asset_keys.js";
 
 /**
  * Class for standing/idling state.
@@ -89,6 +90,8 @@ export default class StandState extends State
             console.log("Enter stand");
         
         // TODO: Implememnt play 'stand' animation.
+        this.player.play(AnimationKeys.Player_Idle);
+        
 
         this.stop(); // Horizontal movement
     }

@@ -91,7 +91,7 @@ export class Player extends Flat3D_Entity {
          * Set up camera parameters to follow the player.
          */
         this.scene.cameras.main.startFollow(this, true, 0.08, 0.08, -this.cameraOffsetX, -this.cameraOffsetY);
-        this.scene.cameras.main.setDeadzone(300, 150);
+        this.scene.cameras.main.setDeadzone(150, 150);
 
         this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 
@@ -107,6 +107,42 @@ export class Player extends Flat3D_Entity {
 			key: AnimationKeys.Player_Idle,
 			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
 			frameRate: 5,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Running,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:4, end:7}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Running_Attacking,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:8, end:11}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Jumping,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:12, end:15}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Jumping_Attacking,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:16, end:19}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Falling,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:20, end:23}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Falling_Attacking,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:24, end:27}),
+			frameRate: 10,
 			repeat: -1
 		});
 		// this.scene.anims.create({
@@ -129,8 +165,7 @@ export class Player extends Flat3D_Entity {
 		// 	}
 		// })
 
-		// // La animación a ejecutar según se genere el personaje será 'idle'
-		this.play(AnimationKeys.Player_Idle);
+
         // !!!!!!!!!!!
 
 

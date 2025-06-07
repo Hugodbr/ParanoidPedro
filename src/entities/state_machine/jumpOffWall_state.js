@@ -1,5 +1,6 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
+import { AnimationKeys } from "../../../assets/asset_keys.js";
 
 
 /**
@@ -58,6 +59,7 @@ export default class JumpOffWallState extends State
             console.log("Enter jump");
 
         // TODO: Implement play 'jump' animation.
+        this.player.play(AnimationKeys.Player_Jumping);
 
         this.body.setVelocityY(-this.jumpSpeed);
     }

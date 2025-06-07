@@ -75,12 +75,14 @@ export default class RunningAttack extends Attack
         // TODO HIT DAMAGE
     }
 
+    // OBS: Returns to run animation
     onAnimationComplete(anim, frame)
     {
         if (anim.key === AnimationKeys.Running_Attack) {
             this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
             this.player.performingAttack = false;
+            this.player.play(AnimationKeys.Player_Running);
         }
     }
 }

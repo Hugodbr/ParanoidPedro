@@ -2,6 +2,7 @@ import State from "./state.js";
 import {Player, FACING} from "../player.js";
 import RunningAttack from "../attack/running_attack.js";
 import PersistentCooldown from "../../utils/persistent_cooldown.js";
+import { AnimationKeys } from "../../../assets/asset_keys.js";
 
 /**
  * Class for running state.
@@ -84,6 +85,7 @@ export default class RunState extends State
             console.log("Enter run");
 
         // TODO: Implememnt play 'run' animation.
+        this.player.play(AnimationKeys.Player_Running);
 
         if (this.facing == FACING.RIGHT) {
             this.goRight();
@@ -107,6 +109,7 @@ export default class RunState extends State
         // TODO: Implement logic.
         this.runATK.attack();
         // TODO: Implement 'run' attack animation.
+        this.player.play(AnimationKeys.Player_Running_Attacking);
 
         if (this.debugState)
             console.log("Attacking");
