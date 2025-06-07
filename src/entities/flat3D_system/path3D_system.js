@@ -91,7 +91,7 @@ export class Path3D_System {
         }
 
         if(initialPathArr_it === pathArr_it  // If it finds nothing in this orientation it returns the same value
-            && this.transitivityType === PATH_TRANSITIVITY.X_AXIS // If cannot use corridors and the next point is in other zone
+            || this.transitivityType === PATH_TRANSITIVITY.X_AXIS // If cannot use corridors and the next point is in other zone
             && this.pathPoints[pathArr_it].zoneID !== pathZoneID) 
         {
             return pathArr_it;
