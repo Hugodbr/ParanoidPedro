@@ -39,12 +39,14 @@ export const ObjectNames = {
 
 export const AnimationKeys = {
     Player_Idle: 'player-idle',
+    Player_Idle_Attacking: 'player-idle-attacking',
     Player_Running: 'player-running',
     Player_Running_Attacking: 'player-running_attacking',
     Player_Jumping: 'player-jumping',
     Player_Jumping_Attacking: 'player-jumping-attacking',
     Player_Falling: 'player-falling',
     Player_Falling_Attacking: 'player-falling-attacking',
+    Player_Rolling: 'player-rolling',
 
     Agent5G_Idle: 'Agent5G_Idle',
     Agent5G_Walk: 'Agent5G_Walk',
@@ -54,7 +56,6 @@ export const AnimationKeys = {
     Normal_Attack: 'normal-attack-anim',
     Running_Attack: 'running-attack-anim',
 
-    Roll_State: 'roll-state'
 };
 
 export const SoundKeys = {

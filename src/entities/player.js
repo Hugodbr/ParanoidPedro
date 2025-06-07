@@ -7,6 +7,7 @@ import JumpState from "./state_machine/jump_state.js";
 import FallState from "./state_machine/fall_state.js";
 import WallState from "./state_machine/wall_state.js";
 import JumpOffWallState from "./state_machine/jumpOffWall_state.js";
+import RollState from "./state_machine/roll_state.js";
 
 /**
  * Enumeration for player facing directions.
@@ -145,29 +146,23 @@ export class Player extends Flat3D_Entity {
 			frameRate: 10,
 			repeat: -1
 		});
-		// this.scene.anims.create({
-		// 	key: 'attack',
-		// 	frames: scene.anims.generateFrameNumbers('knight', {start:4, end:7}),
-		// 	frameRate: 18,
-		// 	repeat: 0
-		// });
-		// this.scene.anims.create({
-		// 	key: 'run',
-		// 	frames: scene.anims.generateFrameNumbers('knight', {start:8, end:14}),
-		// 	frameRate: 5,
-		// 	repeat: -1
-		// });
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Idle_Attacking,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:28, end:31}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.scene.anims.create({
+			key: AnimationKeys.Player_Rolling,
+			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:32, end:35}),
+			frameRate: 15,
+			repeat: 1
+		});
+		
+        
+        this.on('animationcomplete', this.onAnimationComplete, this);
 
-		// // Si la animación de ataque se completa pasamos a ejecutar la animación 'idle'
-		// this.on('animationcomplete', end => {
-		// 	if (this.anims.currentAnim.key === 'attack'){
-		// 		this.stopAttack()
-		// 	}
-		// })
-
-
-        // !!!!!!!!!!!
-
+        // this.requestStateChange = false;
 
     }
 
@@ -181,6 +176,8 @@ export class Player extends Flat3D_Entity {
 
         // Updates current state player is in.
 		this.currentState.update(t, dt);
+        
+        console.log(this.facing);
 
         // So player body won't oscilate between very small y values creating visual artifacts.
         this.y = Math.round(this.y);
@@ -248,7 +245,7 @@ export class Player extends Flat3D_Entity {
     setShortBody()
     {
         // Change body size
-        this.body.setSize(this.body.width, this.body.height/2);
+        this.body.setSize(this.body.width, this.body.halfHeight);
         this.body.setOffset(0, this.height/2);
     }
 
@@ -257,9 +254,16 @@ export class Player extends Flat3D_Entity {
      */
     setNormalBody()
     {
-        this.body.setSize(this.body.width, this.body.height);
+        this.body.setSize(this.body.width, this.height);
         this.body.setOffset(0, 0);
-    }    
+    }
+
+    onAnimationComplete(anim, frame)
+    {
+        if (anim.key === AnimationKeys.Player_Rolling) {
+            this.setState(this.currentState.nextState); // next state adter rolling
+        }
+    }
 
     createStates()
     {
@@ -269,6 +273,7 @@ export class Player extends Flat3D_Entity {
         this.fallState = new FallState(this);
         this.wallState = new WallState(this);
         this.jumpOffWallState = new JumpOffWallState(this);
+        this.rollState = new RollState(this);
 
         this.currentState = this.standState;
         this.currentState.enter();
