@@ -72,7 +72,7 @@ export default class NormalAttack extends Attack
     {
         attack.setAttackColliderActive(false);
 
-        wallSensor.parentWall.break();
+        wallSensor.parentWall.break(attack.player.hasKey);
     }
 
     onAnimationComplete(anim, frame)

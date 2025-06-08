@@ -581,7 +581,6 @@ export class Enemy extends Flat3D_Entity {
             this.blinkTween.remove();
             this.clearTint();
             this.setAlpha(1);
-            console.log("tween remove");
         }
 
         this.setTint(0xff0000);
@@ -605,8 +604,6 @@ export class Enemy extends Flat3D_Entity {
 
     getHit(points)
     {
-        console.log(points);
-        
         this.life -= points;
 
         this.slowDown(); // TODO OPTIONAL DOESNT WORK
@@ -623,6 +620,9 @@ export class Enemy extends Flat3D_Entity {
 
     die()
     {
+        if (this.hasKey)
+            this.scene.player.getKey();
+        
         this.destroy();
     }
 }

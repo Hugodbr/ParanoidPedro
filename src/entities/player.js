@@ -84,6 +84,7 @@ export class Player extends Flat3D_Entity {
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
         this.life = 4;
         this.currentLife = this.life;
+        this.hasKey = false;
         
         this.performingAttack = false;
 
@@ -97,13 +98,6 @@ export class Player extends Flat3D_Entity {
         this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 
 
-        /**
-         * TODO: Create animations
-         */
-
-        // !!!!!!!!!! EXAMPLE FOR LATER
-        // // Creamos las animaciones de nuestro caballero
-		// // Acordaros, las animaciones son comunes a todo el juego. Por ello lo correcto es crear las animaciones en la escena principal o en una de boot
 		this.scene.anims.create({
 			key: AnimationKeys.Player_Idle,
 			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
@@ -161,9 +155,6 @@ export class Player extends Flat3D_Entity {
 		
         
         this.on('animationcomplete', this.onAnimationComplete, this);
-
-        // this.requestStateChange = false;
-
     }
 
     /**
@@ -297,6 +288,16 @@ export class Player extends Flat3D_Entity {
             console.log("dead");
             this.die();
         }
+    }
+
+    useKey()
+    {
+        this.hasKey = false;
+    }
+
+    getKey()
+    {
+        this.hasKey = true;
     }
 
     // ! restart game

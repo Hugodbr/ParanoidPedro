@@ -31,9 +31,14 @@ export default class Wall extends LayerObject
          * Wall object to be used to spawn a wall sensor at x, y location
          * @type {Object}
         */
-        this.wallObject = this.getThisWallObject();
-        this.spawnPos = {x: this.wallObject.x, y: this.wallObject.y};
-        this.size = {w: this.wallObject.width, h: this.wallObject.height};
+        this.wallObj = this.getThisWallObject()
+        this.wallObjects = this.wallObj.objects;
+
+        this.wallObjectSpawn = this.wallObjects.find(obj => obj.name === "wallSpawn");
+        this.spawnPos = {x: this.wallObjectSpawn.x, y: this.wallObjectSpawn.y};
+        this.size = {w: this.wallObjectSpawn.width, h: this.wallObjectSpawn.height};
+
+        this.isDoor = this.wallObj.properties.find(obj => obj.name === "isDoor").value;
 
 
         /**
@@ -68,7 +73,7 @@ export default class Wall extends LayerObject
     }
 
     /**
-     * Finds in json map this wall object
+     * Finds in json map this wall objects
      * 
      * @remarks -
      * 
@@ -76,9 +81,7 @@ export default class Wall extends LayerObject
      */
     getThisWallObject() 
     {
-        const wallObjects = this.scene.map.objects.find(obj => obj.name === this.groupName + "/wall").objects; // ! string
-
-        return wallObjects.find(obj => obj.name === "wallSpawn");
+        return this.scene.map.objects.find(obj => obj.name === this.groupName + "/wall"); // ! string
     }
 
     /**
@@ -91,7 +94,7 @@ export default class Wall extends LayerObject
     getThisZonesIDs() 
     {
         const zoneIDs = [];
-        this.wallObject.properties.forEach(obj => {
+        this.wallObjectSpawn.properties.forEach(obj => {
             zoneIDs.push(obj.value);
         });
 
@@ -138,20 +141,25 @@ export default class Wall extends LayerObject
      * 
      * @returns {void}
      */
-    break()
+    break(hasKey)
     {
-        // Reveal zones
-        this.zones.forEach(zone => {
-            zone.reveal();
-        });
+        if (!this.isDoor || (this.isDoor && hasKey)) {
+            // Reveal zones
+            this.zones.forEach(zone => {
+                zone.reveal();
+            });
 
-        // Deactivate wall sensor
-        this.wallSensor.setVisible(false);
-        this.wallSensor.body.enable = false;
-        this.wallSensor.active = false;
+            // Deactivate wall sensor
+            this.wallSensor.setVisible(false);
+            this.wallSensor.body.enable = false;
+            this.wallSensor.active = false;
 
-        // Deactivate wall layer
-        this.wallLayer.setVisible(false);
-        this.wallLayer.setCollisionByExclusion([]);
+            // Deactivate wall layer
+            this.wallLayer.setVisible(false);
+            this.wallLayer.setCollisionByExclusion([]);
+
+            if (hasKey) 
+                this.scene.player.useKey();
+        }
     }
 }

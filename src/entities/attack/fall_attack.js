@@ -17,7 +17,7 @@ export default class FallAttack extends Attack
 
         this.cooldown = new PersistentCooldown(1000);
 
-        this.damage = 2;
+        this.damage = 3;
 
         this.hitCallback = this.hitCallback.bind(this);
 
