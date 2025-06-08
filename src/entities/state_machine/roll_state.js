@@ -47,9 +47,9 @@ export default class RollState extends State
 
 
         // Fall 
-        if (!this.isGrounded) 
+        if (this.isFalling()) 
         {
-            this.player.setState(this.player.fallState);
+            this.nextState = this.player.fallState;
         }
 
     }
@@ -61,8 +61,6 @@ export default class RollState extends State
         if (this.debugState)
             console.log("Enter roll");
         
-        // TODO: Implememnt play 'roll' animation.
-        // TODO ON ANIMATION END change state
         this.player.play(AnimationKeys.Player_Rolling);
 
         this.player.setShortBody();
@@ -77,21 +75,6 @@ export default class RollState extends State
     exit() 
     {
         this.player.setNormalBody();
-    }
-
-    /**
-     * Executes an attack while the player is in the 'stand' state.
-     */
-    attack(t)
-    {
-        // TODO: Implement logic.
-        // this.normalATK.attack(t);
-        console.log("Attaking");
-
-        // TODO: Implememnt 'stand' attack animation.
-
-        if (this.debugState)
-            console.log("Attaking");
     }
 
 }

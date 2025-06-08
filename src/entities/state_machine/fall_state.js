@@ -1,6 +1,8 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 import { AnimationKeys } from "../../../assets/asset_keys.js";
+import FallAttack from "../attack/fall_attack.js";
+import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
 
 /**
@@ -15,6 +17,10 @@ export default class FallState extends State
      */
     constructor(player) {
         super(player);
+
+        this.fallATK = new FallAttack(this.scene, player);
+
+        this.attackCooldown = new PersistentCooldown(1200);
     }
 
     /**
@@ -29,32 +35,31 @@ export default class FallState extends State
         // Commom state update logic
         super.update();
 
-        // console.log("right:" + this.body.blocked.right);
-        
-        // console.log("left:" + this.isOnRightWall);
-        //* Handle starting horizontal movement
-        // Left movement
-        if (this.input.leftMoveInput()) 
-        {
-            this.goLeft();
-        }
-        // Right movement
-        else if (this.input.rightMoveInput()) 
-        {
-            this.goRight();
-        }
+        if (!this.player.performingAttack) {
+            //* Handle starting horizontal movement
+            // Left movement
+            if (this.input.leftMoveInput()) 
+            {
+                this.goLeft();
+            }
+            // Right movement
+            else if (this.input.rightMoveInput()) 
+            {
+                this.goRight();
+            }
 
-        //* Handle action inputs while jumping
-        if (this.input.attackActionInput()) {
-            this.attack();
-        }
-        // Roll
-        else if (this.input.rollMoveInput()) {
-            // this.player.setState(RollState); // TODO: dash downward?
-        }
-        // Stop
-        else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
-            this.stop();
+            //* Handle action inputs while jumping
+            if (this.input.attackActionInput()) {
+                this.attack(t);
+            }
+            // Roll
+            else if (this.input.rollMoveInput()) {
+                // this.player.setState(RollState); // TODO: dash downward?
+            }
+            // Stop
+            else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
+                this.stop();
+            }
         }
   
         // When reaching the ground sets a 'stand' state
@@ -90,8 +95,10 @@ export default class FallState extends State
      */
     attack()
     {
-        // TODO: Implement logic.
-        // TODO: Implememnt 'fall' attack animation.
+        // Implement logic.
+        this.fallATK.attack();
+        //Implement 'run' attack animation.
+        this.player.play(AnimationKeys.Player_Falling_Attacking);
 
         if (this.debugState)
             console.log("Attaking");

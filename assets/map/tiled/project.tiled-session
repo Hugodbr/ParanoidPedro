@@ -67,7 +67,7 @@
         "MapTileset.tsx"
     ],
     "project": "project.tiled-project",
-    "property.type": "object",
+    "property.type": "bool",
     "recentFiles": [
         "MapTileset.tsx",
         "map_structured.tmx",

@@ -33,40 +33,42 @@ export default class RunState extends State
         // Commom state update logic
         super.update();
 
-        //* Handle horizontal movement
-        // Left movement
-        if (this.input.leftMoveInput()) 
-        {
-                this.goLeft();
-        } 
-        // Right movement
-        else if (this.input.rightMoveInput()) 
-        {
-                this.goRight();
-        }
-
-        //* Handle action inputs while moving
-        // Jump
-        if (this.input.jumpMoveInput()) 
-        {
-            this.player.setState(this.player.jumpState);
-        } 
-        // Attack
-        else if (this.input.attackActionInput()) 
-        {
-            if (this.attackCooldown.canUse(t)) { 
-                this.attack(t);
+        if (!this.player.performingAttack) {
+            //* Handle horizontal movement
+            // Left movement
+            if (this.input.leftMoveInput()) 
+            {
+                    this.goLeft();
+            } 
+            // Right movement
+            else if (this.input.rightMoveInput()) 
+            {
+                    this.goRight();
             }
-        } 
-        // Roll
-        else if (this.input.rollMoveInput()) 
-        {
-            this.player.setState(this.player.rollState);
-        } 
-        // Stop
-        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
-        {
-            this.player.setState(this.player.standState); 
+
+            //* Handle action inputs while moving
+            // Jump
+            if (this.input.jumpMoveInput()) 
+            {
+                this.player.setState(this.player.jumpState);
+            } 
+            // Attack
+            else if (this.input.attackActionInput()) 
+            {
+                if (this.attackCooldown.canUse(t)) { 
+                    this.attack(t);
+                }
+            } 
+            // Roll
+            else if (this.input.rollMoveInput()) 
+            {
+                this.player.setState(this.player.rollState);
+            } 
+            // Stop
+            else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
+            {
+                this.player.setState(this.player.standState); 
+            }
         }
 
         // Check if the player is airborne and sets 'fall' state if it is
@@ -84,15 +86,8 @@ export default class RunState extends State
         if (this.debugState) 
             console.log("Enter run");
 
-        // TODO: Implememnt play 'run' animation.
         this.player.play(AnimationKeys.Player_Running);
 
-        // if (this.facing == FACING.RIGHT) {
-        //     this.goRight();
-        // }
-        // else {
-        //     this.goLeft();
-        // }
     }
 
     exit() 
