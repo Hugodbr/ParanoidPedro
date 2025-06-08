@@ -66,14 +66,6 @@ export default class FallAttack extends Attack
         this.scene.physics.add.overlap(this, this.enemies, this.hitCallback);
     }
 
-    hitCallback(attack, enemy)
-    {
-
-        attack.setAttackColliderActive(false);
-
-        enemy.getHit(this.damage);
-    }
-
     // OBS: Returns to run animation
     onAnimationComplete(anim, frame)
     {

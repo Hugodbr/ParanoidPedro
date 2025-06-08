@@ -605,6 +605,8 @@ export class Enemy extends Flat3D_Entity {
 
     getHit(points)
     {
+        console.log(points);
+        
         this.life -= points;
 
         this.slowDown(); // TODO OPTIONAL DOESNT WORK

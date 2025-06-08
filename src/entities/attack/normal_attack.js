@@ -68,14 +68,6 @@ export default class NormalAttack extends Attack
         this.scene.physics.add.overlap(this, this.walls, this.hitWallCallback);
     }
 
-    hitCallback(attack, enemy)
-    {
-        attack.setAttackColliderActive(false);
-
-        enemy.getHit(this.damage);
-
-    }
-
     hitWallCallback(attack, wallSensor)
     {
         attack.setAttackColliderActive(false);
