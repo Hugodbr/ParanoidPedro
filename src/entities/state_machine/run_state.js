@@ -19,6 +19,7 @@ export default class RunState extends State
         this.runATK = new RunningAttack(this.scene, player);
 
         this.attackCooldown = new PersistentCooldown(1200);
+        this.rollCooldown = new PersistentCooldown(1000);
     }
 
     /**
@@ -62,7 +63,9 @@ export default class RunState extends State
             // Roll
             else if (this.input.rollMoveInput()) 
             {
-                this.player.setState(this.player.rollState);
+                if (this.rollCooldown.canUse(t)) { 
+                    this.player.setState(this.player.rollState);
+                }
             } 
             // Stop
             else if (this.input.leftMoveInput() === this.input.rightMoveInput()) // Stop if no direction is held OR if both directions are being held
