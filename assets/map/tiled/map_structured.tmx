@@ -208,6 +208,7 @@
   <group id="86" name="enemies">
    <objectgroup id="87" name="enemy2">
     <properties>
+     <property name="hasKey" type="bool" value="false"/>
      <property name="type" value="Agent5G"/>
     </properties>
     <object id="89" name="0" x="3342" y="1125.92">
@@ -220,6 +221,7 @@
    </objectgroup>
    <objectgroup id="88" name="enemy1">
     <properties>
+     <property name="hasKey" type="bool" value="true"/>
      <property name="type" value="Agent5G"/>
     </properties>
     <object id="95" name="0" x="4162.71" y="1133.92">
@@ -605,6 +607,7 @@
   <group id="71" name="enemies">
    <objectgroup id="55" name="enemy1">
     <properties>
+     <property name="hasKey" type="bool" value="false"/>
      <property name="type" value="Agent5G"/>
     </properties>
     <object id="59" name="0" x="3482.71" y="733.916">
@@ -1004,6 +1007,7 @@
   <group id="31" name="enemies">
    <objectgroup id="35" name="enemy1">
     <properties>
+     <property name="hasKey" type="bool" value="false"/>
      <property name="type" value="Agent5G"/>
     </properties>
     <object id="38" name="0" x="1316.23" y="1123.07">
