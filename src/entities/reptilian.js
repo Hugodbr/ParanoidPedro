@@ -11,7 +11,7 @@ import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js
 import { InversionBehaviorNode } from "../AI_behavior/inversion_behavior_node.js";
 import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_node.js";
 
-import { FACING } from "./player.js";
+import { FACING, Player } from "./player.js";
 
 export class Reptilian extends Enemy {
 
@@ -54,6 +54,36 @@ export class Reptilian extends Enemy {
      * @type {Vector3D}
      */
     fallDetectionPos = new Vector3D(80, 180, 0);
+
+    /**
+     * Zone that detects if the player is landing above the reptilian
+     * @type {Phaser.GameObjects.Zone}
+     */
+    headDamageZone;
+
+    /**
+     * Relative position of the head damage zone
+     * @type {Vector3D}
+     */
+    headDamageZonePos = new Vector3D(0, 20, 0);
+
+    /**
+     * Zone that damages the player
+     * @type {Phaser.GameObjects.Zone}
+     */
+    attackArea;
+
+    /**
+     * Relative position of the attack area
+     * @type {Vector3D}
+     */
+    attackAreaPos = new Vector3D(20, 90, 0);
+
+    /**
+     * Wheter the reptilian has damaged the player in this attack
+     * @type {boolean}
+     */
+    hasAttackedPlayer = false;
     
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
@@ -61,6 +91,16 @@ export class Reptilian extends Enemy {
         this.setTexture(TextureKeys.Reptilian);
         this.body.width = 163;
         this.body.height = 140;
+
+        // Head damage detection
+        this.headDamageZone = scene.add.zone(x + this.headDamageZonePos.x, y + this.headDamageZonePos.y, 100, 30);
+        scene.physics.add.existing(this.headDamageZone);
+        this.headDamageZone.body.setAllowGravity(false);
+
+        // Attack area
+        this.attackArea = scene.add.zone(x + this.attackAreaPos.x, y + this.attackAreaPos.y, 50, 100);
+         scene.physics.add.existing(this.attackArea);
+        this.attackArea.body.setAllowGravity(false);
 
         // Wall detection
         this.wallDetectionArea = scene.add.zone(x + this.wallDetectionPos.x, y + this.wallDetectionPos.y, 20, 20);
@@ -134,6 +174,7 @@ export class Reptilian extends Enemy {
         const END_ATTACK = new ExecutionBehaviorNode((() => {
             this.setActionState(ENEMY_STATE.CHASING);
             this.attackStarted = false;
+            this.hasAttackedPlayer = false;
 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -184,16 +225,16 @@ export class Reptilian extends Enemy {
                 .addNode(END_ATTACK)
             )
 
-            .addNode( new ForceFailureBehaviorNode()
+           /* .addNode( new ForceFailureBehaviorNode()
                 .setNode( new SequenceBehaviorNode()
 
                     .addNode( new FallbackBehaviorNode()
                         .addNode(IS_GOING_TO_COLLIDE_WITH_WALL)
                     //    .addNode(IS_GOING_TO_FALL)
                     )
-                    //.addNode(SWITCH_FACING)
+                    .addNode(SWITCH_FACING)
                 )
-            )
+            )*/
 
             .addNode(ATTACK_DASH_MOVE)
         );
@@ -210,5 +251,26 @@ export class Reptilian extends Enemy {
 
         this.fallDetectionArea.x = this.body.position.x + this.fallDetectionPos.x * dir;
         this.fallDetectionArea.y = this.body.position.y + this.fallDetectionPos.y;
+
+        this.attackArea.x = this.body.position.x + this.attackAreaPos.x * dir;
+        this.attackArea.y = this.body.position.y + this.attackAreaPos.y;
+
+        if(this.actionState === ENEMY_STATE.ATTACKING 
+            && this.scene.physics.overlap(this.attackArea, this.playerRef) && !this.hasAttackedPlayer) 
+        {
+            this.hasAttackedPlayer = true;
+            this.playerRef.getHit();
+        }
+
+        this.headDamageZone.x = this.body.position.x + this.headDamageZonePos.x;
+        this.headDamageZone.y = this.body.position.y + this.headDamageZonePos.y;
+
+        if(this.scene.physics.overlap(this.headDamageZone, this.playerRef) 
+            && this.playerRef.body.velocity.y > 0) 
+        {
+            this.die();
+            return;
+        }
+
     }
 }
