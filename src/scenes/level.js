@@ -132,6 +132,11 @@ export default class Level extends Phaser.Scene
             wall.defineCollisions(this.enemiesArray);
         });
 
+        //* Finish level
+        const endObj = this.map.objects.find(obj => obj.name === "endLevel").objects.find(obj => obj.name === "end");
+        this.endCollider = this.add.rectangle(endObj.x, endObj.y, endObj.width, endObj.height).setOrigin(0);
+        this.physics.add.existing(this.endCollider, true);
+
         //* Play music
         //
         this.sound.play(SoundKeys.Ambiance, {
@@ -156,6 +161,13 @@ export default class Level extends Phaser.Scene
         this.time.delayedCall(900, () => {
             this.scene.start(SceneKeys.Level_1);
         });
+    }
+
+    loadNextLevel(key)
+    {
+        this.time.delayedCall(500, () => {
+            this.scene.start(key);
+        }); 
     }
 
 }

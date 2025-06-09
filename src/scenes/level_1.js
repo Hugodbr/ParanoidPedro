@@ -1,12 +1,5 @@
-import { TilemapKeys, TilesetNames, LayerNames, SoundKeys, SceneKeys } from '../../assets/asset_keys.js'
+import { TilemapKeys, SceneKeys } from '../../assets/asset_keys.js'
 
-import InputManager from '../managers/input_manager.js';
-
-import { Player } from '../entities/player.js';
-
-import LayerObject from '../zones/layer_object.js';
-import Zone from '../zones/zone.js';
-import Wall from '../zones/wall.js';
 import Level from './level.js';
 
 /**
@@ -36,6 +29,10 @@ export default class Level1 extends Level
     
     create() {
         super.create();
+
+        this.physics.add.overlap(this.player, this.endCollider, () => {
+            this.loadNextLevel(SceneKeys.Level_1);
+        });
     }
 
     /**
