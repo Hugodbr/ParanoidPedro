@@ -62,6 +62,8 @@ export const AnimationKeys = {
     Agent5G_Run: 'Agent5G_Run',
     Agent5G_Shoot: 'Agent5G_Shoot',
 
+    Reptilian_Attack: 'Reptilian_Attack',
+
     Normal_Attack: 'normal-attack-anim',
     Running_Attack: 'running-attack-anim',
     Jump_Attack: 'jump-attack-anim',

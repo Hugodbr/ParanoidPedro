@@ -2589,7 +2589,7 @@
                                 {
                                  "name":"type",
                                  "type":"string",
-                                 "value":"Agent5G"
+                                 "value":"Reptilian"
                                 }],
                          "type":"objectgroup",
                          "visible":true,
@@ -4380,7 +4380,7 @@
  "nextobjectid":108,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1",
+ "tiledversion":"1.11.0",
  "tileheight":32,
  "tilesets":[
         {
