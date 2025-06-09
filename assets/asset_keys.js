@@ -2,7 +2,9 @@
 export const SceneKeys = {
     Tile: 'title-scene',
     Level_1: 'level_1-scene',
-    Level_2: 'level_2-scene'
+    Level_2: 'level_2-scene',
+    Game_Win: 'game-win',
+    Game_Over: 'game-over'
 }
 
 export const TilemapKeys = {

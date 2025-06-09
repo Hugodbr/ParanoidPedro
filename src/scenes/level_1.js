@@ -31,7 +31,7 @@ export default class Level1 extends Level
         super.create();
 
         this.physics.add.overlap(this.player, this.endCollider, () => {
-            this.loadNextLevel(SceneKeys.Level_1);
+            this.loadNextLevel(SceneKeys.Level_2);
         });
     }
 

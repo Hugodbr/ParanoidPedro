@@ -20,7 +20,7 @@ export default class Title extends Phaser.Scene {
 	
 			//* Preload tilemap assets
 			this.load.tilemapTiledJSON(TilemapKeys.Level_1, 'assets/map/tiled/level1.json');
-			this.load.tilemapTiledJSON(TilemapKeys.Level_2, 'assets/map/tiled/level1.json');      
+			this.load.tilemapTiledJSON(TilemapKeys.Level_2, 'assets/map/tiled/level2.json');      
 			this.load.image(TilemapKeys.TilesetImage, 'assets/map/Map Tileset.png');
 	
 			//* Preload player character

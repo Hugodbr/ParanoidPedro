@@ -247,10 +247,9 @@ export class Player extends Flat3D_Entity {
         this.hasKey = true;
     }
 
-    // ! restart game
+    // ! GAME OVER
     die()
     {
-        this.scene.restart();
+        this.scene.gameOver();
     }
-
 }

@@ -19,8 +19,6 @@ export default class RunningAttack extends Attack
 
         this.damage = 3;
 
-        this.hitCallback = this.hitCallback.bind(this);
-
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 

@@ -19,8 +19,6 @@ export default class JumpAttack extends Attack
 
         this.damage = 2;
 
-        this.hitCallback = this.hitCallback.bind(this);
-
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 

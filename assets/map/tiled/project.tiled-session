@@ -28,6 +28,7 @@
                 71,
                 14,
                 80,
+                89,
                 74,
                 63,
                 32,
@@ -39,23 +40,89 @@
                 80,
                 94
             ],
-            "scale": 0.125,
-            "selectedLayer": 66,
+            "scale": 0.25,
+            "selectedLayer": 48,
             "viewCenter": {
-                "x": 2824,
-                "y": 592
+                "x": 3944,
+                "y": 496
             }
         },
         "level1.tmx#MapTileset": {
-            "scaleInDock": 1
+            "scaleInDock": 0.75
+        },
+        "level2.json": {
+            "expandedGroupLayers": [
+                31,
+                86,
+                68,
+                6,
+                8,
+                71,
+                14,
+                80,
+                46,
+                74,
+                63,
+                32,
+                97,
+                94
+            ],
+            "expandedObjectLayers": [
+                94
+            ],
+            "scale": 0.125,
+            "selectedLayer": 51,
+            "viewCenter": {
+                "x": 4000,
+                "y": 1384
+            }
+        },
+        "level2.json#MapTileset": {
+            "scaleInDock": 0.33
         },
         "level2.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 0,
+            "expandedGroupLayers": [
+                31,
+                86,
+                68,
+                6,
+                8,
+                71,
+                14,
+                80,
+                89,
+                74,
+                63,
+                32,
+                97,
+                94
+            ],
+            "expandedObjectLayers": [
+                67,
+                103,
+                68,
+                85,
+                8,
+                102,
+                93,
+                14,
+                80,
+                21,
+                89,
+                15,
+                11,
+                63,
+                94
+            ],
+            "scale": 0.25,
+            "selectedLayer": 48,
             "viewCenter": {
-                "x": 734,
-                "y": 644
+                "x": 3944,
+                "y": 496
             }
+        },
+        "level2.tmx#MapTileset": {
+            "scaleInDock": 0.75
         },
         "map_structured.tmx": {
             "expandedGroupLayers": [
@@ -125,6 +192,7 @@
     "project": "project.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "level2.json",
         "level2.tmx",
         "MapTileset.tsx",
         "map_structured.tmx",
