@@ -16,17 +16,25 @@
         },
         "map_structured.tmx": {
             "expandedGroupLayers": [
-                31,
-                32,
+                63,
+                71,
+                6,
+                68,
+                94,
+                86,
+                80,
                 14,
-                8,
-                6
+                32,
+                97,
+                74,
+                31,
+                8
             ],
             "scale": 0.5,
-            "selectedLayer": -1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 772,
-                "y": 451
+                "x": 5621,
+                "y": 1018
             }
         },
         "map_structured.tmx#Graphic Design Test": {
@@ -34,7 +42,7 @@
             "scaleInEditor": 1
         },
         "map_structured.tmx#MapTileset": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.33,
             "scaleInEditor": 1
         },
         "map_structured.tmx#mapateste": {

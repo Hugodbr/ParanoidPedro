@@ -87,7 +87,7 @@ export default class MainGame extends Phaser.Scene
         */
         this.isDebug = this.physics.config.debug;
 
-        //* Input manager singleton
+        //* Input manager
         this.inputManager = new InputManager(this);
 
         //* Map creation
@@ -97,22 +97,22 @@ export default class MainGame extends Phaser.Scene
             tileWidth: 32,
             tileHeight: 32
         });
-        // console.log(this.map);
 
         this.mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
 
+        // Create backgroundFar layer
+        const backgroundFar = this.map.createLayer(LayerNames.BackgroundFar, this.mapTileset, 0, 0);
+
         //* Player creation
         //
-        console.log(this.map.objects);
         // Tiled
-        const playerObjects = this.map.objects.find(obj => obj.name === "player").objects; // ! string
-        const spawn = playerObjects.find(obj => obj.name === "spawn"); // ! string
+        const playerObjects = this.map.objects.find(obj => obj.name === "player").objects;
+        const spawn = playerObjects.find(obj => obj.name === "spawn");
         this.player = new Player(this, spawn.x, spawn.y, 0);
         
         //* Zones creation
         //
         this.numberOfZones = LayerObject.countLayerObjects(this.map.objects, Zone.type);
-        // console.log(this.numberOfZones);
         
         // Create all zones
         for (let i = 0; i < this.numberOfZones; ++i) {
@@ -123,7 +123,6 @@ export default class MainGame extends Phaser.Scene
             });
         }
     
-        
         //* Walls creation
         //
         this.numberOfWalls = LayerObject.countLayerObjects(this.map.objects, Wall.type);
@@ -180,7 +179,6 @@ export default class MainGame extends Phaser.Scene
             this.bKey = this.input.keyboard.addKey('B'); // break wall
             this.hitCooldown = new PersistentCooldown(500);
         }
-
 	}
 
     /**
