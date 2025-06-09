@@ -176,8 +176,6 @@ export class Player extends Flat3D_Entity {
 
         // Updates current state player is in.
 		this.currentState.update(t, dt);
-        
-        console.log(this.facing);
 
         // So player body won't oscilate between very small y values creating visual artifacts.
         this.y = Math.round(this.y);

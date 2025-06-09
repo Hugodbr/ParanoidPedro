@@ -2,12 +2,14 @@ import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from 
 
 import { Enemy } from '../entities/enemy.js';
 import { Agent5G } from '../entities/agent_5G.js';
+import { Reptilian } from '../entities/reptilian.js';
 
 import { Path3D_Point } from "../entities/flat3D_system/path3D_point.js";
 import LayerObject from './layer_object.js';
 
 const enemyMap = {
-    Agent5G
+    Agent5G,
+    Reptilian
 }
 
 
