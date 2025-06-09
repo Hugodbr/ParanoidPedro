@@ -3,6 +3,8 @@ import {Player, FACING} from "../player.js";
 
 import FallState from "./fall_state.js";
 import { AnimationKeys } from "../../../assets/asset_keys.js";
+import JumpAttack from "../attack/jump_atack.js";
+import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
 /**
  * Class for jumping state.
@@ -15,6 +17,10 @@ export default class JumpState extends State
      */
     constructor(player) {
         super(player);
+
+        this.jumpATK = new JumpAttack(this.scene, player);
+
+        this.attackCooldown = new PersistentCooldown(1200);
     }
 
     /**
@@ -29,31 +35,34 @@ export default class JumpState extends State
         // Commom state update logic
         super.update();
 
-        //* Handle horizontal movement
-        // Left movement
-        if (this.input.leftMoveInput()) 
-        {
-            this.goLeft();
-        }
-        // Right movement
-        else if (this.input.rightMoveInput()) 
-        {
-            this.goRight();
+        if (!this.player.performingAttack) {
+            //* Handle horizontal movement
+            // Left movement
+            if (this.input.leftMoveInput()) 
+            {
+                this.goLeft();
+            }
+            // Right movement
+            else if (this.input.rightMoveInput()) 
+            {
+                this.goRight();
+            }
+
+            //* Handle action inputs while jumping
+            // Attack
+            if (this.input.attackActionInput()) {
+                this.attack();
+            }
+            // Roll
+            else if (this.input.rollMoveInput()) {
+                // this.player.setState(RollState); // TODO: dash downward?
+            }
+            // Stop
+            else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
+                this.stop();
+            }
         }
 
-        //* Handle action inputs while jumping
-        // Attack
-        if (this.input.attackActionInput()) {
-            this.attack();
-        }
-        // Roll
-        else if (this.input.rollMoveInput()) {
-            // this.player.setState(RollState); // TODO: dash downward?
-        }
-        // Stop
-        else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
-            this.stop();
-        }
 
         if (this.onWall()) {
             this.player.setState(this.player.wallState);
@@ -90,8 +99,10 @@ export default class JumpState extends State
      */
     attack()
     {
-        // TODO: Implement logic.
-        // TODO: Implement 'jump' attack animation.
+        // Implement logic.
+        this.jumpATK.attack();
+        //Implement 'run' attack animation.
+        this.player.play(AnimationKeys.Player_Jumping_Attacking);
 
         if (this.debugState)
             console.log("Attacking");

@@ -3,7 +3,7 @@ import Attack from "./attack.js";
 import { TextureKeys, AnimationKeys, SoundKeys } from "../../../assets/asset_keys.js"
 import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
-export default class RunningAttack extends Attack
+export default class FallAttack extends Attack
 {
     constructor(scene, player){
         super(scene, player, TextureKeys.Punch_Attack)
@@ -13,7 +13,7 @@ export default class RunningAttack extends Attack
 
         // Offset distance from the character
         this.offsetX = player.body.width/1.5;
-        this.offsetY = player.body.height/2;
+        this.offsetY = player.body.height;
 
         this.cooldown = new PersistentCooldown(1000);
 
@@ -44,9 +44,9 @@ export default class RunningAttack extends Attack
         this.setAttackSpriteActive(true);
         this.setAttackColliderActive(true);
 
-        this.play(AnimationKeys.Running_Attack);
+        this.play(AnimationKeys.Fall_Attack);
 
-        this.scene.sound.play(SoundKeys.Running_Attack, {
+        this.scene.sound.play(SoundKeys.Normal_Attack, {
             volume: 0.5,
             loop: false,
             rate: 2
@@ -62,11 +62,11 @@ export default class RunningAttack extends Attack
     // OBS: Returns to run animation
     onAnimationComplete(anim, frame)
     {
-        if (anim.key === AnimationKeys.Running_Attack) {
+        if (anim.key === AnimationKeys.Fall_Attack) {
             this.setAttackColliderActive(false);
             this.setAttackSpriteActive(false);
             this.player.performingAttack = false;
-            this.player.play(AnimationKeys.Player_Running);
+            this.player.play(AnimationKeys.Player_Falling);
         }
     }
 }

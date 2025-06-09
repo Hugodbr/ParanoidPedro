@@ -1,4 +1,4 @@
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js'
+import { TilemapKeys, TilesetNames, LayerNames, SceneKeys, SoundKeys } from '../../assets/asset_keys.js'
 
 import InputManager from '../managers/input_manager.js';
 
@@ -7,23 +7,24 @@ import { Player } from '../entities/player.js';
 import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
 import Wall from '../zones/wall.js';
-import PersistentCooldown from '../utils/persistent_cooldown.js';
+
 
 /**
  * Game main scene.
  * @extends Phaser.Scene
  */
-export default class MainGame extends Phaser.Scene 
+export default class Level extends Phaser.Scene 
 {	
     // Depth for rendering order
     playerDepth = 10;
     farBackDepth = -10; // invisible
     enemyDepth = 9;
 
-	constructor() {
-		super({ key: 'maingame' });
+    constructor(key, tilemap) {
+        super(key);
 
-	}
+        this.tilemap = tilemap;
+    }
 
     /**
      * Initialize variables
@@ -38,42 +39,16 @@ export default class MainGame extends Phaser.Scene
 
         this.enemiesArray = []; // all enemies in array
         this.enemiesGroup = this.physics.add.group(); // all enemies in group
-	}
-	
+    }
+    
     /**
      * Image, sounds, tilemaps
      */
-	preload() {
+    preload() {
 
-        //* Music
-        this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')
-
-        //* Preload tilemap assets
-        this.load.tilemapTiledJSON(TilemapKeys.Level_1, 'assets/map/tiled/level1.json');        
-        this.load.image(TilemapKeys.TilesetImage, 'assets/map/Map Tileset.png');
-
-        //* Preload player character
-        this.load.image(TextureKeys.PlayerCharacter, 'assets/character/characterTeste.png');
-        this.load.spritesheet(TextureKeys.Player_Spritesheet, 'assets/character/playerSpritesheet.png', { frameWidth: 96, frameHeight: 128 });
-        this.load.spritesheet(TextureKeys.Player_RollState, 'assets/character/movement/roll_state.png', { frameWidth: 96, frameHeight: 64 });
-        // Audio
-        this.load.audio(SoundKeys.Player_Life, 'assets/sfx/player/life-beat.mp3');
-        
-        //* Enemy
-        this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
-        this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
-
-        //* Attacks
-        // this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
-        this.load.spritesheet(TextureKeys.Punch_Attack, 'assets/character/attacks/punch_attack.png', { frameWidth: 64, frameHeight: 96});
-        this.load.spritesheet(TextureKeys.Aerial_Attack, 'assets/character/attacks/aerial_attack.png', { frameWidth: 64, frameHeight: 64});
-        this.load.audio(SoundKeys.Normal_Attack, 'assets/sfx/attack/punches-single.mp3');
-        this.load.audio(SoundKeys.Running_Attack, 'assets/sfx/attack/punches-4x.mp3');
-
-
-	}
-	
-	create() {
+    }
+    
+    create() {
 
         /**
          * Variable that hold the debug configuration value of phaser
@@ -90,15 +65,12 @@ export default class MainGame extends Phaser.Scene
         //* Map creation
         //
         this.map = this.make.tilemap({
-            key: TilemapKeys.Level_1,
+            key: this.tilemap,
             tileWidth: 32,
             tileHeight: 32
         });
 
         this.mapTileset = this.map.addTilesetImage(TilesetNames.InTiled, TilemapKeys.TilesetImage);
-
-        // Create backgroundFar layer
-        const backgroundFar = this.map.createLayer(LayerNames.BackgroundFar, this.mapTileset, 0, 0);
 
         //* Player creation
         //
@@ -160,6 +132,11 @@ export default class MainGame extends Phaser.Scene
             wall.defineCollisions(this.enemiesArray);
         });
 
+        //* Finish level
+        const endObj = this.map.objects.find(obj => obj.name === "endLevel").objects.find(obj => obj.name === "end");
+        this.endCollider = this.add.rectangle(endObj.x, endObj.y, endObj.width, endObj.height).setOrigin(0);
+        this.physics.add.existing(this.endCollider, true);
+
         //* Play music
         //
         this.sound.play(SoundKeys.Ambiance, {
@@ -168,64 +145,29 @@ export default class MainGame extends Phaser.Scene
             rate: 1
         });
 
-        
-        // ! DEBUG
-		// Enable arrow key input
-        if (this.isDebug) {
-            this.cursors = this.input.keyboard.createCursorKeys();
-            this.bKey = this.input.keyboard.addKey('B'); // break wall
-            this.hitCooldown = new PersistentCooldown(500);
-        }
-	}
+    }
 
     /**
      * Scene loop
      */
-	update(time, dt) {
+    update(time, dt) {
 
-        // ! DEBUG
-        if (this.isDebug) {
-            this.scrollAround(dt);
-
-            if (this.bKey.isDown) {
-                this.walls[0].break();
-
-                if (this.hitCooldown.canUse(time)) {
-                    this.player.getHit();
-                }
-            }
-        }
-
-	}
+    }
 
     restart()
     {
         this.cameras.main.fadeOut(500, 70, 0, 0);
 
         this.time.delayedCall(900, () => {
-            this.scene.start('maingame');
+            this.scene.start(SceneKeys.Level_1);
         });
     }
 
-    // ! DEBUG
-    scrollAround(delta)
+    loadNextLevel(key)
     {
-        const cam = this.cameras.main;
-		const speed = 1000; // pixels per second
-
-		if (this.cursors.left.isDown) {
-			cam.scrollX -= speed * delta / 1000;
-		}
-		else if (this.cursors.right.isDown) {
-			cam.scrollX += speed * delta / 1000;
-		}
-
-		if (this.cursors.up.isDown) {
-			cam.scrollY -= speed * delta / 1000;
-		}
-		else if (this.cursors.down.isDown) {
-			cam.scrollY += speed * delta / 1000;
-		}
+        this.time.delayedCall(500, () => {
+            this.scene.start(key);
+        }); 
     }
 
 }

@@ -1,7 +1,13 @@
 
+export const SceneKeys = {
+    Tile: 'title-scene',
+    Level_1: 'level_1-scene',
+    Level_2: 'level_2-scene'
+}
 
 export const TilemapKeys = {
-    MapJSON: 'tilemap',
+    Level_1: 'level-1',
+    Level_2: 'level-2',
     TilesetImage: 'tilesetMapImage',
 };
 
@@ -22,11 +28,12 @@ export const TextureKeys = {
     PlayerCharacter: 'player-character',
     Player_Spritesheet: 'player-spritesheet',
     Player_RollState: 'player-roll-state',
+    Punch_Attack: 'punch-attack',
+    Aerial_Attack: 'aerial-attack',
 
     Agent5G: 'Agent5G',
-    Wave5G: 'Wave5G',
+    Wave5G: 'Wave5G'
 
-    Punch_Attack: 'punch-attack'
 };
 
 export const ObjectNames = {
@@ -41,7 +48,7 @@ export const AnimationKeys = {
     Player_Idle: 'player-idle',
     Player_Idle_Attacking: 'player-idle-attacking',
     Player_Running: 'player-running',
-    Player_Running_Attacking: 'player-running_attacking',
+    Player_Running_Attacking: 'player-running-attacking',
     Player_Jumping: 'player-jumping',
     Player_Jumping_Attacking: 'player-jumping-attacking',
     Player_Falling: 'player-falling',
@@ -57,7 +64,8 @@ export const AnimationKeys = {
 
     Normal_Attack: 'normal-attack-anim',
     Running_Attack: 'running-attack-anim',
-
+    Jump_Attack: 'jump-attack-anim',
+    Fall_Attack: 'fall-attack-anim',
 };
 
 export const SoundKeys = {

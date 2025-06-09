@@ -1,4 +1,8 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "map_structured.tmx",
     "expandedProjectPaths": [
         "."
@@ -14,19 +18,71 @@
             "scaleInDock": 0.25,
             "scaleInEditor": 0.5
         },
+        "level1.tmx": {
+            "expandedGroupLayers": [
+                31,
+                86,
+                68,
+                6,
+                8,
+                71,
+                14,
+                80,
+                74,
+                63,
+                32,
+                97,
+                94
+            ],
+            "expandedObjectLayers": [
+                85,
+                80,
+                94
+            ],
+            "scale": 0.125,
+            "selectedLayer": 66,
+            "viewCenter": {
+                "x": 2824,
+                "y": 592
+            }
+        },
+        "level1.tmx#MapTileset": {
+            "scaleInDock": 1
+        },
+        "level2.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 734,
+                "y": 644
+            }
+        },
         "map_structured.tmx": {
             "expandedGroupLayers": [
                 31,
-                32,
-                14,
+                86,
+                68,
+                45,
+                6,
                 8,
-                6
+                71,
+                14,
+                80,
+                46,
+                74,
+                63,
+                32,
+                97,
+                94
             ],
-            "scale": 0.5,
-            "selectedLayer": -1,
+            "expandedObjectLayers": [
+                94
+            ],
+            "scale": 0.125,
+            "selectedLayer": 66,
             "viewCenter": {
-                "x": 772,
-                "y": 451
+                "x": 4000,
+                "y": 1384
             }
         },
         "map_structured.tmx#Graphic Design Test": {
@@ -34,7 +90,7 @@
             "scaleInEditor": 1
         },
         "map_structured.tmx#MapTileset": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.33,
             "scaleInEditor": 1
         },
         "map_structured.tmx#mapateste": {
@@ -67,8 +123,9 @@
         "MapTileset.tsx"
     ],
     "project": "project.tiled-project",
-    "property.type": "object",
+    "property.type": "bool",
     "recentFiles": [
+        "level2.tmx",
         "MapTileset.tsx",
         "map_structured.tmx",
         "mapatiled.tmx"

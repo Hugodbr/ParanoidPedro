@@ -1,7 +1,7 @@
 import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames } from '../../assets/asset_keys.js'
 
 /**
- * Class // TODO
+ * Abstract class for layer objects
  */
 export default class LayerObject
 {
@@ -21,10 +21,6 @@ export default class LayerObject
                     names.add(name);
             }
         });
-
-        // ! DEBUG
-        // console.log(`Number of ${type}: ${names.size}`);
-        // console.log(`${type} found:`, [...names]);
 
         return names.size;
     }
@@ -115,9 +111,7 @@ export default class LayerObject
     /**
      * Reveal all visible objects (layers and entities)
      */
-    reveal() {
-        // console.log(this.visibleObjects);
-        
+    reveal() {        
         // Fade-in effect
         this.scene.tweens.add({
         targets: this.visibleObjects,

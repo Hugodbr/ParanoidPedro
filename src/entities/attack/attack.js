@@ -61,8 +61,11 @@ export default class Attack extends Phaser.GameObjects.Sprite
     {  
     }
 
-    hitCallback()
+    hitCallback(attack, enemy)
     {
+        attack.setAttackColliderActive(false);
+
+        enemy.getHit(attack.damage);
     }
 
     setAttackSpriteActive(active)

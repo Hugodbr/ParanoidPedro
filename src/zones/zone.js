@@ -94,8 +94,13 @@ export default class Zone extends LayerObject
             });
 
             const enemyType = enemyObjects[i].properties.find(prop => prop.name === "type").value;
+            const hasKey = enemyObjects[i].properties.find(prop => prop.name === "hasKey").value;
 
-            this.enemies.push(new enemyMap[enemyType](this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints));
+            let newEnemy = new enemyMap[enemyType](this.scene, pathPoints[0].x, pathPoints[0].y, pathPoints[0].z, this.scene.player, pathPoints);
+
+            newEnemy.hasKey = hasKey;
+
+            this.enemies.push(newEnemy);
 
             this.visibleObjects.push(this.enemies[i]);
         }

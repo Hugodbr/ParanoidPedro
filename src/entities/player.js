@@ -84,6 +84,7 @@ export class Player extends Flat3D_Entity {
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
         this.life = 4;
         this.currentLife = this.life;
+        this.hasKey = false;
         
         this.performingAttack = false;
 
@@ -97,73 +98,10 @@ export class Player extends Flat3D_Entity {
         this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
 
 
-        /**
-         * TODO: Create animations
-         */
 
-        // !!!!!!!!!! EXAMPLE FOR LATER
-        // // Creamos las animaciones de nuestro caballero
-		// // Acordaros, las animaciones son comunes a todo el juego. Por ello lo correcto es crear las animaciones en la escena principal o en una de boot
-		this.scene.anims.create({
-			key: AnimationKeys.Player_Idle,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
-			frameRate: 5,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Running,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:4, end:7}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Running_Attacking,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:8, end:11}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Jumping,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:12, end:15}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Jumping_Attacking,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:16, end:19}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Falling,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:20, end:23}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Falling_Attacking,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:24, end:27}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Idle_Attacking,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:28, end:31}),
-			frameRate: 10,
-			repeat: -1
-		});
-        this.scene.anims.create({
-			key: AnimationKeys.Player_Rolling,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:32, end:35}),
-			frameRate: 15,
-			repeat: 1
-		});
 		
         
         this.on('animationcomplete', this.onAnimationComplete, this);
-
-        // this.requestStateChange = false;
-
     }
 
     /**
@@ -297,6 +235,16 @@ export class Player extends Flat3D_Entity {
             console.log("dead");
             this.die();
         }
+    }
+
+    useKey()
+    {
+        this.hasKey = false;
+    }
+
+    getKey()
+    {
+        this.hasKey = true;
     }
 
     // ! restart game

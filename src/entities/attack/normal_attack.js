@@ -7,28 +7,23 @@ import PersistentCooldown from "../../utils/persistent_cooldown.js";
 export default class NormalAttack extends Attack
 {
     constructor(scene, player){
-        super(scene, player, TextureKeys.NormalAttack)
+        super(scene, player, TextureKeys.Punch_Attack)
 
         // Define collisions with enemies // TODO OBJECTS
         this.defineCollisions();
 
         // Offset distance from the character
-        this.offsetX = player.body.width/1.1;
+        this.offsetX = player.body.width + 5;
         this.offsetY = player.body.height/2;
 
-        this.cooldown = new PersistentCooldown(1000);
+        this.cooldown = new PersistentCooldown(900);
+
+        this.damage = 1;
 
         this.hitCallback = this.hitCallback.bind(this);
 
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
-
-        scene.anims.create({
-			key: AnimationKeys.Normal_Attack,
-			frames: scene.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:0, end:0}),
-			frameRate: 10,
-			repeat: 1
-		});
 
         this.on('animationcomplete', this.onAnimationComplete, this);
 
@@ -66,24 +61,11 @@ export default class NormalAttack extends Attack
         this.scene.physics.add.overlap(this, this.walls, this.hitWallCallback);
     }
 
-    hitCallback(attack, enemy)
-    {
-        console.log("hit");
-
-        attack.setAttackColliderActive(false);
-
-        enemy.getHit();
-
-        // TODO HIT DAMAGE
-    }
-
     hitWallCallback(attack, wallSensor)
     {
-        console.log("wall hit");
-
         attack.setAttackColliderActive(false);
 
-        wallSensor.parentWall.break();
+        wallSensor.parentWall.break(attack.player.hasKey);
     }
 
     onAnimationComplete(anim, frame)

@@ -103,7 +103,6 @@ export default class StandState extends State
     {
         // Implement logic.
         this.normalATK.attack(t);
-        console.log("Attaking");
 
         // Implememnt 'stand' attack animation.
         this.player.play(AnimationKeys.Player_Idle_Attacking);
