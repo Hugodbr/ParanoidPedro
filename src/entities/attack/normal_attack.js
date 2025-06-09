@@ -20,8 +20,6 @@ export default class NormalAttack extends Attack
 
         this.damage = 1;
 
-        this.hitCallback = this.hitCallback.bind(this);
-
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 

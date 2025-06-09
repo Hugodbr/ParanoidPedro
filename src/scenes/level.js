@@ -156,16 +156,23 @@ export default class Level extends Phaser.Scene
 
     restart()
     {
+        // TODO ?
+    }
+
+    gameOver()
+    {
         this.cameras.main.fadeOut(500, 70, 0, 0);
 
         this.time.delayedCall(900, () => {
-            this.scene.start(SceneKeys.Level_1);
+            this.scene.start(SceneKeys.Game_Over);
         });
     }
 
     loadNextLevel(key)
     {
-        this.time.delayedCall(500, () => {
+        this.cameras.main.fadeOut(500, 0, 0, 0);
+
+        this.time.delayedCall(900, () => {
             this.scene.start(key);
         }); 
     }
