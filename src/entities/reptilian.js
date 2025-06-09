@@ -113,14 +113,11 @@ export class Reptilian extends Enemy {
             let wallCollision = false;
 
             this.scene.zones.forEach(zone => {
-                zone.walls.forEach(wall => {
-                    if(this.scene.physics.overlap(wall.groundLayer, this.wallDetectionArea))
-                        wallCollision = true;
-                });
-                /*if(this.scene.physics.overlap(zone.groundLayer, this.wallDetectionArea))
-                    wallCollision = true;*/
+                                
+                if(this.scene.physics.overlap(zone.groundLayer, this.wallDetectionArea))
+                    wallCollision = true;
             });
-console.log(wallCollision);
+
             return wallCollision;
         }).bind(this));
 
