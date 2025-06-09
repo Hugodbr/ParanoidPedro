@@ -64,12 +64,8 @@ export default class RollState extends State
         this.player.play(AnimationKeys.Player_Rolling);
 
         this.player.setShortBody();
-
-        console.log(this.facing);
         
         this.body.setVelocityX(this.body.velocity.x * 1.5);
-
-
     }
 
     exit() 

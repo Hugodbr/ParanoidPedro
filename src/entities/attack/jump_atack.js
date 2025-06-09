@@ -24,13 +24,6 @@ export default class JumpAttack extends Attack
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 
-        scene.anims.create({
-            key: AnimationKeys.Jump_Attack,
-            frames: scene.anims.generateFrameNumbers(TextureKeys.Aerial_Attack, {start:0, end:0}),
-            frameRate: 10,
-            repeat: 1
-        });
-
         this.on('animationcomplete', this.onAnimationComplete, this);
 
     }

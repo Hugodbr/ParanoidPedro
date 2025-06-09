@@ -1,4 +1,4 @@
-import { TilemapKeys, SceneKeys, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js'
+import { TilemapKeys, SceneKeys, AnimationKeys, TextureKeys, SoundKeys } from '../../assets/asset_keys.js'
 
 
 export default class Title extends Phaser.Scene {
@@ -46,8 +46,105 @@ export default class Title extends Phaser.Scene {
 	* Creación de los elementos de la escena principal de juego
 	*/
 	create() {
+
+		this.createPlayerAnimations();
+
+		this.createAttackAnimations();
+
 		this.time.delayedCall(500, () => {
             this.scene.start(SceneKeys.Level_1);
+        });
+	}
+
+	createPlayerAnimations()
+	{
+		this.anims.create({
+			key: AnimationKeys.Player_Idle,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
+			frameRate: 5,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Running,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:4, end:7}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Running_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:8, end:11}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Jumping,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:12, end:15}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Jumping_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:16, end:19}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Falling,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:20, end:23}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Falling_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:24, end:27}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Idle_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:28, end:31}),
+			frameRate: 10,
+			repeat: -1
+		});
+        this.anims.create({
+			key: AnimationKeys.Player_Rolling,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:32, end:35}),
+			frameRate: 15,
+			repeat: 1
+		});
+	}
+
+	createAttackAnimations()
+	{
+		this.anims.create({
+			key: AnimationKeys.Normal_Attack,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:1, end:1}),
+			frameRate: 10,
+			repeat: 1
+		});
+
+		
+        this.anims.create({
+            key: AnimationKeys.Running_Attack,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:0, end:3}),
+            frameRate: 10,
+            repeat: 1
+        });
+
+		
+        this.anims.create({
+            key: AnimationKeys.Fall_Attack,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Aerial_Attack, {start:1, end:1}),
+            frameRate: 10,
+            repeat: 1
+        });
+
+		
+        this.anims.create({
+            key: AnimationKeys.Jump_Attack,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Aerial_Attack, {start:0, end:0}),
+            frameRate: 10,
+            repeat: 1
         });
 	}
 }

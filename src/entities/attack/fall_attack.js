@@ -24,13 +24,6 @@ export default class FallAttack extends Attack
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 
-        scene.anims.create({
-            key: AnimationKeys.Fall_Attack,
-            frames: scene.anims.generateFrameNumbers(TextureKeys.Aerial_Attack, {start:1, end:1}),
-            frameRate: 10,
-            repeat: 1
-        });
-
         this.on('animationcomplete', this.onAnimationComplete, this);
 
     }

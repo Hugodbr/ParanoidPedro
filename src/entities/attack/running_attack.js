@@ -24,13 +24,6 @@ export default class RunningAttack extends Attack
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
 
-        scene.anims.create({
-            key: AnimationKeys.Running_Attack,
-            frames: scene.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:0, end:3}),
-            frameRate: 10,
-            repeat: 1
-        });
-
         this.on('animationcomplete', this.onAnimationComplete, this);
 
     }
