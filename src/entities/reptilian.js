@@ -58,7 +58,9 @@ export class Reptilian extends Enemy {
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
 
-        this.setTexture(TextureKeys.PlayerCharacter);
+        this.setTexture(TextureKeys.Reptilian);
+        this.body.width = 163;
+        this.body.height = 140;
 
         // Wall detection
         this.wallDetectionArea = scene.add.zone(x + this.wallDetectionPos.x, y + this.wallDetectionPos.y, 20, 20);
@@ -69,6 +71,33 @@ export class Reptilian extends Enemy {
         this.fallDetectionArea = scene.add.zone(x + this.fallDetectionPos.x, y + this.fallDetectionPos.y, 20, 20);
         scene.physics.add.existing(this.fallDetectionArea);
         this.fallDetectionArea.body.setAllowGravity(false);
+
+        // Animation
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Run,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 6, end: 11 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Attack,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 0, end: 5 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Walk,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 12, end: 17 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.patrolAnimation = AnimationKeys.Reptilian_Walk;
+        this.searchAnimation = AnimationKeys.Reptilian_Walk;
+        this.chaseAnimation = AnimationKeys.Reptilian_Run;
+        this.attackAnimation = AnimationKeys.Reptilian_Attack;
 
         this.buildAttackBahevior();
 
@@ -84,7 +113,7 @@ export class Reptilian extends Enemy {
         const INIT_ATTACK = new ExecutionBehaviorNode((() => {
             this.attackTimer = new Cooldown(1500, this.gameTime);
             this.attackStarted = true;
-            this.play(AnimationKeys.Reptilian_Attack, true);
+            this.play(this.attackAnimation, true);
             
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -113,7 +142,7 @@ export class Reptilian extends Enemy {
             let wallCollision = false;
 
             this.scene.zones.forEach(zone => {
-                                
+                       
                 if(this.scene.physics.overlap(zone.groundLayer, this.wallDetectionArea))
                     wallCollision = true;
             });
@@ -162,7 +191,7 @@ export class Reptilian extends Enemy {
                         .addNode(IS_GOING_TO_COLLIDE_WITH_WALL)
                     //    .addNode(IS_GOING_TO_FALL)
                     )
-                    .addNode(SWITCH_FACING)
+                    //.addNode(SWITCH_FACING)
                 )
             )
 

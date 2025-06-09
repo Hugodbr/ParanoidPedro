@@ -34,8 +34,9 @@ export const TextureKeys = {
     Aerial_Attack: 'aerial-attack',
 
     Agent5G: 'Agent5G',
-    Wave5G: 'Wave5G'
+    Wave5G: 'Wave5G',
 
+    Reptilian: 'Reptilian'
 };
 
 export const ObjectNames = {
@@ -63,6 +64,8 @@ export const AnimationKeys = {
     Agent5G_Shoot: 'Agent5G_Shoot',
 
     Reptilian_Attack: 'Reptilian_Attack',
+    Reptilian_Walk: 'Agent5G_Walk',
+    Reptilian_Run: 'Agent5G_Run',
 
     Normal_Attack: 'normal-attack-anim',
     Running_Attack: 'running-attack-anim',
