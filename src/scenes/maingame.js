@@ -1,17 +1,12 @@
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, SoundKeys } from '../../assets/asset_keys.js'
+import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys } from '../../assets/asset_keys.js'
 
 import InputManager from '../managers/input_manager.js';
 
-// import Character from "../entities/character.js";
-import { Flat3D_Entity } from "../entities/flat3D_system/flat3D_entity.js";
 import { Player } from '../entities/player.js';
-import { Enemy } from '../entities/enemy.js';
-import { Agent5G } from '../entities/agent_5G.js';
 
 import LayerObject from '../zones/layer_object.js';
 import Zone from '../zones/zone.js';
 import Wall from '../zones/wall.js';
-import { Path3D_Point } from '../entities/flat3D_system/path3D_point.js';
 import PersistentCooldown from '../utils/persistent_cooldown.js';
 
 /**
@@ -54,7 +49,7 @@ export default class MainGame extends Phaser.Scene
         this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')
 
         //* Preload tilemap assets
-        this.load.tilemapTiledJSON(TilemapKeys.MapJSON, 'assets/map/tiled/map_structured.json');        
+        this.load.tilemapTiledJSON(TilemapKeys.Level_1, 'assets/map/tiled/level1.json');        
         this.load.image(TilemapKeys.TilesetImage, 'assets/map/Map Tileset.png');
 
         //* Preload player character
@@ -87,13 +82,15 @@ export default class MainGame extends Phaser.Scene
         */
         this.isDebug = this.physics.config.debug;
 
+        this.cameras.main.setBackgroundColor('#FFFFFF');
+
         //* Input manager
         this.inputManager = new InputManager(this);
 
         //* Map creation
         //
         this.map = this.make.tilemap({
-            key: TilemapKeys.MapJSON,
+            key: TilemapKeys.Level_1,
             tileWidth: 32,
             tileHeight: 32
         });

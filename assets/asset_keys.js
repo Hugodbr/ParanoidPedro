@@ -1,7 +1,8 @@
 
 
 export const TilemapKeys = {
-    MapJSON: 'tilemap',
+    Level_1: 'level-1',
+    Level_2: 'level-2',
     TilesetImage: 'tilesetMapImage',
 };
 
