@@ -1,10 +1,5 @@
-// import Title from './scenes/title.js';
-import MainGame from './scenes/maingame.js'; //* original
 import Title from './scenes/title.js';
-// import MainGameTest from './scenes/maingame_test.js'; // ! test
-
-
-
+import Level1 from './scenes/level_1.js';
 
 let config = {
 	type: Phaser.AUTO,
@@ -27,7 +22,7 @@ let config = {
 		zoom: 1
 
 	},
-	scene: [MainGame],
+	scene: [Title, Level1],
 
 	physics: {
 		default: 'arcade',

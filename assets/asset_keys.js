@@ -1,4 +1,9 @@
 
+export const SceneKeys = {
+    Tile: 'title-scene',
+    Level_1: 'level_1-scene',
+    Level_2: 'level_2-scene'
+}
 
 export const TilemapKeys = {
     Level_1: 'level-1',
