@@ -33,6 +33,8 @@ export default class Title extends Phaser.Scene {
 			//* Enemy
 			this.load.spritesheet(TextureKeys.Agent5G, 'assets/enemies/5G_shooter_spritesheet.png', { frameWidth: 123, frameHeight: 153 });
 			this.load.image(TextureKeys.Wave5G, 'assets/enemies/5G_Wave.png');
+
+			 this.load.spritesheet(TextureKeys.Reptilian, 'assets/enemies/reptilian_spritesheet.png', { frameWidth: 163, frameHeight: 140 });
 	
 			//* Attacks
 			// this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');

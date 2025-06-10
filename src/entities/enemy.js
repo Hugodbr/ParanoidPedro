@@ -185,9 +185,7 @@ export class Enemy extends Flat3D_Entity {
         this.pKey = this.scene.input.keyboard.addKey('P'); // Can see player switch
         this.tKey = this.scene.input.keyboard.addKey('T'); // Transitivity switch
 
-        // !!!
         this.life = 3;
-        this.hasKey = false;
         this.blinkTween = null;
     }
 
@@ -581,6 +579,7 @@ export class Enemy extends Flat3D_Entity {
             this.blinkTween.remove();
             this.clearTint();
             this.setAlpha(1);
+            console.log("tween remove");
         }
 
         this.setTint(0xff0000);
@@ -602,9 +601,9 @@ export class Enemy extends Flat3D_Entity {
         this.chaseStateSpeed = this.chaseStateSpeed * 0;
     }
 
-    getHit(points)
+    getHit()
     {
-        this.life -= points;
+        this.life--;
 
         this.slowDown(); // TODO OPTIONAL DOESNT WORK
 
@@ -620,9 +619,6 @@ export class Enemy extends Flat3D_Entity {
 
     die()
     {
-        if (this.hasKey)
-            this.scene.player.getKey();
-        
         this.destroy();
     }
 }

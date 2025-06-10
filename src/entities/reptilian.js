@@ -11,7 +11,7 @@ import { ExecutionBehaviorNode } from "../AI_behavior/execution_behavior_node.js
 import { InversionBehaviorNode } from "../AI_behavior/inversion_behavior_node.js";
 import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_node.js";
 
-import { FACING } from "./player.js";
+import { FACING, Player } from "./player.js";
 
 export class Reptilian extends Enemy {
 
@@ -54,11 +54,53 @@ export class Reptilian extends Enemy {
      * @type {Vector3D}
      */
     fallDetectionPos = new Vector3D(80, 180, 0);
+
+    /**
+     * Zone that detects if the player is landing above the reptilian
+     * @type {Phaser.GameObjects.Zone}
+     */
+    headDamageZone;
+
+    /**
+     * Relative position of the head damage zone
+     * @type {Vector3D}
+     */
+    headDamageZonePos = new Vector3D(0, 20, 0);
+
+    /**
+     * Zone that damages the player
+     * @type {Phaser.GameObjects.Zone}
+     */
+    attackArea;
+
+    /**
+     * Relative position of the attack area
+     * @type {Vector3D}
+     */
+    attackAreaPos = new Vector3D(20, 90, 0);
+
+    /**
+     * Wheter the reptilian has damaged the player in this attack
+     * @type {boolean}
+     */
+    hasAttackedPlayer = false;
     
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
 
-        this.setTexture(TextureKeys.PlayerCharacter);
+        this.setTexture(TextureKeys.Reptilian);
+        this.body.width = 163;
+        this.body.height = 140;
+
+        // Head damage detection
+        this.headDamageZone = scene.add.zone(x + this.headDamageZonePos.x, y + this.headDamageZonePos.y, 100, 30);
+        scene.physics.add.existing(this.headDamageZone);
+        this.headDamageZone.body.setAllowGravity(false);
+
+        // Attack area
+        this.attackArea = scene.add.zone(x + this.attackAreaPos.x, y + this.attackAreaPos.y, 50, 100);
+         scene.physics.add.existing(this.attackArea);
+        this.attackArea.body.setAllowGravity(false);
 
         // Wall detection
         this.wallDetectionArea = scene.add.zone(x + this.wallDetectionPos.x, y + this.wallDetectionPos.y, 20, 20);
@@ -69,6 +111,33 @@ export class Reptilian extends Enemy {
         this.fallDetectionArea = scene.add.zone(x + this.fallDetectionPos.x, y + this.fallDetectionPos.y, 20, 20);
         scene.physics.add.existing(this.fallDetectionArea);
         this.fallDetectionArea.body.setAllowGravity(false);
+
+        // Animation
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Run,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 6, end: 11 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Attack,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 0, end: 5 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Reptilian_Walk,
+            frames: this.anims.generateFrameNumbers(TextureKeys.Reptilian, { start: 12, end: 17 }),
+            frameRate: 5, // Velocidad de la animación
+            repeat: -1    // Animación en bucle
+        });
+
+        this.patrolAnimation = AnimationKeys.Reptilian_Walk;
+        this.searchAnimation = AnimationKeys.Reptilian_Walk;
+        this.chaseAnimation = AnimationKeys.Reptilian_Run;
+        this.attackAnimation = AnimationKeys.Reptilian_Attack;
 
         this.buildAttackBahevior();
 
@@ -84,7 +153,7 @@ export class Reptilian extends Enemy {
         const INIT_ATTACK = new ExecutionBehaviorNode((() => {
             this.attackTimer = new Cooldown(1500, this.gameTime);
             this.attackStarted = true;
-            this.play(AnimationKeys.Reptilian_Attack, true);
+            this.play(this.attackAnimation, true);
             
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -105,6 +174,7 @@ export class Reptilian extends Enemy {
         const END_ATTACK = new ExecutionBehaviorNode((() => {
             this.setActionState(ENEMY_STATE.CHASING);
             this.attackStarted = false;
+            this.hasAttackedPlayer = false;
 
             return NODE_STATUS.SUCCESS;
         }).bind(this));
@@ -113,14 +183,11 @@ export class Reptilian extends Enemy {
             let wallCollision = false;
 
             this.scene.zones.forEach(zone => {
-                zone.walls.forEach(wall => {
-                    if(this.scene.physics.overlap(wall.groundLayer, this.wallDetectionArea))
-                        wallCollision = true;
-                });
-                /*if(this.scene.physics.overlap(zone.groundLayer, this.wallDetectionArea))
-                    wallCollision = true;*/
+                       
+                if(this.scene.physics.overlap(zone.groundLayer, this.wallDetectionArea))
+                    wallCollision = true;
             });
-console.log(wallCollision);
+
             return wallCollision;
         }).bind(this));
 
@@ -158,7 +225,7 @@ console.log(wallCollision);
                 .addNode(END_ATTACK)
             )
 
-            .addNode( new ForceFailureBehaviorNode()
+           /* .addNode( new ForceFailureBehaviorNode()
                 .setNode( new SequenceBehaviorNode()
 
                     .addNode( new FallbackBehaviorNode()
@@ -167,7 +234,7 @@ console.log(wallCollision);
                     )
                     .addNode(SWITCH_FACING)
                 )
-            )
+            )*/
 
             .addNode(ATTACK_DASH_MOVE)
         );
@@ -184,5 +251,26 @@ console.log(wallCollision);
 
         this.fallDetectionArea.x = this.body.position.x + this.fallDetectionPos.x * dir;
         this.fallDetectionArea.y = this.body.position.y + this.fallDetectionPos.y;
+
+        this.attackArea.x = this.body.position.x + this.attackAreaPos.x * dir;
+        this.attackArea.y = this.body.position.y + this.attackAreaPos.y;
+
+        if(this.actionState === ENEMY_STATE.ATTACKING 
+            && this.scene.physics.overlap(this.attackArea, this.playerRef) && !this.hasAttackedPlayer) 
+        {
+            this.hasAttackedPlayer = true;
+            this.playerRef.getHit();
+        }
+
+        this.headDamageZone.x = this.body.position.x + this.headDamageZonePos.x;
+        this.headDamageZone.y = this.body.position.y + this.headDamageZonePos.y;
+
+        if(this.scene.physics.overlap(this.headDamageZone, this.playerRef) 
+            && this.playerRef.body.velocity.y > 0) 
+        {
+            this.die();
+            return;
+        }
+
     }
 }

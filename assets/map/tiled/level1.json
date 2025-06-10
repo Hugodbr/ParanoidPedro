@@ -14,9 +14,9 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":309.333333333333,
+                 "width":309.333,
                  "x":5132,
-                 "y":82.6666666666667
+                 "y":82.6667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1351,7 +1351,7 @@
                                 {
                                  "name":"type",
                                  "type":"string",
-                                 "value":"Agent5G"
+                                 "value":"Reptilian"
                                 }],
                          "type":"objectgroup",
                          "visible":true,
@@ -1380,7 +1380,7 @@
                          "visible":true,
                          "width":0,
                          "x":1563.02,
-                         "y":1.75400000000002
+                         "y":1.754
                         }],
                  "opacity":1,
                  "properties":[
@@ -1722,7 +1722,7 @@
  "nextobjectid":111,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1",
+ "tiledversion":"1.11.0",
  "tileheight":32,
  "tilesets":[
         {
