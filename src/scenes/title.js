@@ -54,7 +54,7 @@ export default class Title extends Phaser.Scene {
 		this.createAttackAnimations();
 
 		this.time.delayedCall(500, () => {
-            this.scene.start(SceneKeys.Level_2);
+            this.scene.start(SceneKeys.Level_1);
         });
 	}
 

@@ -82,7 +82,7 @@ export class Player extends Flat3D_Entity {
         this.setDepth(this.scene.playerDepth);
 
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
-        this.life = 4;
+        this.life = 40;
         this.currentLife = this.life;
         this.hasKey = false;
         
@@ -236,13 +236,24 @@ export class Player extends Flat3D_Entity {
         }
     }
 
+    resetLife()
+    {
+        this.currentLife = this.life;
+
+        if (this.playerLifeSound.isPlaying) {
+            this.playerLifeSound.stop();
+        }
+    }
+
     useKey()
     {
+        console.log("use key");
         this.hasKey = false;
     }
 
     getKey()
     {
+        console.log("get key");
         this.hasKey = true;
     }
 

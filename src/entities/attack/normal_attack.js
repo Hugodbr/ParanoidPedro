@@ -9,16 +9,16 @@ export default class NormalAttack extends Attack
     constructor(scene, player){
         super(scene, player, TextureKeys.Punch_Attack)
 
-        // Define collisions with enemies // TODO OBJECTS
+        // Define collisions with enemies
         this.defineCollisions();
 
         // Offset distance from the character
         this.offsetX = player.body.width + 5;
         this.offsetY = player.body.height/2;
 
-        this.cooldown = new PersistentCooldown(900);
+        this.cooldown = new PersistentCooldown(500);
 
-        this.damage = 1;
+        this.damage = 2;
 
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);
