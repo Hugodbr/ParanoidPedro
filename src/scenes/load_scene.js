@@ -23,6 +23,11 @@ export default class LoadScene extends Phaser.Scene {
             this.load.image(TextureKeys.Play_Button, 'assets/menu/game_start_button.png');
             this.load.image(TextureKeys.Game_Title, 'assets/menu/game_title.png');
             this.load.image(TextureKeys.Introduction_Comic, 'assets/menu/introduction_comic.png');
+
+            // Gameover assets
+            this.load.image(TextureKeys.GameOver_Title, 'assets/menu/gameover_title.png');
+            this.load.image(TextureKeys.GameWin_Title, 'assets/menu/end_title.png');
+            this.load.image(TextureKeys.BackToMenu_Button, 'assets/menu/menu_button.png');
     
             //* Preload tilemap assets
             this.load.tilemapTiledJSON(TilemapKeys.Level_1, 'assets/map/tiled/level1.json');

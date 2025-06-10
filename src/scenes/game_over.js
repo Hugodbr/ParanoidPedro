@@ -9,4 +9,21 @@ export default class GameOver extends Phaser.Scene {
     constructor() {
         super(SceneKeys.Game_Over);
     }
+
+    create() {
+
+		const centerX = this.game.scale.width / 2;
+		const centerY = this.game.scale.height / 2;
+
+		this.add.image(centerX, centerY, TextureKeys.Title_Background);
+		this.add.image(centerX, 140, TextureKeys.GameOver_Title);
+
+		let playButton = this.add.image(centerX, centerY + 100, TextureKeys.BackToMenu_Button);
+		playButton.setInteractive();
+		playButton.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+			this.time.delayedCall(100, () => {
+				this.scene.start(SceneKeys.Title);
+			});
+		});
+	}
 }

@@ -45,7 +45,11 @@ export const TextureKeys = {
     Title_Background: 'title-background',
     Play_Button: 'play-button',
     Game_Title: 'game-title',
-    Introduction_Comic: 'introduction-comic'
+    Introduction_Comic: 'introduction-comic',
+
+    GameOver_Title: 'GameOver_Title',
+    GameWin_Title: 'GameWin_Title',
+    BackToMenu_Button: 'BackToMenu_Button'
 };
 
 export const ObjectNames = {
