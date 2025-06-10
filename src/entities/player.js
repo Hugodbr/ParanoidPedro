@@ -232,7 +232,6 @@ export class Player extends Flat3D_Entity {
             this.playerLifeSound.setLoop(true);
             this.playerLifeSound.play();
         } else {
-            console.log("dead");
             this.die();
         }
     }
