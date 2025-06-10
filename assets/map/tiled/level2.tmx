@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="128" height="62" tilewidth="32" tileheight="32" infinite="0" nextlayerid="116" nextobjectid="148">
+<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="128" height="62" tilewidth="32" tileheight="32" infinite="0" nextlayerid="120" nextobjectid="150">
  <editorsettings>
   <export target="level2.json" format="json"/>
  </editorsettings>
@@ -911,6 +911,18 @@
     <point/>
    </object>
   </objectgroup>
+  <group id="117" name="health">
+   <objectgroup id="118" name="health2">
+    <object id="148" name="healthSpawn" x="1306.06" y="1151.52">
+     <point/>
+    </object>
+   </objectgroup>
+   <objectgroup id="119" name="health1">
+    <object id="149" name="healthSpawn" x="1757.58" y="1712.12">
+     <point/>
+    </object>
+   </objectgroup>
+  </group>
  </group>
  <group id="63" name="wall1">
   <layer id="64" name="backgroundScenery" width="128" height="62">
