@@ -82,7 +82,7 @@ export class Player extends Flat3D_Entity {
         this.setDepth(this.scene.playerDepth);
 
         this.playerLifeSound = this.scene.sound.add(SoundKeys.Player_Life);
-        this.life = 40;
+        this.life = 4;
         this.currentLife = this.life;
         this.hasKey = false;
         
@@ -95,12 +95,8 @@ export class Player extends Flat3D_Entity {
         this.scene.cameras.main.startFollow(this, true, 0.08, 0.08, -this.cameraOffsetX, -this.cameraOffsetY);
         this.scene.cameras.main.setDeadzone(150, 150);
 
-        this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); // TODO hardcoded
+        this.scene.cameras.main.setBounds(-1000, -1000, 100000, 100000); 
 
-
-
-		
-        
         this.on('animationcomplete', this.onAnimationComplete, this);
     }
 

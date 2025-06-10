@@ -11,7 +11,7 @@ El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch 
 
 ### Movimiento del Personaje:
 
-El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras rueda, mientras cae o mientras está quieto para eliminar enemigos o interactuar con las paredes destructibles.
+El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras cae o mientras está quieto para eliminar enemigos o interactuar con las paredes destructibles.
 
 Controles:
 
@@ -20,21 +20,23 @@ W o A (con mando): salto
 Espacio o X (con mando): ataque (en suelo y en aire)
 S o B (con mando): rodar en suelo
 
+Romper paredes/abrir puertas: golpe normal mientras está quieto.
+
 ### Uso de llaves para acceder a nuevas zonas:
 
 Para avanzar en el juego, en ciertas zonas será necesario abrir puertas con llaves, que se obtienen a través de derrotar a algún enemigo que la posea. Las llaves son obtenidas automáticamente al derrotarlos.
 
 ### Seguimiento de la cámara al personaje:
 
-La cámara seguirá al personaje centrandolo en pantalla.
+La cámara seguirá al personaje centrandolo en pantalla con un offset según la dirección que apunta.
 
 ### Objetos interactuables:
 
-En su mayoría serán destructibles, como las paredes que separan las zonas del juego o los objetos que al pegarlos salen disparados en la dirección del golpe arrollando a los enemigos.
+Paredes que separan las zonas del juego y item de vida que la rellena.
 
 ### Sistema de vidas del jugador:
 
-El jugador contará con las clásicas tres vidas, que en el juego se representarán como pelotas anti estrés y por cada golpe de un enemigo perderá una. Opcionalmente podríamos añadir un componente que hiciese que en algunas zonas del juego, donde no haya sigilo y se pretende buscar una dinámica de acción, se quite vida por estar quieto demasiado tiempo (estéticamente simboliza la locura del personaje y la desesperación por salir del hospital)
+El jugador conta con un número de vidas discreto. Al tomar daño de los enemigos, en lugar de una UI visual clásica, un sonido de monitor de hospital empezará para avisar que ya no tiene la vida total. La frecuencia del sonido incrementará a cada vez que el jugador perder una vida.
 
 
 ## De los enemigos
@@ -56,11 +58,18 @@ En orden de dificultad y aparecimiento:
 Enemigos que disparan proyectiles(pulso 5G): Son de la seguridad del hospital. Si están de cara al jugador se quedan disparando y no se mueven.
 Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Reciben daño letal desde arriba, asi que es más práctico matarlos saltanto sobre su cabeza.
 
+### Vida de los enemigos
 
+Cada enemigo tiene su cantidad de vida. Lo golpes infligidos a ellos por el jugador inicían una animación de blinking rojo de los enemigos que le avisa que han perdido vida. La frecuencia del blinking también aumenta a medida que la vida llega a 0.
 
 ### Los enemigos tienen factor visibilidad con el jugador:
 
 Para que los enemigos vayan a por el jugador estos tienen que estar de cara a él.
+
+### Spawning y ruta de patrulla de los enemigos
+
+Las posiciones iniciales y las rutas de patrulla son definidas en Tiled y parseadas por código.
+
 
 ## Del escenario
 
@@ -68,33 +77,24 @@ Para que los enemigos vayan a por el jugador estos tienen que estar de cara a é
 
 Para avanzar en el juego se deben destruir las paredes que separan a las zonas entre sí (estas paredes son objetos interactuables de los ya mencionados en mecánica del jugador), las zonas con las que todavía no se haya conectado destruyendo las paredes no solo son inaccesibles, sino que tampoco muestran su contenido
 
-
 ### Sistema de pasillos:
 
 Los pasillos son transitables por los enemigos y pueden estar conectados entre sí, de forma que un enemigo puede tanto patrullar de alante a atrás un pasillo (más común) como transitar entre zonas a través de los pasillos. 
 Opcionalmente nos gustaría que el jugador también pueda usar este sistema para hacer la animación de entrar en puertas, ascensores, etc.
 
+
 # Sistemas:
 
 Una vez comentadas las mecánicas y sistemas que incluirá el juego, vamos a definir en detalle lo que hacen:
 
-## Zone-System
+## Zone-Wall-System
 
 Este es el sistema que gestiona la identificación y visibilidad de las distintas zonas del juego, como se ha comentado, el jugador no ve en todo momento todo el mapa, sino que se va descubriendo a medida que se van destruyendo las paredes accediendo a nuevas zonas. Por zona, se entiende a cualquier sección del mapa separada por paredes de las demás.
 
-La organización de este sistema inicia desde *Tiled*, donde se definirá una *layer* por cada bloqueo visual de la zona con el nombre de "zone-*n*-cover", siendo *n* el id (numero) de la zona. Es importante que el id de las zonas sea único. En cada layer de zona es donde se pondrán los tiles que tapan el contenido de la misma (por temas de diseño es posible que algunas zonas estén vacías, es decir, que no tengan cobertura de vista porque se quiere que el jugador vea lo que hay en el otro lado sin romper la pared). 
+La organización de este sistema inicia desde *Tiled*, donde se define grupos de zonas y grupos de paredes. Ambos grupos tienen capas de suelo y escenario. El grupo de paredes tiene también una capa de pared que se desactiva al romperla, que es cuando se detecta un overlap del golpe normal con un sensor de colisión. Las puertas con cerradura son paredes especiales que se desactivan si el jugador tiene una llave.
 
-Aparte de las coberturas, también hay que añadir las paredes, por supuesto, pero estas no se añaden a ninguna layer de zona, sino a la layer del mapa general. Las paredes pueden ser tiles si son indestructibles, pero en caso de tratarse de las destructibles, estas paredes serán objetos de Tiled y tendrán tres atributos muy importantes que serán el estado de la pared (si está rota o no, lo que cambia su Sprite y estado de colisión), el id (*n*) de la zona que separan por un lado y el id de la zona que separan por el otro. En la lógica del juego, se al destruir una pared se harán invisibles las dos layers que referencian los atributos del objeto de la pared destruida, por ejemplo:
+![zonewall](https://github.com/user-attachments/assets/57f116b5-3b71-44fa-89dd-909ca7a07f11)
 
-```
-Wall {
-	state: "intact",
-	side_A_zone: 2,
-	side_B_zone: 3
-};
-```
-
-Al destruir esta pared las zonas 2 y 3 se harán visibles (puede quedar bien con un tweens que settee la visibilidad a 0). Para gestionar estas colisiones y obtener el objeto de cada layer y manejar su visibilidad, el Zone_System implementado en código tendrá que leer del archivo del tilemap y guardarse una lista de objetos pared `Array<BreakeableWall>` y un mapa de ID's a objetos de layer `Map<number, Phaser.Tilemaps.LayerData>`.
 
 ## Flat3D-System
 
@@ -140,3 +140,13 @@ La realidad está alterada, tanto el mapa como los enemigos quieren representar 
 El mapa está formado por tiles de forma que un tile se corresponde con  cuadro cuadrados del papel de cuadrícula real que se usará para dibujar. Además la altura de los pasillos será generalmente de 4 tiles, es decir 8 cuadrados de alto.
 
 Los pasillos serán imágenes que se integran con el fondo dando sensación de profundidad, sus dimensiones serán generalmente de 8x7 siendo más anchos que altos, el final del pasillo será un cuadrado de 2x2 centrado en horizontal y 3 cuadrados por encima de la base del dibujo.
+
+# Niveles
+
+El juego cuenta con 2 niveles con progresión de dificultad y pensado para que el jugador aprenda y use las mecánicas que dispone.
+
+![nivel1](https://github.com/user-attachments/assets/ad9083ae-7b26-4393-a0b9-2224db0e1a7c)
+
+![nivel2](https://github.com/user-attachments/assets/3056a791-7ced-4662-a518-e7f88edbcf25)
+
+
