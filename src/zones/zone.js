@@ -78,16 +78,12 @@ export default class Zone extends LayerObject
      */
     createEnemies()
     {
-        // console.log(this.scene.map.objects);
-
         const enemyObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/enemies/")); // ! string
 
         // No enemies to create in this zone
         if (enemyObjects.length === 0) {
             return;
-        }
-
-        // console.log(enemyObjects);
+        };
 
         for (let i = 0; i < enemyObjects.length; ++i) {
             let pathPoints = [];
@@ -111,8 +107,6 @@ export default class Zone extends LayerObject
 
     createHealth()
     {
-        // console.log(this.scene.map.objects);
-
         const healthObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/health/")); // ! string
 
         // No enemies to create in this zone
@@ -120,22 +114,11 @@ export default class Zone extends LayerObject
             return;
         }
 
-        // console.log(healthObjects);
-
         for (let i = 0; i < healthObjects.length; ++i) {
-
-            console.log(healthObjects[i]);
 
             const spwanPoint = healthObjects[i].objects.find(obj => obj.name === "healthSpawn");
 
-            // healthObjects[i].objects.forEach(point => {
-            //     pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
-            // });
-
-
-
             let health = new Health(this.scene, spwanPoint.x, spwanPoint.y);
-
 
             this.visibleObjects.push(health);
         }

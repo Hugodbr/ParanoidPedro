@@ -595,15 +595,20 @@ export class Enemy extends Flat3D_Entity {
 
     getHit()
     {
-        this.life--;
+        if (this.flat3D_Position.z <= 0) {
 
-        if (this.life > 0) {
-            let duration = 50 * (this.life * 2);
-            this.blinkRedDamaged(duration);
+            this.life--;
+
+            if (this.life > 0) {
+                let duration = 50 * (this.life * 2);
+                this.blinkRedDamaged(duration);
+            }
+            else {
+                this.die();
+            }
         }
-        else {
-            this.die();
-        }
+
+
     }
 
     die()
