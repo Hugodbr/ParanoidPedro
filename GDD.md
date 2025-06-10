@@ -11,17 +11,18 @@ El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch 
 
 ### Movimiento del Personaje:
 
-El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras rueda, mientras cae o mientras está quieto para eliminar enemigos o interactuar con otros objetos destructibles como por ejemplo paredes o carros.
+El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras rueda, mientras cae o mientras está quieto para eliminar enemigos o interactuar con las paredes destructibles.
 
-Controls:
-A-D: desplazamiento izquierda-derecha
-W: salto
-J: ataque (en suelo y en aire)
-K: rodar en suelo
+Controles:
+
+A-D o Joy-stick izquierdo: desplazamiento izquierda-derecha
+W o A (con mando): salto
+Espacio o X (con mando): ataque (en suelo y en aire)
+S o B (con mando): rodar en suelo
 
 ### Uso de llaves para acceder a nuevas zonas:
 
-Para avanzar en el juego, en ciertas zonas será necesario abrir puertas con llaves, que se obtienen a través de la exploración y/o de derrotar a algún enemigo que la posea. Las llaves son obtenidas automáticamente al derrotarlos.
+Para avanzar en el juego, en ciertas zonas será necesario abrir puertas con llaves, que se obtienen a través de derrotar a algún enemigo que la posea. Las llaves son obtenidas automáticamente al derrotarlos.
 
 ### Seguimiento de la cámara al personaje:
 
@@ -33,16 +34,16 @@ En su mayoría serán destructibles, como las paredes que separan las zonas del 
 
 ### Sistema de vidas del jugador:
 
-El jugador contará con las clásicas tres vidas, que en el juego se representarán como pelotas anti estrés y por cada golpe de un enemigo perderá una, aunque hay casos excepcionales en los que algunos enemigos pueden acabar con la vida del jugador de un solo golpe o contacto. Opcionalmente podríamos añadir un componente que hiciese que en algunas zonas del juego, donde no haya sigilo y se pretende buscar una dinámica de acción, se quite vida por estar quieto demasiado tiempo (estéticamente simboliza la locura del personaje y la desesperación por salir del hospital)
+El jugador contará con las clásicas tres vidas, que en el juego se representarán como pelotas anti estrés y por cada golpe de un enemigo perderá una. Opcionalmente podríamos añadir un componente que hiciese que en algunas zonas del juego, donde no haya sigilo y se pretende buscar una dinámica de acción, se quite vida por estar quieto demasiado tiempo (estéticamente simboliza la locura del personaje y la desesperación por salir del hospital)
 
 
 ## De los enemigos
 
 ### Los enemigos patrullan el eje X y/o pasillos en el eje Z:
 
-Es probablemente la mecánica más interesante del juego, algunos enemigos tienen rutas por las que patrullan en una zona definida, ya sea de un lado al otro en el plano principal del juego, pero hay otros que a través de pasillos (que son objetos integrados en el mapa de forma que dan un efecto de profundidad), son capaces de patrullar en dos dimensiones, esto está principalmente pensado para enemigos invencibles donde el jugador tenga que adaptarse a una dinámica de sigilo, aprovechando cuando el enemigo esté patrullando dando la espalda al jugador (ya sea en el mismo eje X o porque está avanzando hacia el interior del pasillo en ese eje Z ficticio) para pasar de largo sin ser detectado.
+Es probablemente la mecánica más interesante del juego, algunos enemigos tienen rutas por las que patrullan en una zona definida, ya sea de un lado al otro en el plano principal del juego, pero hay otros que a través de pasillos (que son objetos integrados en el mapa de forma que dan un efecto de profundidad), son capaces de patrullar en dos dimensiones, de esta forma el jugador puede seguir una dinámica de sigilo, aprovechando cuando el enemigo esté patrullando dando la espalda al jugador (ya sea en el mismo eje X o porque está avanzando hacia el interior del pasillo en ese eje Z ficticio) para pasar de largo sin ser detectado.
 
-Si un enemigo ve al jugador desde el pasillo porque este pasa por enfrente, este acelerará el paso y saldrá del eje Z y tomará la dirección en la que se encuentra el jugador, si no lo ve al salir del pasillo se mantendrá patrullando en el eje X.
+Los enemigos solo ven al jugador cuando están fuera del pasillo.
 
 Para desarrollar esta mecánica tan compleja de los enemigos tenemos pensado usar un modelo de árboles de comportamiento para entrelazar de manera más clara las acciones de los enemigos en determinadas circunstancias.
 
@@ -52,18 +53,14 @@ Para desarrollar esta mecánica tan compleja de los enemigos tenemos pensado usa
 
 Todos los enemigos pueden patrullar en X y/o Z.
 En orden de dificultad y aparecimiento:
-Enemigos normales: más fáciles, lentos. Son funcionarios del hospital que intentan agarrar a Pedro y aplicarle la vacuna. Si el jugador no está golpeando de ninguna manera y hay colisión, pierde todas sus vidas pues fue capturado y vuelve al inicio.
 Enemigos que disparan proyectiles(pulso 5G): Son de la seguridad del hospital. Si están de cara al jugador se quedan disparando y no se mueven.
-Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Sólo reciben daño desde arriba o espalda.
-Enemigos inmortales (Alien): no reciben daño, tiene mayor velocidad de desplazamiento, van para el jugador hasta donde pueden y tienen la misma lógica de los enemigos normales, es decir, si colisionan con el jugador este pierde la “run”.
+Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Reciben daño letal desde arriba, asi que es más práctico matarlos saltanto sobre su cabeza.
 
 
 
 ### Los enemigos tienen factor visibilidad con el jugador:
 
 Para que los enemigos vayan a por el jugador estos tienen que estar de cara a él.
-
-Tipos de enemigos
 
 ## Del escenario
 
@@ -115,18 +112,17 @@ La clase `Path3D_System`, será un componente/atributo de las entidades que siga
 
 ## Acción:
 
-La dinámica principal del juego será la de destruir todo lo que se ponga en frente al más puro estilo Rayman o Pizza Tower, el hecho de que la mayoría de enemigos se vencen de un solo golpe, así como las paredes debe crear una dinámica divertida que a menudo consiste en moverse por el mapa y pulsar el botón de pegar.
+La dinámica principal del juego será la de moverse por las paredes y esquivar proyectiles y ataques enemigos al más puro estilo Rayman o Pizza Tower, las paredes y la estructura del mapa deben crear una dinámica divertida que a menudo consiste en moverse por el mapa y pulsar el botón de pegar.
 
 ## Sigilo:
 
-Como ya se ha mencionado en mecánica hay enemigos invencibles que a demás de matar de un golpe, el jugador no puede matar (como el alien, por ejemplo), en un principio no serán demasiados pero estas zonas de enemigos invencibles se apoyarán en la mecánica del sistema de pasillos para que el jugador tenga que hacer timing con la trayectoria del enemigo y evitar ser visto.
+El jugador, excepto para obtener la llave de una puerta, puede optar por seguir una dinámica de sigilo aprovechando la patrulla de los enemigos por los pasillos, donde no pueden verlo.
 Una idea es queL los enemigos pueden tener distintas velocidades de desplazamiento en Z, lo que significa que los más difíciles no permiten que el jugador pase sin ser percibido solamente con el movimiento horizontal normal, sino que tenga que rodar por el suelo que le hace más deprisa.
 
 ## Enemigos:
 
 Ataques enemigos por proyectiles (pulso 5G) obligan al jugador usar mecánicas de rodar para pasar por debajo o saltar por arriba para evitar daño.
-Los enemigos inmortales le dan al jugador dos alternativas: sigilo o correr. Al correr para huir, tendrá menos tiempo para pensar y reaccionar a ataques de enemigos más adelante, pues rápidamente lo alcanzará y lo matará.
-Los enemigos reptilianos sólo se pueden derrotar saltando y golpeando la cabeza o si están de espalda con cualquier ataque. Cuando están de cara, sus dientes afilados no permiten a uno acercarse sin recibir daño ni infringir.
+Los enemigos reptilianos sólo se pueden derrotar saltando y golpeando la cabeza. Cuando están de cara, sus dientes afilados no permiten a uno acercarse sin recibir daño.
 
 
 # Estética:
