@@ -265,14 +265,14 @@ export class Enemy extends Flat3D_Entity {
 
         const DEBUG_FALLBACK_POINT = (message) => {
             return new ExecutionBehaviorNode(() => {
-                console.log(message)
+                // console.log(message)
                 return NODE_STATUS.FAILURE;
             });
         };
 
         const DEBUG_SEQUENCE_POINT = (message) => {
             return new ExecutionBehaviorNode(() => {
-                console.log(message)
+                // console.log(message)
                 return NODE_STATUS.SUCCESS;
             });
         };
