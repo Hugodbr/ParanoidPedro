@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map_structured.tmx",
+    "activeFile": "level1.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -49,11 +49,11 @@
                 104,
                 94
             ],
-            "scale": 0.21,
-            "selectedLayer": 37,
+            "scale": 0.33,
+            "selectedLayer": 26,
             "viewCenter": {
-                "x": 602.3809523809523,
-                "y": 623.8095238095239
+                "x": 2880.30303030303,
+                "y": 496.969696969697
             }
         },
         "level1.tmx#MapTileset": {
@@ -108,9 +108,14 @@
                 94
             ],
             "expandedObjectLayers": [
+                8,
+                111,
+                21,
                 71,
+                107,
                 115,
                 68,
+                120,
                 114
             ],
             "scale": 0.5,
@@ -185,13 +190,14 @@
     "map.lastUsedExportFilter": "Arquivos de mapa JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "map_structured.tmx",
-        "MapTileset.tsx"
+        "level1.tmx",
+        "level2.tmx"
     ],
     "project": "project.tiled-project",
     "property.type": "bool",
     "recentFiles": [
         "level2.tmx",
+        "level1.tmx",
         "map_structured.tmx",
         "MapTileset.tsx",
         "level2.json",

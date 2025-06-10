@@ -61,6 +61,9 @@ export default class Level extends Phaser.Scene
 
         //* Input manager
         this.inputManager = new InputManager(this);
+        this.inputManager.setupGamepad();
+        this.inputManager.setupKeyboard();
+
 
         //* Map creation
         //

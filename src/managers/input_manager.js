@@ -27,9 +27,15 @@ export default class InputManager
 
         this.scene = scene;
 
-        // Connect to gamepad
-        this.scene.input.gamepad.once("connected", pad => { this.gamepad = pad; });
+        /**
+         * Reference to the gamepad controller
+         * @type {Phaser.Input.Gamepad}
+         */
+        this.gamepad = null;
+    }
 
+    setupKeyboard()
+    {
         /**
          * References to keyboard bindings
          */
@@ -38,12 +44,22 @@ export default class InputManager
 		this.rightMoveKey = this.scene.input.keyboard.addKey('D');
 		this.rollKey = this.scene.input.keyboard.addKey('S');
 		this.attackKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    }
 
-        /**
-         * Reference to the gamepad controller
-         * @type {Phaser.Input.Gamepad}
-         */
-        this.gamepad = null;
+    setupGamepad() 
+    {
+        const gamepadPlugin = this.scene.input.gamepad;
+
+        const gamepads = gamepadPlugin.gamepads;
+
+        if (gamepads.length > 0 && gamepads[0]) {
+            this.gamepad = gamepads[0];
+        } 
+        else {
+            gamepadPlugin.once('connected', pad => {
+                this.gamepad = pad;
+            });
+        }
     }
 
     /**
@@ -85,7 +101,7 @@ export default class InputManager
     rollMoveInput()
     {
         return this.rollKey.isDown
-            || this.gamepad !== null && this.gamepad.B; // TODO: ?
+            || this.gamepad !== null && this.gamepad.B;
     }
     
     /**
@@ -95,6 +111,15 @@ export default class InputManager
     attackActionInput()
     {
         return this.attackKey.isDown
-            || this.gamepad !== null && this.gamepad.X; // TODO: ?
+            || this.gamepad !== null && this.gamepad.X;
+    }
+
+    /**
+     * For menus
+     * @type {bool}
+     */
+    nextInput()
+    {
+        return this.gamepad !== null && this.gamepad.A;
     }
 }

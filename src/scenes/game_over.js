@@ -1,4 +1,5 @@
 import { SceneKeys, TextureKeys, SoundKeys } from '../../assets/asset_keys.js'
+import InputManager from '../managers/input_manager.js';
 
 
 export default class GameOver extends Phaser.Scene {
@@ -11,6 +12,9 @@ export default class GameOver extends Phaser.Scene {
     }
 
     create() {
+
+		this.inputManager = new InputManager(this);
+		this.inputManager.setupGamepad();
 
 		const centerX = this.game.scale.width / 2;
 		const centerY = this.game.scale.height / 2;
@@ -26,4 +30,14 @@ export default class GameOver extends Phaser.Scene {
 			});
 		});
 	}
+
+	update(time, dt) {
+	
+		if (this.inputManager.nextInput()) {
+			this.time.delayedCall(100, () => {
+				this.scene.start(SceneKeys.Title);
+			});
+		}
+
+    }
 }
