@@ -3,6 +3,7 @@ import Level1 from './scenes/level_1.js';
 import Level2 from './scenes/level_2.js';
 import GameOver from './scenes/game_over.js';
 import GameWin from './scenes/game_win.js';
+import LoadScene from './scenes/load_scene.js';
 
 let config = {
 	type: Phaser.AUTO,
@@ -25,7 +26,7 @@ let config = {
 		zoom: 1
 
 	},
-	scene: [Title, Level1, Level2, GameOver, GameWin],
+	scene: [LoadScene, Title, Level1, Level2, GameOver, GameWin],
 
 	physics: {
 		default: 'arcade',
