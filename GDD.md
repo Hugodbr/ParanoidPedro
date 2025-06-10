@@ -137,3 +137,7 @@ La realidad está alterada, tanto el mapa como los enemigos quieren representar 
 El mapa está formado por tiles de forma que un tile se corresponde con  cuadro cuadrados del papel de cuadrícula real que se usará para dibujar. Además la altura de los pasillos será generalmente de 4 tiles, es decir 8 cuadrados de alto.
 
 Los pasillos serán imágenes que se integran con el fondo dando sensación de profundidad, sus dimensiones serán generalmente de 8x7 siendo más anchos que altos, el final del pasillo será un cuadrado de 2x2 centrado en horizontal y 3 cuadrados por encima de la base del dibujo.
+
+# Niveles
+
+El juego cuenta con 2 niveles con progresión de dificultad y pensado para que el jugador aprenda y use las mecánicas que dispone.
