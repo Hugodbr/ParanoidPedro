@@ -90,7 +90,7 @@ export class Agent5G extends Enemy {
 
                 let pos = Vector3D.add_vecs(this.flat3D_Position, gunPos);
 
-                new Pulse5G(this.scene, pos, new Vector3D(100 * sign, 0, 0));
+                new Pulse5G(this.scene, this.playerRef, pos, new Vector3D(100 * sign, 0, 0));
             }
                 
         }).bind(this));
