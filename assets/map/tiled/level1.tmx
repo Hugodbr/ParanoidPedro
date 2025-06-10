@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="171" height="29" tilewidth="32" tileheight="32" infinite="0" nextlayerid="108" nextobjectid="115">
+<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="171" height="29" tilewidth="32" tileheight="32" infinite="0" nextlayerid="108" nextobjectid="115">
  <editorsettings>
   <export target="level1.json" format="json"/>
  </editorsettings>
@@ -514,7 +514,7 @@
      <property name="hasKey" type="bool" value="false"/>
      <property name="type" value="Agent5G"/>
     </properties>
-    <object id="59" name="0" x="3482.71" y="221.916">
+    <object id="59" name="0" x="3973.62" y="221.916">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="60"/>
@@ -549,7 +549,7 @@
      </properties>
      <point/>
     </object>
-    <object id="64" name="5" x="2919.61" y="264.573">
+    <object id="64" name="5" x="2665.06" y="261.543">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="59"/>
@@ -750,16 +750,16 @@
    <objectgroup id="35" name="enemy1">
     <properties>
      <property name="hasKey" type="bool" value="false"/>
-     <property name="type" value="Reptilian"/>
+     <property name="type" value="Agent5G"/>
     </properties>
-    <object id="38" name="0" x="1637.56" y="603.07">
+    <object id="38" name="0" x="1532.8" y="598.308">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="39"/>
      </properties>
      <point/>
     </object>
-    <object id="114" name="1" x="1056.23" y="625.737">
+    <object id="114" name="1" x="894.325" y="611.451">
      <properties>
       <property name="Z" type="float" value="0"/>
       <property name="next" type="object" value="39"/>
