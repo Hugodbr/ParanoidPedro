@@ -66,7 +66,7 @@ Para desarrollar esta mecánica tan compleja de los enemigos tenemos pensado usa
 Todos los enemigos pueden patrullar en X y/o Z.
 En orden de dificultad y aparecimiento:
 Enemigos que disparan proyectiles(pulso 5G): Son de la seguridad del hospital. Si están de cara al jugador se quedan disparando y no se mueven.
-Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Reciben daño letal desde arriba, asi que es más práctico matarlos saltanto sobre su cabeza.
+Enemigos reptilianos: un poco más rápidos, pero más lentos que el jugador. Daño cuerpo a cuerpo. Reciben daño letal desde arriba, asi que es más práctico matarlos saltanto sobre su cabeza. También reciben daño por la espalda.
 
 ### Vida de los enemigos
 
