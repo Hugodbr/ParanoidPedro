@@ -93,6 +93,9 @@ Este es el sistema que gestiona la identificación y visibilidad de las distinta
 
 La organización de este sistema inicia desde *Tiled*, donde se define grupos de zonas y grupos de paredes. Ambos grupos tienen capas de suelo y escenario. El grupo de paredes tiene también una capa de pared que se desactiva al romperla, que es cuando se detecta un overlap del golpe normal con un sensor de colisión. Las puertas con cerradura son paredes especiales que se desactivan si el jugador tiene una llave.
 
+![zonewall](https://github.com/user-attachments/assets/57f116b5-3b71-44fa-89dd-909ca7a07f11)
+
+
 ## Flat3D-System
 
 Todas las entidades del juego derivan de `Flat3D_Entity`, clase que contará con atributos de posición en 3D como posición y velocidad 3D, esto para gestionar el movimientos de las entidades, que serán cuerpos kinemáticos para evitar físicas raras sobre todo con la simulación del eje Z y para evitar conflictos en los desplazamientos hechos por IA. Además, esta clase  contará con un atributo muy importante que será el *depth scaling factor*, que se utilizará para escalar el Sprite de cada entidad dependiendo de su profundidad en el eje Z para dar el efecto deseado.
@@ -141,3 +144,9 @@ Los pasillos serán imágenes que se integran con el fondo dando sensación de p
 # Niveles
 
 El juego cuenta con 2 niveles con progresión de dificultad y pensado para que el jugador aprenda y use las mecánicas que dispone.
+
+![nivel1](https://github.com/user-attachments/assets/ad9083ae-7b26-4393-a0b9-2224db0e1a7c)
+
+![nivel2](https://github.com/user-attachments/assets/3056a791-7ced-4662-a518-e7f88edbcf25)
+
+
