@@ -6,6 +6,7 @@ import { Reptilian } from '../entities/reptilian.js';
 
 import { Path3D_Point } from "../entities/flat3D_system/path3D_point.js";
 import LayerObject from './layer_object.js';
+import { Health } from '../items/health.js';
 
 const enemyMap = {
     Agent5G,
@@ -43,6 +44,8 @@ export default class Zone extends LayerObject
 
         // Initialize the zone's Enemies
         this.createEnemies();
+
+        this.createHealth();
 
         // Starts invisible by default
         this.hide();
@@ -103,6 +106,38 @@ export default class Zone extends LayerObject
             this.enemies.push(newEnemy);
 
             this.visibleObjects.push(this.enemies[i]);
+        }
+    }
+
+    createHealth()
+    {
+        // console.log(this.scene.map.objects);
+
+        const healthObjects = this.scene.map.objects.filter(obj => obj.name?.startsWith(this.groupName + "/health/")); // ! string
+
+        // No enemies to create in this zone
+        if (healthObjects.length === 0) {
+            return;
+        }
+
+        // console.log(healthObjects);
+
+        for (let i = 0; i < healthObjects.length; ++i) {
+
+            console.log(healthObjects[i]);
+
+            const spwanPoint = healthObjects[i].objects.find(obj => obj.name === "healthSpawn");
+
+            // healthObjects[i].objects.forEach(point => {
+            //     pathPoints.push(new Path3D_Point(this.scene, point.x, point.y, point.properties.find(z => z.name === "Z").value * 20000));
+            // });
+
+
+
+            let health = new Health(this.scene, spwanPoint.x, spwanPoint.y);
+
+
+            this.visibleObjects.push(health);
         }
     }
 

@@ -41,11 +41,13 @@ export default class LoadScene extends Phaser.Scene {
              this.load.spritesheet(TextureKeys.Reptilian, 'assets/enemies/reptilian_spritesheet.png', { frameWidth: 163, frameHeight: 140 });
     
             //* Attacks
-            // this.load.image(TextureKeys.NormalAttack, 'assets/character/attacks/punch.png');
             this.load.spritesheet(TextureKeys.Punch_Attack, 'assets/character/attacks/punch_attack.png', { frameWidth: 64, frameHeight: 96});
             this.load.spritesheet(TextureKeys.Aerial_Attack, 'assets/character/attacks/aerial_attack.png', { frameWidth: 64, frameHeight: 64});
             this.load.audio(SoundKeys.Normal_Attack, 'assets/sfx/attack/punches-single.mp3');
             this.load.audio(SoundKeys.Running_Attack, 'assets/sfx/attack/punches-4x.mp3');
+
+            //* Item
+            this.load.image(TextureKeys.Health, 'assets/item/health.png');
     }
 
     /**

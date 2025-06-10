@@ -8,15 +8,15 @@
          "name":"endLevel",
          "objects":[
                 {
-                 "height":640,
+                 "height":664,
                  "id":108,
                  "name":"end",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":309.333,
-                 "x":5132,
-                 "y":82.6667
+                 "width":233.333,
+                 "x":5208,
+                 "y":58.6667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -132,6 +132,39 @@
                          "value":"wall"
                         }],
                  "type":"objectgroup",
+                 "visible":true,
+                 "x":0,
+                 "y":0
+                }, 
+                {
+                 "id":106,
+                 "layers":[
+                        {
+                         "draworder":"topdown",
+                         "id":107,
+                         "name":"health1",
+                         "objects":[
+                                {
+                                 "height":0,
+                                 "id":113,
+                                 "name":"healthSpawn",
+                                 "point":true,
+                                 "rotation":0,
+                                 "type":"",
+                                 "visible":true,
+                                 "width":0,
+                                 "x":5190.66666666667,
+                                 "y":280
+                                }],
+                         "opacity":1,
+                         "type":"objectgroup",
+                         "visible":true,
+                         "x":0,
+                         "y":0
+                        }],
+                 "name":"health",
+                 "opacity":1,
+                 "type":"group",
                  "visible":true,
                  "x":0,
                  "y":0
@@ -1393,6 +1426,39 @@
                  "visible":true,
                  "x":0,
                  "y":0
+                }, 
+                {
+                 "id":104,
+                 "layers":[
+                        {
+                         "draworder":"topdown",
+                         "id":105,
+                         "name":"health1",
+                         "objects":[
+                                {
+                                 "height":0,
+                                 "id":111,
+                                 "name":"healthSpawn",
+                                 "point":true,
+                                 "rotation":0,
+                                 "type":"",
+                                 "visible":true,
+                                 "width":0,
+                                 "x":2160,
+                                 "y":236
+                                }],
+                         "opacity":1,
+                         "type":"objectgroup",
+                         "visible":true,
+                         "x":0,
+                         "y":0
+                        }],
+                 "name":"health",
+                 "opacity":1,
+                 "type":"group",
+                 "visible":true,
+                 "x":0,
+                 "y":0
                 }],
          "name":"zone2",
          "opacity":1,
@@ -1718,11 +1784,11 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":104,
- "nextobjectid":111,
+ "nextlayerid":108,
+ "nextobjectid":114,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.0",
+ "tiledversion":"1.11.1",
  "tileheight":32,
  "tilesets":[
         {

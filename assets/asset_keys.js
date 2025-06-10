@@ -34,6 +34,8 @@ export const TextureKeys = {
     Punch_Attack: 'punch-attack',
     Aerial_Attack: 'aerial-attack',
 
+    Health: 'health',
+
     Agent5G: 'Agent5G',
     Wave5G: 'Wave5G',
 
