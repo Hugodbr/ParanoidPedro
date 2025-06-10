@@ -13,6 +13,16 @@ El juego se inspira en títulos como la saga de Rayman, My Friend Pedro, Sketch 
 
 El jugador será capaz de desplazarse horizontal y verticalmente corriendo y saltando, además podrá rodar por el suelo para pasar por lugares más estrechos o evitar enemigos y saltar por las paredes. También podrá pegar ya sea mientras salta, mientras corre, mientras cae o mientras está quieto para eliminar enemigos o interactuar con las paredes destructibles.
 
+### Máquina de estados del movimiento
+
+![statemachine](https://github.com/user-attachments/assets/d4aebba7-5be3-4a77-bb89-935c896f9f7b)
+
+
+### Ataque según el movimiento
+
+![ataques](https://github.com/user-attachments/assets/8073110d-d96f-4c54-8dbb-bf1f17ad501f)
+
+
 Controles:
 
 A-D o Joy-stick izquierdo: desplazamiento izquierda-derecha
@@ -94,6 +104,8 @@ Este es el sistema que gestiona la identificación y visibilidad de las distinta
 La organización de este sistema inicia desde *Tiled*, donde se define grupos de zonas y grupos de paredes. Ambos grupos tienen capas de suelo y escenario. El grupo de paredes tiene también una capa de pared que se desactiva al romperla, que es cuando se detecta un overlap del golpe normal con un sensor de colisión. Las puertas con cerradura son paredes especiales que se desactivan si el jugador tiene una llave.
 
 ![zonewall](https://github.com/user-attachments/assets/57f116b5-3b71-44fa-89dd-909ca7a07f11)
+
+![layerobjects](https://github.com/user-attachments/assets/792ca0d3-f031-48a3-8dd1-52a2a7d185ce)
 
 
 ## Flat3D-System
