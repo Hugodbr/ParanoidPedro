@@ -39,18 +39,20 @@
             ],
             "expandedObjectLayers": [
                 107,
+                31,
                 6,
                 106,
                 102,
+                35,
                 105,
                 104,
                 94
             ],
-            "scale": 0.33,
+            "scale": 0.21,
             "selectedLayer": 37,
             "viewCenter": {
-                "x": 1663.6363636363635,
-                "y": 293.939393939394
+                "x": 2850,
+                "y": 633.333333333333
             }
         },
         "level1.tmx#MapTileset": {
@@ -104,25 +106,11 @@
                 97,
                 94
             ],
-            "expandedObjectLayers": [
-                8,
-                21,
-                63,
-                67,
-                71,
-                107,
-                6,
-                68,
-                89,
-                93,
-                102,
-                11
-            ],
-            "scale": 0.33,
+            "scale": 0.25,
             "selectedLayer": 26,
             "viewCenter": {
-                "x": 2533.333333333333,
-                "y": 1042.4242424242425
+                "x": 2138,
+                "y": 948
             }
         },
         "level2.tmx#MapTileset": {
