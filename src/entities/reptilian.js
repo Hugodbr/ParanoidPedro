@@ -12,6 +12,7 @@ import { InversionBehaviorNode } from "../AI_behavior/inversion_behavior_node.js
 import { ForceFailureBehaviorNode } from "../AI_behavior/force_failure_behavior_node.js";
 
 import { FACING, Player } from "./player.js";
+import FallAttack from "./attack/fall_attack.js";
 
 export class Reptilian extends Enemy {
 
@@ -65,7 +66,7 @@ export class Reptilian extends Enemy {
      * Relative position of the head damage zone
      * @type {Vector3D}
      */
-    headDamageZonePos = new Vector3D(0, 20, 0);
+    headDamageZonePos = new Vector3D(0, 0, 0);
 
     /**
      * Zone that damages the player
@@ -87,6 +88,8 @@ export class Reptilian extends Enemy {
     
     constructor(scene, x, y, z, playerRef, pathPoints) {
         super(scene, x, y, z, playerRef, pathPoints);
+
+        this.life = 4;
 
         this.setTexture(TextureKeys.Reptilian);
         this.body.width = 163;
@@ -264,13 +267,26 @@ export class Reptilian extends Enemy {
 
         this.headDamageZone.x = this.body.position.x + this.headDamageZonePos.x;
         this.headDamageZone.y = this.body.position.y + this.headDamageZonePos.y;
+    }
 
-        if(this.scene.physics.overlap(this.headDamageZone, this.playerRef) 
-            && this.playerRef.body.velocity.y > 0) 
-        {
-            this.die();
-            return;
+    getHit(attack)
+    {
+        if (this.flat3D_Position.z <= 0) {
+
+            if (attack instanceof FallAttack) {
+                this.die();
+            }
+            else if (this.facing === this.playerRef.facing) {
+                this.life -= attack.damage;
+
+                if (this.life > 0) {
+                    let duration = 50 * (this.life * 2);
+                    this.blinkRedDamaged(duration);
+                }
+                else {
+                    this.die();
+                }
+            }
         }
-
     }
 }

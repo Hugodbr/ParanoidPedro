@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, ObjectNames, AnimationKeys } from '../../assets/asset_keys.js';
+import { TextureKeys } from '../../assets/asset_keys.js';
 import { Vector3D } from "../utils/vector3D.js";
 import { Cooldown } from "../utils/cooldown.js";
 
@@ -593,11 +593,11 @@ export class Enemy extends Flat3D_Entity {
         });
     }
 
-    getHit()
+    getHit(attack)
     {
         if (this.flat3D_Position.z <= 0) {
 
-            this.life--;
+            this.life -= attack.damage;
 
             if (this.life > 0) {
                 let duration = 50 * (this.life * 2);
@@ -607,8 +607,6 @@ export class Enemy extends Flat3D_Entity {
                 this.die();
             }
         }
-
-
     }
 
     die()

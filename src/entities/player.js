@@ -1,5 +1,5 @@
 import { Flat3D_Entity } from "./flat3D_system/flat3D_entity.js";
-import { TilemapKeys, TilesetNames, LayerNames, TextureKeys, SoundKeys, AnimationKeys } from '../../assets/asset_keys.js';
+import { TextureKeys, SoundKeys, AnimationKeys } from '../../assets/asset_keys.js';
 
 import StandState from "./state_machine/stand_state.js";
 import RunState from "./state_machine/run_state.js";
@@ -243,13 +243,11 @@ export class Player extends Flat3D_Entity {
 
     useKey()
     {
-        console.log("use key");
         this.hasKey = false;
     }
 
     getKey()
     {
-        console.log("get key");
         this.hasKey = true;
     }
 

@@ -132,7 +132,7 @@ export default class LoadScene extends Phaser.Scene {
         this.anims.create({
             key: AnimationKeys.Normal_Attack,
             frames: this.anims.generateFrameNumbers(TextureKeys.Punch_Attack, {start:1, end:1}),
-            frameRate: 10,
+            frameRate: 8,
             repeat: 1
         });
 
