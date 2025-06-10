@@ -27,7 +27,6 @@ export default class Title extends Phaser.Scene {
 				this.scene.start(SceneKeys.Level_1);
 			});
 		});
-
-		
 	}
+
 }

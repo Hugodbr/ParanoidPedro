@@ -75,6 +75,13 @@ export default class LayerObject
      */
     createLayers()
     {
+        //* Non collision layers
+        // Create backgorund scenery layer
+        this.backgroundSceneryLayerName = this.groupName + "/" + LayerNames.BackgroundScenery;
+        this.backgroundSceneryLayer = this.scene.map.createLayer(this.backgroundSceneryLayerName, this.scene.mapTileset, 0, 0);
+
+        this.visibleObjects.push(this.backgroundSceneryLayer);
+
         //* Collision layers
         // Create ground layer
         this.groundLayerName = this.groupName + "/" + LayerNames.Ground;
@@ -84,12 +91,7 @@ export default class LayerObject
         this.collisionLayers.push(this.groundLayer);
         this.visibleObjects.push(this.groundLayer);
 
-        //* Non collision layers
-        // Create backgorund scenery layer
-        this.backgroundSceneryLayerName = this.groupName + "/" + LayerNames.BackgroundScenery;
-        this.backgroundSceneryLayer = this.scene.map.createLayer(this.backgroundSceneryLayerName, this.scene.mapTileset, 0, 0);
 
-        this.visibleObjects.push(this.backgroundSceneryLayer);
     }
 
     /**

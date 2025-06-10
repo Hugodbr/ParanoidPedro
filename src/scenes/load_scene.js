@@ -63,34 +63,34 @@ export default class LoadScene extends Phaser.Scene {
     createPlayerAnimations()
     {
         this.anims.create({
-            key: AnimationKeys.Player_Idle,
-            frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
-            frameRate: 5,
-            repeat: -1
-        });
+			key: AnimationKeys.Player_Idle,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:0, end:3}),
+			frameRate: 5,
+			repeat: -1
+		});
         this.anims.create({
-            key: AnimationKeys.Player_Running,
-            frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:4, end:7}),
-            frameRate: 10,
-            repeat: -1
-        });
+			key: AnimationKeys.Player_Running,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:4, end:7}),
+			frameRate: 10,
+			repeat: -1
+		});
         this.anims.create({
-            key: AnimationKeys.Player_Running_Attacking,
-            frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:8, end:11}),
-            frameRate: 10,
-            repeat: -1
-        });
+			key: AnimationKeys.Player_Running_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:8, end:11}),
+			frameRate: 10,
+			repeat: -1
+		});
         this.anims.create({
-            key: AnimationKeys.Player_Jumping,
-            frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:12, end:15}),
-            frameRate: 10,
-            repeat: -1
-        });
+			key: AnimationKeys.Player_Jumping,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:12, end:15}),
+			frameRate: 10,
+			repeat: -1
+		});
         this.anims.create({
-            key: AnimationKeys.Player_Jumping_Attacking,
-            frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:16, end:19}),
-            frameRate: 10,
-            repeat: -1
+			key: AnimationKeys.Player_Jumping_Attacking,
+			frames: this.anims.generateFrameNumbers(TextureKeys.Player_Spritesheet, {start:16, end:19}),
+			frameRate: 10,
+			repeat: -1
         });
         this.anims.create({
             key: AnimationKeys.Player_Falling,
