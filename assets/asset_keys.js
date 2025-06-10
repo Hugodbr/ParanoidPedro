@@ -1,10 +1,11 @@
 
 export const SceneKeys = {
-    Tile: 'title-scene',
+    Title: 'title-scene',
     Level_1: 'level_1-scene',
     Level_2: 'level_2-scene',
     Game_Win: 'game-win',
-    Game_Over: 'game-over'
+    Game_Over: 'game-over',
+    Load: 'load-scene'
 }
 
 export const TilemapKeys = {
@@ -36,7 +37,12 @@ export const TextureKeys = {
     Agent5G: 'Agent5G',
     Wave5G: 'Wave5G',
 
-    Reptilian: 'Reptilian'
+    Reptilian: 'Reptilian',
+
+    Title_Background: 'title-background',
+    Play_Button: 'play-button',
+    Game_Title: 'game-title',
+    Introduction_Comic: 'introduction-comic'
 };
 
 export const ObjectNames = {
