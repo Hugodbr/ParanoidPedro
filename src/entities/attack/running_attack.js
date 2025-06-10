@@ -15,9 +15,7 @@ export default class RunningAttack extends Attack
         this.offsetX = player.body.width/1.5;
         this.offsetY = player.body.height/2;
 
-        this.cooldown = new PersistentCooldown(1000);
-
-        this.damage = 3;
+        this.damage = 2;
 
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);

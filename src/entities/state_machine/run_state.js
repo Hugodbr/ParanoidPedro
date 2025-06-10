@@ -18,7 +18,7 @@ export default class RunState extends State
 
         this.runATK = new RunningAttack(this.scene, player);
 
-        this.attackCooldown = new PersistentCooldown(1200);
+        this.attackCooldown = new PersistentCooldown(1000);
         this.rollCooldown = new PersistentCooldown(1000);
     }
 
@@ -102,10 +102,10 @@ export default class RunState extends State
     /**
      * Executes an attack while the player is in the 'run' state.
      */
-    attack()
+    attack(t)
     {
         // Implement logic.
-        this.runATK.attack();
+        this.runATK.attack(t);
         //Implement 'run' attack animation.
         this.player.play(AnimationKeys.Player_Running_Attacking);
 

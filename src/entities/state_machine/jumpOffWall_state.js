@@ -1,6 +1,8 @@
 import State from "./state.js";
 import {Player, FACING} from "../player.js";
 import { AnimationKeys } from "../../../assets/asset_keys.js";
+import JumpAttack from "../attack/jump_atack.js";
+import PersistentCooldown from "../../utils/persistent_cooldown.js";
 
 
 /**
@@ -14,6 +16,10 @@ export default class JumpOffWallState extends State
      */
     constructor(player) {
         super(player);
+
+        this.jumpATK = new JumpAttack(this.scene, player);
+
+        this.attackCooldown = new PersistentCooldown(1000);
     }
 
     /**
@@ -28,16 +34,12 @@ export default class JumpOffWallState extends State
         // Commom state update logic
         super.update();
 
-
-
         //* Handle action inputs while jumping
         // Attack
         if (this.input.attackActionInput()) {
-            this.attack();
-        }
-        // Roll
-        else if (this.input.rollMoveInput()) {
-            // this.player.setState(RollState); // TODO: dash downward?
+            if (this.attackCooldown.canUse(t)) { 
+                this.attack(t);
+            }
         }
 
         if (this.onWall()) {
@@ -58,7 +60,6 @@ export default class JumpOffWallState extends State
         if (this.debugState)
             console.log("Enter jump");
 
-        // TODO: Implement play 'jump' animation.
         this.player.play(AnimationKeys.Player_Jumping);
 
         this.body.setVelocityY(-this.jumpSpeed);
@@ -71,12 +72,14 @@ export default class JumpOffWallState extends State
     }
 
     /**
-     * Executes an attack while the player is in the 'jump' state.
+     * Executes an attack while the player is in the 'jumpoffwall' state.
      */
-    attack()
+    attack(t)
     {
-        // TODO: Implement logic.
-        // TODO: Implement 'jump' attack animation.
+        // Implement logic.
+        this.jumpATK.attack(t);
+        //Implement 'run' attack animation.
+        this.player.play(AnimationKeys.Player_Jumping_Attacking);
 
         if (this.debugState)
             console.log("Attacking");

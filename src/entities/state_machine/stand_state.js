@@ -20,7 +20,7 @@ export default class StandState extends State
 
         this.normalATK = new NormalAttack(this.scene, player);
 
-        this.attackCooldown = new PersistentCooldown(700);
+        this.attackCooldown = new PersistentCooldown(500);
     }
 
     /**

@@ -20,7 +20,7 @@ export default class JumpState extends State
 
         this.jumpATK = new JumpAttack(this.scene, player);
 
-        this.attackCooldown = new PersistentCooldown(1200);
+        this.attackCooldown = new PersistentCooldown(1000);
     }
 
     /**
@@ -51,11 +51,9 @@ export default class JumpState extends State
             //* Handle action inputs while jumping
             // Attack
             if (this.input.attackActionInput()) {
-                this.attack();
-            }
-            // Roll
-            else if (this.input.rollMoveInput()) {
-                // this.player.setState(RollState); // TODO: dash downward?
+                if (this.attackCooldown.canUse(t)) { 
+                    this.attack(t);
+                }
             }
             // Stop
             else if (this.input.leftMoveInput() === this.input.rightMoveInput()) {
@@ -82,7 +80,6 @@ export default class JumpState extends State
         if (this.debugState)
             console.log("Enter jump");
 
-        // TODO: Implement play 'jump' animation.
         this.player.play(AnimationKeys.Player_Jumping);
 
         this.body.setVelocityY(-this.jumpSpeed);
@@ -97,10 +94,10 @@ export default class JumpState extends State
     /**
      * Executes an attack while the player is in the 'jump' state.
      */
-    attack()
+    attack(t)
     {
         // Implement logic.
-        this.jumpATK.attack();
+        this.jumpATK.attack(t);
         //Implement 'run' attack animation.
         this.player.play(AnimationKeys.Player_Jumping_Attacking);
 

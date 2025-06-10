@@ -15,9 +15,7 @@ export default class JumpAttack extends Attack
         this.offsetX = player.body.width/2;
         this.offsetY = 0;
 
-        this.cooldown = new PersistentCooldown(1000);
-
-        this.damage = 2;
+        this.damage = 3;
 
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);

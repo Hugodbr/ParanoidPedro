@@ -16,9 +16,7 @@ export default class NormalAttack extends Attack
         this.offsetX = player.body.width + 5;
         this.offsetY = player.body.height/2;
 
-        this.cooldown = new PersistentCooldown(200);
-
-        this.damage = 2;
+        this.damage = 1;
 
         this.setAttackSpriteActive(false);
         this.setAttackColliderActive(false);

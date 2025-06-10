@@ -20,7 +20,7 @@ export default class FallState extends State
 
         this.fallATK = new FallAttack(this.scene, player);
 
-        this.attackCooldown = new PersistentCooldown(1200);
+        this.attackCooldown = new PersistentCooldown(1000);
     }
 
     /**
@@ -50,11 +50,9 @@ export default class FallState extends State
 
             //* Handle action inputs while jumping
             if (this.input.attackActionInput()) {
-                this.attack(t);
-            }
-            // Roll
-            else if (this.input.rollMoveInput()) {
-                // this.player.setState(RollState); // TODO: dash downward?
+                if (this.attackCooldown.canUse(t)) { 
+                    this.attack(t);
+                }
             }
             // Stop
             else if (this.input.leftMoveInput() && this.input.rightMoveInput()) {
@@ -93,10 +91,10 @@ export default class FallState extends State
     /**
      * Executes an attack while the player is in the 'fall' state.
      */
-    attack()
+    attack(t)
     {
         // Implement logic.
-        this.fallATK.attack();
+        this.fallATK.attack(t);
         //Implement 'run' attack animation.
         this.player.play(AnimationKeys.Player_Falling_Attacking);
 

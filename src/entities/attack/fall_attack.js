@@ -15,8 +15,6 @@ export default class FallAttack extends Attack
         this.offsetX = player.body.width/1.5;
         this.offsetY = player.body.height;
 
-        this.cooldown = new PersistentCooldown(1000);
-
         this.damage = 3;
 
         this.setAttackSpriteActive(false);
