@@ -9,7 +9,7 @@
     ],
     "fileStates": {
         "": {
-            "scaleInDock": 0.75
+            "scaleInDock": 0.5
         },
         "Graphic Design Test.tsx": {
             "scaleInDock": 0.33
@@ -37,11 +37,20 @@
                 104,
                 94
             ],
-            "scale": 0.75,
-            "selectedLayer": 4,
+            "expandedObjectLayers": [
+                107,
+                6,
+                106,
+                102,
+                105,
+                104,
+                94
+            ],
+            "scale": 0.33,
+            "selectedLayer": 37,
             "viewCenter": {
-                "x": 4956,
-                "y": 416
+                "x": 1663.6363636363635,
+                "y": 293.939393939394
             }
         },
         "level1.tmx#MapTileset": {
