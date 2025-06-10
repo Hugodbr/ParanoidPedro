@@ -17,4 +17,6 @@ El proyecto consiste en un videojuego web desarrollado en javascript, bautizado 
 
 ![image](https://github.com/user-attachments/assets/9b60e62a-63c4-4ebb-850c-37c279a907d4)
 
-# Enlace a la página web pública con la versión de publicación del juego
+# Enlace a la página web del juego
+
+https://hugodbr.github.io/ParanoidPedro/
